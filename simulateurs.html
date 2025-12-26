@@ -2,150 +2,43 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>Simulateurs financiers | The Moroccan Community</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<title>Simulateurs</title>
 <link rel="stylesheet" href="assets/style.css">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-<style>
-body{background:#0b0b10;color:#eaeaf0;font-family:Arial;padding:40px}
-h1,h2{color:#d4af37}
-.sim{background:#15151c;padding:25px;margin-bottom:40px;border:1px solid #333}
-input{width:100%;padding:10px;margin:8px 0;background:#0b0b10;color:white;border:1px solid #333}
-button{background:#d4af37;color:black;padding:10px 20px;border:none;cursor:pointer}
-.result{margin-top:15px;color:#ccc}
-canvas{margin-top:25px}
-</style>
 </head>
-
 <body>
 
-<h1>Simulateurs financiers professionnels</h1>
+<nav>
+<h1>The Moroccan Community</h1>
+<div>
+<a href="index.html">Accueil</a>
+<a href="formations.html">Formations</a>
+</div>
+</nav>
 
-<!-- 1. DCF -->
+<section class="container">
+<h2>Simulateurs financiers</h2>
+
 <div class="sim">
-<h2>1. Valorisation DCF</h2>
-<input id="dcf_fcf" placeholder="Cash-flow annuel (DH)">
-<input id="dcf_g" placeholder="Croissance %">
-<input id="dcf_w" placeholder="Taux d’actualisation %">
-<button onclick="calcDCF()">Calculer</button>
-<div id="dcf_res" class="result"></div>
+<h3>Valorisation DCF</h3>
+<input placeholder="Cash-flow">
+<input placeholder="Croissance %">
+<input placeholder="Taux d’actualisation %">
+<button>Calculer</button>
 </div>
 
-<!-- 2. Dividend Yield -->
 <div class="sim">
-<h2>2. Dividend Yield</h2>
-<input id="dy_price" placeholder="Cours de l’action (DH)">
-<input id="dy_div" placeholder="Dividende annuel (DH)">
-<button onclick="calcYield()">Calculer</button>
-<div id="dy_res" class="result"></div>
+<h3>Actions vs Épargne</h3>
+<input placeholder="Capital initial">
+<input placeholder="Durée">
+<input placeholder="Rendement actions %">
+<input placeholder="Taux épargne %">
+<button>Comparer</button>
 </div>
 
-<!-- 3. WACC -->
-<div class="sim">
-<h2>3. WACC</h2>
-<input id="w_e" placeholder="Coût fonds propres %">
-<input id="w_d" placeholder="Coût dette %">
-<input id="w_s" placeholder="Part de la dette %">
-<button onclick="calcWACC()">Calculer</button>
-<div id="w_res" class="result"></div>
-</div>
+</section>
 
-<!-- 4. Projection -->
-<div class="sim">
-<h2>4. Projection de capital</h2>
-<input id="p_cap" placeholder="Capital initial (DH)">
-<input id="p_rate" placeholder="Rendement annuel %">
-<input id="p_years" placeholder="Durée (années)">
-<button onclick="calcProjection()">Projeter</button>
-<canvas id="projChart"></canvas>
-</div>
-
-<!-- 5. Investir vs Épargner -->
-<div class="sim">
-<h2>5. Investir vs Épargner</h2>
-<input id="i_cap" placeholder="Capital initial (DH)">
-<input id="i_years" placeholder="Durée (années)">
-<input id="i_inv" placeholder="Rendement investissement %">
-<input id="i_save" placeholder="Taux épargne %">
-<button onclick="compareInvest()">Comparer</button>
-<canvas id="invChart"></canvas>
-<div id="inv_res" class="result"></div>
-</div>
-
-<!-- 6. Actions vs Immobilier -->
-<div class="sim">
-<h2>6. Actions vs Immobilier</h2>
-<input id="a_cap" placeholder="Capital initial (DH)">
-<input id="a_act" placeholder="Rendement actions %">
-<input id="a_immo" placeholder="Rendement immobilier %">
-<input id="a_years" placeholder="Durée (années)">
-<button onclick="compareAssets()">Comparer</button>
-<canvas id="assetChart"></canvas>
-<div id="asset_res" class="result"></div>
-</div>
-
-<script>
-let projChart,invChart,assetChart;
-
-// 1. DCF
-function calcDCF(){
-const f=+dcf_fcf.value,g=+dcf_g.value/100,w=+dcf_w.value/100;
-if(w<=g)return dcf_res.innerHTML="⚠️ Le taux d’actualisation doit être supérieur à la croissance.";
-const v=f/(w-g);
-dcf_res.innerHTML=`Valeur estimée : <b>${v.toFixed(0)} DH</b>`;
-}
-
-// 2. Yield
-function calcYield(){
-const y=(+dy_div.value/+dy_price.value)*100;
-dy_res.innerHTML=`Rendement : <b>${y.toFixed(2)} %</b>`;
-}
-
-// 3. WACC
-function calcWACC(){
-const e=+w_e.value/100,d=+w_d.value/100,s=+w_s.value/100;
-const wacc=(1-s)*e+s*d;
-w_res.innerHTML=`WACC estimé : <b>${(wacc*100).toFixed(2)} %</b>`;
-}
-
-// 4. Projection
-function calcProjection(){
-const c=+p_cap.value,r=+p_rate.value/100,y=+p_years.value;
-let labels=[],data=[];
-for(let i=0;i<=y;i++){labels.push("Année "+i);data.push(c*Math.pow(1+r,i))}
-if(projChart)projChart.destroy();
-projChart=new Chart(document.getElementById("projChart"),{
-type:"line",
-data:{labels,datasets:[{label:"Capital",data,borderColor:"#d4af37"}]}
-});
-}
-
-// 5. Invest vs Save
-function compareInvest(){
-const c=+i_cap.value,y=+i_years.value,ri=+i_inv.value/100,rs=+i_save.value/100;
-let inv=c*Math.pow(1+ri,y),sav=c*Math.pow(1+rs,y);
-inv_res.innerHTML=`Écart final : <b>${(inv-sav).toFixed(0)} DH</b>`;
-if(invChart)invChart.destroy();
-invChart=new Chart(document.getElementById("invChart"),{
-type:"bar",
-data:{labels:["Investir","Épargner"],datasets:[{data:[inv,sav],backgroundColor:["#d4af37","#999"]}]}
-});
-}
-
-// 6. Assets
-function compareAssets(){
-const c=+a_cap.value,y=+a_years.value,ra=+a_act.value/100,ri=+a_immo.value/100;
-let act=c*Math.pow(1+ra,y),im=c*Math.pow(1+ri,y);
-asset_res.innerHTML="Les actions offrent un potentiel supérieur mais plus volatil.";
-if(assetChart)assetChart.destroy();
-assetChart=new Chart(document.getElementById("assetChart"),{
-type:"bar",
-data:{labels:["Actions","Immobilier"],datasets:[{data:[act,im],backgroundColor:["#d4af37","#4fa3ff"]}]}
-});
-}
-</script>
+<footer>© The Moroccan Community</footer>
 
 </body>
 </html>
