@@ -3,209 +3,195 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Moroccan Community | Analyst & CFO Hub</title>
+    <title>The Moroccan Community | High-End Financial Hub</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Playfair+Display:ital,wght@1,700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #ffffff;
-            --surface: #f8f9fa;
-            --brand: #000000;
-            --accent: #c5a059;
-            --text-main: #1a1a1a;
-            --text-muted: #666666;
-            --border: #e5e7eb;
+            --bg: #0a0a0c;
+            --surface: #16161a;
+            --accent: #d4af37; /* Or Royal */
+            --text: #e0e0e6;
+            --dim: #88888e;
+            --border: rgba(212, 175, 55, 0.2);
         }
 
-        * { box-sizing: border-box; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-        body { font-family: 'Inter', sans-serif; margin: 0; background: var(--bg); color: var(--text-main); line-height: 1.6; }
+        * { box-sizing: border-box; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+        body { 
+            font-family: 'Space Grotesk', sans-serif; 
+            background: var(--bg); 
+            color: var(--text); 
+            margin: 0; 
+            overflow-x: hidden;
+        }
 
-        /* --- TICKER BOURSE --- */
-        .market-ticker { background: var(--brand); color: var(--accent); padding: 12px 0; overflow: hidden; position: sticky; top: 0; z-index: 2000; font-size: 0.85rem; font-weight: 700; border-bottom: 1px solid var(--accent); }
-        .ticker-track { display: flex; width: max-content; animation: scroll 40s linear infinite; }
-        .ticker-item { padding: 0 30px; }
-        @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        /* --- BACKGROUND DECOR --- */
+        .bg-glow {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 10% 10%, rgba(212,175,55,0.05) 0%, transparent 50%);
+            pointer-events: none; z-index: -1;
+        }
 
-        /* --- NAVIGATION --- */
-        nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 6%; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); position: sticky; top: 43px; z-index: 1000; }
-        .logo { font-family: 'Cinzel', serif; font-size: 1.4rem; color: var(--brand); letter-spacing: 1px; cursor: pointer; }
-        .nav-links a { text-decoration: none; color: var(--brand); margin-left: 25px; font-weight: 600; font-size: 0.85rem; cursor: pointer; text-transform: uppercase; }
+        /* --- HEADER & NAV --- */
+        nav {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 30px 6%; border-bottom: 1px solid var(--border);
+            backdrop-filter: blur(20px); position: sticky; top: 0; z-index: 100;
+        }
+        .logo { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-style: italic; color: var(--accent); cursor: pointer; }
+        .nav-links a { 
+            color: var(--dim); text-decoration: none; margin-left: 30px; 
+            font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase;
+        }
         .nav-links a:hover { color: var(--accent); }
 
-        /* --- PAGES SYSTEM --- */
-        .page { display: none; padding: 60px 8%; animation: pageIn 0.5s ease-out; }
+        /* --- PAGES --- */
+        .page { display: none; padding: 60px 6%; animation: slideUp 0.6s ease; }
         .page.active { display: block; }
-        @keyframes pageIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* --- HOME PAGE : EDUCATION --- */
-        .hero { padding: 80px 0; text-align: center; border-bottom: 1px solid var(--border); }
-        .hero h1 { font-family: 'Cinzel', serif; font-size: 3.5rem; margin: 0; }
-        .edu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; margin-top: 60px; }
-        .edu-card { background: var(--surface); padding: 40px; border-radius: 4px; border-left: 4px solid var(--accent); }
-        .edu-card h3 { color: var(--accent); text-transform: uppercase; letter-spacing: 1px; }
+        /* --- HOME DESIGN --- */
+        .hero { min-height: 70vh; display: flex; flex-direction: column; justify-content: center; }
+        .hero h1 { font-size: clamp(3rem, 8vw, 6rem); margin: 0; line-height: 1; letter-spacing: -2px; }
+        .hero span { color: var(--accent); }
+        .hero p { max-width: 600px; color: var(--dim); font-size: 1.2rem; margin: 30px 0; }
 
-        /* --- SIMULATORS DASHBOARD --- */
-        .sim-hub-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-        @media (max-width: 900px) { .sim-hub-grid { grid-template-columns: 1fr; } }
-        .sim-launcher { background: var(--brand); color: white; padding: 40px; border-radius: 8px; cursor: pointer; position: relative; overflow: hidden; }
-        .sim-launcher:hover { background: #222; transform: translateY(-5px); }
-        .sim-launcher h3 { margin: 0; font-family: 'Cinzel', serif; color: var(--accent); }
-        .sim-launcher p { font-size: 0.8rem; opacity: 0.7; }
+        .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; margin: 100px 0; }
+        .info-card { 
+            background: var(--surface); padding: 40px; border-radius: 2px; 
+            border: 1px solid var(--border); position: relative;
+        }
+        .info-card::before {
+            content: ""; position: absolute; top: 0; left: 0; width: 2px; height: 100%; background: var(--accent);
+        }
 
-        /* --- SIMULATOR PAGE DESIGN --- */
-        .sim-workspace { display: grid; grid-template-columns: 400px 1fr; gap: 40px; background: white; padding: 40px; border-radius: 12px; box-shadow: 0 20px 40px rgba(0,0,0,0.05); }
-        @media (max-width: 1100px) { .sim-workspace { grid-template-columns: 1fr; } }
-        
-        .sim-controls { background: var(--surface); padding: 30px; border-radius: 8px; }
-        .guide-section { margin-top: 30px; padding: 20px; background: #fff; border: 1px dashed var(--accent); font-size: 0.85rem; }
-        
-        .output-section { display: flex; flex-direction: column; gap: 30px; }
-        .chart-box { background: white; border: 1px solid var(--border); padding: 20px; border-radius: 8px; height: 350px; }
-        .analysis-report { background: var(--brand); color: white; padding: 30px; border-radius: 8px; border-bottom: 5px solid var(--accent); }
-        .analysis-report h4 { color: var(--accent); margin-top: 0; text-transform: uppercase; }
+        /* --- FAQ SECTION --- */
+        .faq-section { margin: 100px 0; }
+        .faq-item { border-bottom: 1px solid var(--border); padding: 20px 0; cursor: pointer; }
+        .faq-question { display: flex; justify-content: space-between; font-size: 1.2rem; font-weight: 500; }
+        .faq-answer { display: none; padding: 20px 0; color: var(--dim); line-height: 1.8; }
 
-        input, select { width: 100%; padding: 12px; margin-bottom: 20px; border: 1px solid #ddd; border-radius: 4px; font-family: inherit; }
-        .btn-action { width: 100%; padding: 15px; background: var(--accent); color: white; border: none; font-weight: bold; cursor: pointer; text-transform: uppercase; }
+        /* --- SIMULATORS GRID --- */
+        .sim-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+        .sim-box { 
+            aspect-ratio: 1/1; background: var(--surface); border: 1px solid var(--border);
+            display: flex; flex-direction: column; justify-content: flex-end; padding: 30px;
+            cursor: pointer; position: relative; overflow: hidden;
+        }
+        .sim-box:hover { border-color: var(--accent); }
+        .sim-box h3 { font-size: 1.5rem; margin: 0; z-index: 2; }
+        .sim-box .num { position: absolute; top: 20px; right: 20px; font-size: 4rem; font-weight: 700; opacity: 0.05; }
 
-        /* --- FORMATIONS --- */
-        .course-grid { display: grid; gap: 30px; }
-        .course-item { display: flex; background: white; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
-        .course-badge { background: var(--brand); color: var(--accent); padding: 40px; display: flex; align-items: center; font-family: 'Cinzel', serif; font-size: 1.5rem; }
-        .course-info { padding: 30px; flex: 1; }
+        /* --- MODAL SIMULATEUR --- */
+        .modal {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg); z-index: 1000; display: none; padding: 60px; overflow-y: auto;
+        }
+        .modal-content { max-width: 1200px; margin: auto; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; }
+        .close-modal { position: fixed; top: 30px; right: 30px; font-size: 2rem; cursor: pointer; color: var(--accent); }
 
-        footer { background: var(--brand); color: white; padding: 80px 8%; text-align: center; margin-top: 100px; }
+        /* --- FORM ELEMENTS --- */
+        input { 
+            background: transparent; border: none; border-bottom: 2px solid var(--border);
+            width: 100%; padding: 15px 0; color: white; font-size: 1.2rem; outline: none; margin-bottom: 30px;
+        }
+        input:focus { border-color: var(--accent); }
+        .btn-premium { 
+            background: var(--accent); color: var(--bg); padding: 20px 40px; 
+            border: none; font-weight: 700; cursor: pointer; letter-spacing: 2px;
+        }
+
+        .analysis-box { background: #1a1a20; padding: 30px; border-radius: 10px; margin-top: 30px; border-left: 4px solid var(--accent); }
+
     </style>
 </head>
 <body>
 
-<div class="market-ticker">
-    <div class="ticker-track">
-        <div class="ticker-item">MASI: 14,245.30 (+0.42%)</div>
-        <div class="ticker-item">IAM: 108.50 DH (+1.2%)</div>
-        <div class="ticker-item">ATTIJARI: 525.00 DH (-0.15%)</div>
-        <div class="ticker-item">BCP: 298.00 DH (+0.8%)</div>
-        <div class="ticker-item">LAFARGE: 1,890.00 DH (+0.2%)</div>
-        <div class="ticker-item">BOA: 194.00 DH (+1.5%)</div>
-        <div class="ticker-item">MASI: 14,245.30 (+0.42%)</div>
-        <div class="ticker-item">IAM: 108.50 DH (+1.2%)</div>
-        <div class="ticker-item">ATTIJARI: 525.00 DH (-0.15%)</div>
-    </div>
-</div>
+<div class="bg-glow"></div>
 
 <nav>
-    <div class="logo" onclick="showPage('home')">The Moroccan Community</div>
+    <div class="logo" onclick="showPage('home')">The Moroccan Community.</div>
     <div class="nav-links">
         <a onclick="showPage('home')">Accueil</a>
-        <a onclick="showPage('sim-hub')">Simulateurs</a>
-        <a onclick="showPage('courses')">Formations</a>
-        <a onclick="showPage('resources')">Ressources</a>
-        <a onclick="showPage('about')">A Propos</a>
-        <a onclick="showPage('contact')">Contact</a>
+        <a onclick="showPage('sim-page')">Terminal</a>
+        <a onclick="showPage('edu-page')">Formations</a>
+        <a onclick="showPage('contact-page')">Contact</a>
     </div>
 </nav>
 
 <div id="home" class="page active">
     <div class="hero">
-        <h1>L'Analyste & Le CFO</h1>
-        <p>Expertise Boursière et Corporate Finance dédiée au marché marocain.</p>
+        <h1>THE <span>ANALYST</span><br>& THE <span>CFO</span></h1>
+        <p>L'élite de l'ingénierie financière marocaine. Nous fusionnons l'analyse boursière de précision et la stratégie corporate.</p>
     </div>
 
-    <div class="edu-grid">
-        <div class="edu-card">
-            <h3>Comprendre la Bourse de Casablanca</h3>
-            <p>La Bourse de Casablanca (MASI) est le moteur de l'investissement au Royaume. Nous vous aidons à décrypter les rapports annuels, à calculer la valeur intrinsèque des fleurons nationaux et à anticiper les cycles économiques.</p>
+    <div class="info-grid">
+        <div class="info-card">
+            <h3>Bourse de Casablanca</h3>
+            <p>Le MASI n'est pas qu'un indice, c'est le reflet de l'économie marocaine. Nous décortiquons chaque action, des télécoms à l'énergie, pour identifier la valeur réelle.</p>
         </div>
-        <div class="edu-card">
-            <h3>Finance d'Entreprise (Corporate)</h3>
-            <p>Du calcul du WACC à la modélisation DCF, nous équipons les directeurs financiers (CFO) et les entrepreneurs avec des outils de décision de niveau institutionnel.</p>
+        <div class="info-card">
+            <h3>Finance Corporate</h3>
+            <p>Maîtriser son WACC, optimiser sa structure de capital et modéliser ses flux de trésorerie (DCF) sont les piliers de la croissance d'entreprise.</p>
         </div>
-        <div class="edu-card">
-            <h3>Éducation & Rigueur</h3>
-            <p>Pas de spéculation, uniquement de l'analyse fondamentale. Apprenez à lire un bilan, un compte de résultat et un tableau de flux de trésorerie.</p>
+    </div>
+
+    <section class="faq-section">
+        <h2>F.A.Q <span>Précision</span></h2>
+        <div class="faq-item" onclick="toggleFaq(this)">
+            <div class="faq-question">Qu'est-ce que l'analyse fondamentale ? <span>+</span></div>
+            <div class="faq-answer">C'est l'étude de la santé financière d'une entreprise (bilans, bénéfices, dettes) pour déterminer si son prix en bourse est justifié.</div>
+        </div>
+        <div class="faq-item" onclick="toggleFaq(this)">
+            <div class="faq-question">Comment utiliser vos simulateurs ? <span>+</span></div>
+            <div class="faq-answer">Nos outils sont basés sur les formules académiques de finance (DCF, WACC). Il vous suffit d'insérer les données financières pour obtenir une analyse instantanée.</div>
+        </div>
+        <div class="faq-item" onclick="toggleFaq(this)">
+            <div class="faq-question">Les formations sont-elles adaptées aux débutants ? <span>+</span></div>
+            <div class="faq-answer">Oui, nous avons un cursus allant des bases de la bourse (BVC) jusqu'à la modélisation financière complexe sur Excel.</div>
+        </div>
+    </section>
+</div>
+
+<div id="sim-page" class="page">
+    <h2 style="font-size: 3rem; margin-bottom: 50px;">Terminal de <span>Calcul</span></h2>
+    <div class="sim-grid">
+        <div class="sim-box" onclick="openModal('dcf')">
+            <span class="num">01</span>
+            <h3>Modèle DCF</h3>
+            <p>Valeur Intrinsèque</p>
+        </div>
+        <div class="sim-box" onclick="openModal('yield')">
+            <span class="num">02</span>
+            <h3>Dividend Yield</h3>
+            <p>Rendement Boursier</p>
+        </div>
+        <div class="sim-box" onclick="openModal('wacc')">
+            <span class="num">03</span>
+            <h3>Coût du Capital</h3>
+            <p>Modèle WACC</p>
         </div>
     </div>
 </div>
 
-<div id="sim-hub" class="page">
-    <h2 style="font-family: 'Cinzel', serif; margin-bottom: 40px;">Terminal de Simulation Financière</h2>
-    <div class="sim-hub-grid">
-        <div class="sim-launcher" onclick="loadSim('dcf')"><h3>01. Valorisation DCF</h3><p>Modèle Discounted Cash Flow - Valeur Intrinsèque.</p></div>
-        <div class="sim-launcher" onclick="loadSim('yield')"><h3>02. Dividend Yield</h3><p>Analyse du rendement et Payback Boursier.</p></div>
-        <div class="sim-launcher" onclick="loadSim('wacc')"><h3>03. Modèle WACC</h3><p>Coût Moyen Pondéré du Capital.</p></div>
-        <div class="sim-launcher" onclick="loadSim('immo')"><h3>04. Rentabilité Immo</h3><p>Rendement locatif net au Maroc.</p></div>
-        <div class="sim-launcher" onclick="loadSim('break')"><h3>05. Point Mort</h3><p>Seuil de rentabilité pour entreprises.</p></div>
-        <div class="sim-launcher" onclick="loadSim('compound')"><h3>06. Intérêts Composés</h3><p>Projection de fortune à long terme.</p></div>
-    </div>
-</div>
-
-<div id="sim-workspace-page" class="page">
-    <a onclick="showPage('sim-hub')" style="cursor:pointer; font-weight:700; color:var(--accent)">← Retour au Hub</a>
-    <div class="sim-workspace" style="margin-top:20px;">
-        <div class="sim-controls">
-            <h2 id="sim-title" style="font-family:'Cinzel',serif">Simulateur</h2>
-            <div id="sim-inputs-area"></div>
-            <div class="guide-section">
-                <h4>Méthodologie & Guide</h4>
-                <p id="sim-guide-text"></p>
-            </div>
+<div id="sim-modal" class="modal">
+    <span class="close-modal" onclick="closeModal()">&times;</span>
+    <div class="modal-content">
+        <div class="controls">
+            <h2 id="modal-title" style="font-size: 2.5rem; color: var(--accent);">Simulateur</h2>
+            <div id="modal-inputs"></div>
+            <button class="btn-premium" id="calc-btn">Lancer l'Analyse</button>
+            <div id="modal-guide" style="margin-top: 40px; color: var(--dim);"></div>
         </div>
-        <div class="output-section">
-            <div class="chart-box"><canvas id="simChart"></canvas></div>
-            <div class="analysis-report">
-                <h4>Analyse de l'Analyste</h4>
-                <div id="analysis-content">Effectuez une simulation pour générer le rapport.</div>
+        <div class="results">
+            <div style="height: 300px;"><canvas id="modalChart"></canvas></div>
+            <div id="modal-analysis" class="analysis-box">
+                <h4>Rapport de l'Expert</h4>
+                <p>En attente de données...</p>
             </div>
         </div>
     </div>
 </div>
-
-<div id="courses" class="page">
-    <h2 style="font-family:'Cinzel',serif">Programmes de Certification</h2>
-    <div class="course-grid">
-        <div class="course-item">
-            <div class="course-badge">BASICS</div>
-            <div class="course-info">
-                <h3>Les Bases de la Bourse de Casablanca</h3>
-                <p>Idéal pour les débutants. Apprenez le fonctionnement du MASI, le passage d'ordres et les indicateurs clés.</p>
-                <button class="btn-action" style="width:200px">En savoir plus</button>
-            </div>
-        </div>
-        <div class="course-item">
-            <div class="course-badge">FUNDA</div>
-            <div class="course-info">
-                <h3>Analyse Fondamentale Avancée</h3>
-                <p>Apprenez à valoriser n'importe quelle action marocaine via les multiples et le DCF.</p>
-                <button class="btn-action" style="width:200px">En savoir plus</button>
-            </div>
-        </div>
-        <div class="course-item">
-            <div class="course-badge">CAREER</div>
-            <div class="course-info">
-                <h3>Entretien & Carrière Finance</h3>
-                <p>Coaching complet : CV, LinkedIn et techniques de recherche d'emploi en finance.</p>
-                <button class="btn-action" style="width:200px">En savoir plus</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div id="contact" class="page">
-    <div style="max-width:600px; margin:auto; background:var(--surface); padding:50px; border-radius:12px;">
-        <h2 style="font-family:'Cinzel',serif">Entrer en Contact</h2>
-        <p>Email: <b>themoroccananalyst@gmail.com</b></p>
-        <hr>
-        <input type="text" placeholder="Nom">
-        <input type="email" placeholder="Email">
-        <textarea style="width:100%; height:150px; padding:12px; border:1px solid #ddd; margin-bottom:20px;" placeholder="Message"></textarea>
-        <button class="btn-action">Envoyer</button>
-    </div>
-</div>
-
-<footer>
-    <div class="logo" style="color:var(--accent); margin-bottom:20px;">The Moroccan Community</div>
-    <p>Retrouvez-nous sur Instagram @the_moroccananalyst et sur nos deux chaînes YouTube.</p>
-    <p style="font-size:0.7rem; opacity:0.5; margin-top:40px;">&copy; 2025 THE MOROCCAN COMMUNITY. TOUS DROITS RÉSERVÉS.</p>
-</footer>
 
 <script>
     let currentChart = null;
@@ -216,77 +202,80 @@
         window.scrollTo(0,0);
     }
 
-    function loadSim(type) {
-        showPage('sim-workspace-page');
-        const inputsArea = document.getElementById('sim-inputs-area');
-        const guide = document.getElementById('sim-guide-text');
-        const title = document.getElementById('sim-title');
-        
-        if(type === 'dcf') {
-            title.innerText = "Modèle DCF";
-            inputsArea.innerHTML = `
-                <label>Flux de Trésorerie Libre (DH)</label><input type="number" id="v1" value="1000000">
-                <label>Taux de Croissance Perpetuel (%)</label><input type="number" id="v2" value="3">
-                <label>Taux d'Actualisation / WACC (%)</label><input type="number" id="v3" value="10">
-                <button class="btn-action" onclick="runDCF()">Calculer la Valeur</button>
-            `;
-            guide.innerText = "Le modèle DCF (Discounted Cash Flow) estime la valeur d'une entreprise aujourd'hui sur la base de l'argent qu'elle générera dans le futur. C'est l'outil roi de l'investisseur fondamental.";
-        } else if(type === 'yield') {
-            title.innerText = "Dividend Yield";
-            inputsArea.innerHTML = `
-                <label>Prix de l'Action (DH)</label><input type="number" id="v1" value="500">
-                <label>Dividende par Action (DH)</label><input type="number" id="v2" value="25">
-                <button class="btn-action" onclick="runYield()">Analyser le Rendement</button>
-            `;
-            guide.innerText = "Le rendement dividende mesure le revenu passif généré par une action. Le Payback indique combien d'années sont nécessaires pour récupérer votre capital via les dividendes seuls.";
-        }
-        // ... Logique similaire pour les autres simulateurs ...
+    function toggleFaq(el) {
+        const ans = el.querySelector('.faq-answer');
+        ans.style.display = ans.style.display === 'block' ? 'none' : 'block';
     }
 
-    // --- MOTEUR DE GRAPHIQUE ---
-    function updateChart(type, labels, data, label) {
+    function openModal(type) {
+        const modal = document.getElementById('sim-modal');
+        const inputs = document.getElementById('modal-inputs');
+        const guide = document.getElementById('modal-guide');
+        const title = document.getElementById('modal-title');
+        
+        modal.style.display = 'block';
+        document.body.style.overflow = 'hidden';
+
+        if(type === 'dcf') {
+            title.innerText = "Discounted Cash Flow";
+            inputs.innerHTML = `
+                <label>Flux de Trésorerie (DH)</label><input type="number" id="v1" value="5000000">
+                <label>Taux de Croissance (%)</label><input type="number" id="v2" value="4">
+                <label>Taux d'Actualisation (%)</label><input type="number" id="v3" value="10">
+            `;
+            guide.innerHTML = "<b>Guide :</b> Projetez les cash-flows futurs d'une société du MASI et actualisez-les pour connaître sa valeur réelle aujourd'hui.";
+            document.getElementById('calc-btn').onclick = runDCF;
+        }
+        if(type === 'yield') {
+            title.innerText = "Analyse du Rendement";
+            inputs.innerHTML = `
+                <label>Cours de l'action (DH)</label><input type="number" id="v1" value="150">
+                <label>Dividende versé (DH)</label><input type="number" id="v2" value="10">
+            `;
+            guide.innerHTML = "<b>Guide :</b> Calculez le rendement dividende net. Idéal pour les valeurs de 'Bon Père de famille' à Casablanca.";
+            document.getElementById('calc-btn').onclick = runYield;
+        }
+    }
+
+    function closeModal() {
+        document.getElementById('sim-modal').style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+
+    function updateChart(labels, data, label) {
         if (currentChart) currentChart.destroy();
-        const ctx = document.getElementById('simChart').getContext('2d');
+        const ctx = document.getElementById('modalChart').getContext('2d');
         currentChart = new Chart(ctx, {
-            type: type,
+            type: 'bar',
             data: {
                 labels: labels,
                 datasets: [{
                     label: label,
                     data: data,
-                    backgroundColor: ['#c5a059', '#1a1a1a', '#e5e7eb'],
-                    borderWidth: 0
+                    backgroundColor: '#d4af37',
+                    borderColor: '#d4af37',
+                    borderWidth: 1
                 }]
             },
-            options: { responsive: true, maintainAspectRatio: false }
+            options: { responsive: true, maintainAspectRatio: false, scales: { y: { grid: { color: '#222' } } } }
         });
     }
 
-    // --- LOGIQUES SPÉCIFIQUES ---
     function runDCF() {
         const fcf = parseFloat(document.getElementById('v1').value);
-        const g = parseFloat(document.getElementById('v2').value) / 100;
-        const wacc = parseFloat(document.getElementById('v3').value) / 100;
-        const val = fcf / (wacc - g);
-        
-        updateChart('bar', ['FCF Initial', 'Valeur Terminale'], [fcf, val], 'Estimation (DH)');
-        document.getElementById('analysis-content').innerHTML = `
-            <p>Valeur Intrinsèque : <b>${Math.round(val).toLocaleString()} DH</b></p>
-            <p><b>Constat :</b> Si la capitalisation boursière actuelle au MASI est inférieure à ce montant, l'action présente une marge de sécurité. Attention, une hausse du WACC de 1% peut drastiquement réduire cette valeur.</p>
-        `;
+        const g = parseFloat(document.getElementById('v2').value)/100;
+        const w = parseFloat(document.getElementById('v3').value)/100;
+        const val = fcf / (w - g);
+        updateChart(['Aujourd\'hui', 'Valeur Intrinsèque'], [fcf, val], 'Capital (DH)');
+        document.getElementById('modal-analysis').innerHTML = `<h4>Constat Analyste</h4><p>La valeur de l'entreprise est estimée à <b>${Math.round(val).toLocaleString()} DH</b>. Une marge de sécurité de 20% est conseillée avant tout investissement.</p>`;
     }
 
     function runYield() {
-        const prix = parseFloat(document.getElementById('v1').value);
+        const cours = parseFloat(document.getElementById('v1').value);
         const div = parseFloat(document.getElementById('v2').value);
-        const yield = (div / prix) * 100;
-        const payback = prix / div;
-
-        updateChart('doughnut', ['Dividende', 'Reste du prix'], [div, prix-div], 'Rendement');
-        document.getElementById('analysis-content').innerHTML = `
-            <p>Rendement : <b>${yield.toFixed(2)}%</b> | Payback : <b>${payback.toFixed(1)} ans</b></p>
-            <p><b>Constat :</b> Au Maroc, un bon rendement dépasse souvent 5%. Un payback inférieur à 12 ans est considéré comme excellent pour une valeur de rendement (ex: Maroc Telecom ou Banques).</p>
-        `;
+        const yield = (div / cours) * 100;
+        updateChart(['Cours', 'Rendement x10'], [cours, yield*10], 'Ratio');
+        document.getElementById('modal-analysis').innerHTML = `<h4>Constat Analyste</h4><p>Rendement actuel : <b>${yield.toFixed(2)}%</b>. Un rendement supérieur à 6% au Maroc est considéré comme attractif pour une stratégie de rente.</p>`;
     }
 </script>
 
