@@ -3,23 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>The Moroccan Community | Plateforme financière marocaine</title>
-
-<meta name="description" content="The Moroccan Community est une plateforme fintech marocaine dédiée à la pédagogie financière, l’analyse d’investissement et la compréhension de la bourse de Casablanca.">
-<meta name="keywords" content="finance maroc, bourse de casablanca, investissement maroc, analyse financière, fintech maroc">
-<meta name="author" content="The Moroccan Community">
+<title>The Moroccan Community | Fintech & Analyse</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Playfair+Display:ital,wght@1,700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
 :root{
---bg:#0a0a0c;
---surface:#151518;
+--bg:#0b0b10;
+--surface:#15151c;
 --accent:#d4af37;
---text:#eaeaf0;
---dim:#8c8c95;
---border:rgba(212,175,55,.25);
+--accent2:#4fa3ff;
+--text:#ececf2;
+--dim:#9a9aa5;
+--border:rgba(255,255,255,.08);
 }
 *{box-sizing:border-box}
 body{
@@ -27,242 +24,212 @@ margin:0;
 font-family:'Space Grotesk',sans-serif;
 background:var(--bg);
 color:var(--text);
-line-height:1.7;
+overflow-x:hidden;
 }
-a{text-decoration:none;color:inherit}
-.bg{
+.bg-anim{
 position:fixed;inset:0;
-background:radial-gradient(circle at 10% 10%,rgba(212,175,55,.08),transparent 50%);
+background:
+radial-gradient(circle at 20% 20%,rgba(212,175,55,.08),transparent 50%),
+radial-gradient(circle at 80% 70%,rgba(79,163,255,.08),transparent 50%);
 z-index:-1;
+animation:float 18s infinite alternate;
 }
+@keyframes float{to{transform:translateY(-40px)}}
+
 nav{
 position:sticky;top:0;z-index:100;
 display:flex;justify-content:space-between;align-items:center;
-padding:28px 6%;
-border-bottom:1px solid var(--border);
+padding:25px 6%;
 backdrop-filter:blur(15px);
+border-bottom:1px solid var(--border);
 }
 .logo{
 font-family:'Playfair Display',serif;
 font-size:1.6rem;
 font-style:italic;
 color:var(--accent);
+cursor:pointer;
 }
 .nav-links a{
-margin-left:30px;
+margin-left:25px;
 font-size:.75rem;
 letter-spacing:2px;
 text-transform:uppercase;
 color:var(--dim);
+cursor:pointer;
 }
 .nav-links a:hover{color:var(--accent)}
 
-section{padding:100px 6%}
+.page{display:none;padding:90px 6%;animation:fade .6s ease}
+.page.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(30px)}to{opacity:1}}
+
 .hero{
-min-height:85vh;
-display:flex;
-flex-direction:column;
-justify-content:center;
+min-height:80vh;
+display:grid;
+grid-template-columns:1.2fr 1fr;
+gap:60px;
+align-items:center;
 }
-.hero h1{
-font-size:clamp(3rem,7vw,5.5rem);
-letter-spacing:-2px;
-line-height:1.05;
-margin:0;
-}
+.hero h1{font-size:clamp(3rem,7vw,5.2rem);margin:0}
 .hero span{color:var(--accent)}
-.hero p{
-max-width:680px;
-font-size:1.2rem;
-color:var(--dim);
-margin:35px 0 50px;
-}
+.hero p{font-size:1.2rem;color:var(--dim);margin:30px 0}
 .btn{
-display:inline-block;
-background:var(--accent);
-color:var(--bg);
-padding:20px 45px;
+background:linear-gradient(135deg,var(--accent),var(--accent2));
+color:#000;
+padding:18px 40px;
 font-weight:700;
 letter-spacing:2px;
+cursor:pointer;
+border:none;
 }
 
 .grid{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-gap:45px;
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+gap:35px;
 }
 .card{
 background:var(--surface);
 border:1px solid var(--border);
-padding:45px;
+padding:35px;
 position:relative;
+overflow:hidden;
 }
-.card::before{
+.card::after{
 content:"";
 position:absolute;
-top:0;left:0;
-width:3px;height:100%;
-background:var(--accent);
+inset:0;
+background:linear-gradient(120deg,transparent,rgba(255,255,255,.06),transparent);
+transform:translateX(-100%);
 }
-.card h3{margin-top:0}
+.card:hover::after{transform:translateX(100%)}
 
-.dark{
-background:#0d0d10;
+input{
+width:100%;
+background:none;
+border:none;
+border-bottom:2px solid var(--border);
+padding:12px 0;
+color:white;
+margin-bottom:20px;
+font-size:1.05rem;
 }
-
-h2{
-font-size:2.8rem;
-margin-bottom:70px;
-}
-h2 span{color:var(--accent)}
-
-footer{
-padding:60px 6%;
-border-top:1px solid var(--border);
-color:var(--dim);
-font-size:.9rem;
-display:flex;
-justify-content:space-between;
-flex-wrap:wrap;
-gap:20px;
-}
+input:focus{outline:none;border-color:var(--accent)}
+canvas{margin-top:30px}
 </style>
 </head>
 
 <body>
-<div class="bg"></div>
+<div class="bg-anim"></div>
 
 <nav>
-<div class="logo">The Moroccan Community.</div>
+<div class="logo" onclick="showPage('home')">The Moroccan Community.</div>
 <div class="nav-links">
-<a href="#solution">Notre mission</a>
-<a href="#process">Méthode</a>
-<a href="#trust">Confiance</a>
-<a href="#contact">Contact</a>
+<a onclick="showPage('home')">Accueil</a>
+<a onclick="showPage('sim')">Simulateurs</a>
+<a onclick="showPage('compare')">Comparateurs</a>
+<a onclick="showPage('contact')">Contact</a>
 </div>
 </nav>
 
-<!-- HERO -->
-<section class="hero">
-<h1>Comprendre, analyser et maîtriser<br><span>la finance marocaine</span></h1>
-<p>
-The Moroccan Community est une plateforme fintech éducative dédiée à
-la compréhension de l’investissement, de la bourse de Casablanca et de
-la finance d’entreprise au Maroc.
-</p>
-<a href="#solution" class="btn">Découvrir la plateforme</a>
-</section>
-
-<!-- MISSION -->
-<section id="solution">
-<h2>Notre <span>mission</span></h2>
+<!-- HOME -->
+<div id="home" class="page active">
+<div class="hero">
+<div>
+<h1>Comprendre.<br><span>Comparer.</span><br>Décider.</h1>
+<p>Plateforme fintech marocaine d’analyse et de comparaison financière.</p>
+<button class="btn" onclick="showPage('compare')">Comparer maintenant</button>
+</div>
 <div class="grid">
-<div class="card">
-<h3>Démocratiser la finance</h3>
-<p>
-Nous rendons la finance compréhensible pour tous : investisseurs,
-entrepreneurs, étudiants et professionnels.
-</p>
-</div>
-<div class="card">
-<h3>Valoriser l’expertise marocaine</h3>
-<p>
-Nos analyses sont adaptées au contexte économique marocain,
-aux entreprises locales et à la Bourse de Casablanca.
-</p>
-</div>
-<div class="card">
-<h3>Favoriser des décisions éclairées</h3>
-<p>
-Comprendre avant d’investir. Analyser avant de décider.
-La rigueur avant la spéculation.
-</p>
+<div class="card"><h3>Analyse</h3><p>Décisions basées sur les données.</p></div>
+<div class="card"><h3>Visualisation</h3><p>Graphiques clairs et pédagogiques.</p></div>
 </div>
 </div>
-</section>
+</div>
 
-<!-- PROCESS -->
-<section id="process" class="dark">
-<h2>Comment ça <span>fonctionne</span></h2>
+<!-- SIMULATORS -->
+<div id="sim" class="page">
+<h2>Simulateurs financiers</h2>
 <div class="grid">
-<div class="card">
-<h3>1. Apprendre</h3>
-<p>
-Comprendre les bases de la finance, des marchés financiers
-et des mécanismes de création de valeur.
-</p>
-</div>
-<div class="card">
-<h3>2. Analyser</h3>
-<p>
-Utiliser des méthodes reconnues : valorisation, rendement,
-analyse financière et logique long terme.
-</p>
-</div>
-<div class="card">
-<h3>3. Décider</h3>
-<p>
-Prendre des décisions alignées avec vos objectifs,
-votre horizon et le marché marocain.
-</p>
+<div class="card"><h3>DCF</h3><p>Valeur intrinsèque</p></div>
+<div class="card"><h3>Rendement</h3><p>Dividend Yield</p></div>
+<div class="card"><h3>WACC</h3><p>Coût du capital</p></div>
 </div>
 </div>
-</section>
 
-<!-- TRUST -->
-<section id="trust">
-<h2>Pourquoi nous <span>faire confiance</span></h2>
-<div class="grid">
-<div class="card">
-<h3>Transparence totale</h3>
-<p>
-Aucun rendement promis. Aucune illusion.
-Uniquement des méthodes claires et expliquées.
-</p>
-</div>
-<div class="card">
-<h3>Approche long terme</h3>
-<p>
-Nous privilégions la création de valeur durable
-plutôt que la spéculation court terme.
-</p>
-</div>
-<div class="card">
-<h3>Pédagogie avant tout</h3>
-<p>
-Notre priorité est la compréhension.
-Un investisseur informé est un investisseur responsable.
-</p>
-</div>
-</div>
-</section>
+<!-- COMPARATORS -->
+<div id="compare" class="page">
+<h2>Comparateurs interactifs</h2>
 
-<!-- CTA -->
-<section class="dark">
-<h2>Une finance plus <span>intelligente</span></h2>
-<p style="max-width:650px;color:var(--dim);margin-bottom:50px;">
-The Moroccan Community n’est pas un courtier, ni un vendeur de rêves.
-C’est un espace de compréhension, d’analyse et de réflexion financière.
-</p>
-<a href="#contact" class="btn">Nous contacter</a>
-</section>
+<!-- Investir vs Epargner -->
+<div class="card">
+<h3>Investir vs Épargner</h3>
+<input id="c1" placeholder="Montant initial (DH)">
+<input id="c2" placeholder="Durée (années)">
+<input id="c3" placeholder="Rendement investissement %">
+<input id="c4" placeholder="Taux épargne %">
+<button class="btn" onclick="compareInvest()">Comparer</button>
+<canvas id="chart1"></canvas>
+</div>
+
+<!-- Action vs Immobilier -->
+<div class="card" style="margin-top:40px">
+<h3>Actions vs Immobilier</h3>
+<input id="a1" placeholder="Capital initial (DH)">
+<input id="a2" placeholder="Rendement actions %">
+<input id="a3" placeholder="Rendement immobilier %">
+<input id="a4" placeholder="Durée (années)">
+<button class="btn" onclick="compareAssets()">Comparer</button>
+<canvas id="chart2"></canvas>
+</div>
+</div>
 
 <!-- CONTACT -->
-<section id="contact">
-<h2>Contact & <span>partenariats</span></h2>
-<p style="max-width:600px;color:var(--dim);">
-Vous êtes investisseur, étudiant, entreprise ou institution ?
-Contactez-nous pour collaborations, formations ou contenus financiers.
-</p>
-<p style="margin-top:30px;">
-📧 contact@themoroccancommunity.ma
-</p>
-</section>
+<div id="contact" class="page">
+<h2>Contact</h2>
+<p>📧 contact@themoroccancommunity.ma</p>
+</div>
 
-<footer>
-<div>© 2025 The Moroccan Community</div>
-<div>Plateforme financière marocaine indépendante</div>
-</footer>
+<script>
+let chart1,chart2;
+
+function showPage(id){
+document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+document.getElementById(id).classList.add('active');
+window.scrollTo(0,0);
+}
+
+function compareInvest(){
+const m=+c1.value,t=+c2.value,ri=+c3.value/100,re=+c4.value/100;
+const invest=m*Math.pow(1+ri,t);
+const save=m*Math.pow(1+re,t);
+if(chart1)chart1.destroy();
+chart1=new Chart(chart1Canvas(),{
+type:'bar',
+data:{
+labels:['Investir','Épargner'],
+datasets:[{data:[invest,save],backgroundColor:['#d4af37','#4fa3ff']}]
+}
+});
+}
+function chart1Canvas(){return document.getElementById('chart1');}
+
+function compareAssets(){
+const c=+a1.value,ra=+a2.value/100,ri=+a3.value/100,t=+a4.value;
+const action=c*Math.pow(1+ra,t);
+const immo=c*Math.pow(1+ri,t);
+if(chart2)chart2.destroy();
+chart2=new Chart(chart2Canvas(),{
+type:'bar',
+data:{
+labels:['Actions','Immobilier'],
+datasets:[{data:[action,immo],backgroundColor:['#d4af37','#4fa3ff']}]
+}
+});
+}
+function chart2Canvas(){return document.getElementById('chart2');}
+</script>
 
 </body>
 </html>
