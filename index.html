@@ -2,235 +2,46 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Moroccan Community | Fintech & Analyse</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Playfair+Display:ital,wght@1,700&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-<style>
-:root{
---bg:#0b0b10;
---surface:#15151c;
---accent:#d4af37;
---accent2:#4fa3ff;
---text:#ececf2;
---dim:#9a9aa5;
---border:rgba(255,255,255,.08);
-}
-*{box-sizing:border-box}
-body{
-margin:0;
-font-family:'Space Grotesk',sans-serif;
-background:var(--bg);
-color:var(--text);
-}
-.bg-anim{
-position:fixed;inset:0;
-background:
-radial-gradient(circle at 20% 20%,rgba(212,175,55,.08),transparent 50%),
-radial-gradient(circle at 80% 70%,rgba(79,163,255,.08),transparent 50%);
-z-index:-1;
-animation:float 18s infinite alternate;
-}
-@keyframes float{to{transform:translateY(-40px)}}
-
-nav{
-position:sticky;top:0;
-display:flex;justify-content:space-between;align-items:center;
-padding:25px 6%;
-border-bottom:1px solid var(--border);
-backdrop-filter:blur(15px);
-}
-.logo{
-font-family:'Playfair Display',serif;
-font-size:1.6rem;
-color:var(--accent);
-cursor:pointer;
-}
-.nav-links a{
-margin-left:25px;
-font-size:.75rem;
-letter-spacing:2px;
-text-transform:uppercase;
-color:var(--dim);
-cursor:pointer;
-}
-.nav-links a:hover{color:var(--accent)}
-
-.page{display:none;padding:90px 6%}
-.page.active{display:block;animation:fade .5s ease}
-@keyframes fade{from{opacity:0;transform:translateY(25px)}to{opacity:1}}
-
-.hero{
-min-height:75vh;
-display:grid;
-grid-template-columns:1.2fr 1fr;
-gap:60px;
-align-items:center;
-}
-.hero h1{font-size:clamp(3rem,7vw,5.2rem);margin:0}
-.hero span{color:var(--accent)}
-.hero p{color:var(--dim);font-size:1.2rem;margin:30px 0}
-
-.btn{
-background:linear-gradient(135deg,var(--accent),var(--accent2));
-color:#000;
-padding:18px 40px;
-font-weight:700;
-border:none;
-cursor:pointer;
-}
-
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-gap:40px;
-}
-.card{
-background:var(--surface);
-border:1px solid var(--border);
-padding:35px;
-}
-.card h3{margin-top:0}
-
-input{
-width:100%;
-background:none;
-border:none;
-border-bottom:2px solid var(--border);
-padding:12px 0;
-color:white;
-margin-bottom:20px;
-font-size:1.05rem;
-}
-input:focus{outline:none;border-color:var(--accent)}
-
-.analysis{
-margin-top:25px;
-padding:20px;
-border-left:4px solid var(--accent);
-background:#1b1b22;
-color:var(--dim);
-}
-canvas{margin-top:30px}
-</style>
+<title>The Moroccan Community | Finance & Marchés</title>
+<link rel="stylesheet" href="assets/style.css">
 </head>
-
 <body>
-<div class="bg-anim"></div>
 
+<header>
+<h1>The Moroccan Community</h1>
+<p>Analyse financière, marchés marocains et finance d’entreprise</p>
 <nav>
-<div class="logo" onclick="showPage('home')">The Moroccan Community.</div>
-<div class="nav-links">
-<a onclick="showPage('home')">Accueil</a>
-<a onclick="showPage('compare')">Comparateurs</a>
-</div>
+<a href="simulateurs.html">Simulateurs</a>
+<a href="marche.html">Marché BVC</a>
+<a href="formations.html">Formations</a>
+<a href="ressources.html">Ressources</a>
+<a href="chaines.html">Chaînes</a>
+<a href="contact.html">Contact</a>
 </nav>
+</header>
 
-<!-- HOME -->
-<div id="home" class="page active">
-<div class="hero">
-<div>
-<h1>Comparer pour mieux<br><span>décider</span></h1>
-<p>Visualisez l’impact réel de vos décisions financières dans le temps.</p>
-<button class="btn" onclick="showPage('compare')">Lancer une comparaison</button>
-</div>
-<div class="grid">
-<div class="card"><h3>Évolution</h3><p>Analyse année par année.</p></div>
-<div class="card"><h3>Compréhension</h3><p>Messages clairs et pédagogiques.</p></div>
-</div>
-</div>
-</div>
+<section>
+<h2>Simulateurs financiers avancés</h2>
+<p>
+Outils professionnels dédiés à l’analyse fondamentale,
+à la valorisation des actions marocaines et à la finance d’entreprise.
+</p>
 
-<!-- COMPARATORS -->
-<div id="compare" class="page">
-<h2>Comparateurs financiers</h2>
+<ul class="grid">
+<li>Valorisation DCF</li>
+<li>Rendement & Dividendes</li>
+<li>WACC</li>
+<li>Comparateur Actions vs Épargne</li>
+<li>Comparateur Actions vs Immobilier</li>
+<li>Analyse de croissance long terme</li>
+</ul>
 
-<!-- Invest vs Save -->
-<div class="card">
-<h3>Investir vs Épargner</h3>
-<input id="m" placeholder="Capital initial (DH)">
-<input id="t" placeholder="Durée (années)">
-<input id="ri" placeholder="Rendement investissement %">
-<input id="re" placeholder="Taux épargne %">
-<button class="btn" onclick="compareInvest()">Comparer</button>
-<canvas id="chart1"></canvas>
-<div id="analysis1" class="analysis"></div>
-</div>
+<a class="btn" href="simulateurs.html">Accéder aux simulateurs</a>
+</section>
 
-<!-- Assets -->
-<div class="card" style="margin-top:50px">
-<h3>Actions vs Immobilier</h3>
-<input id="c" placeholder="Capital initial (DH)">
-<input id="ra" placeholder="Rendement actions %">
-<input id="rim" placeholder="Rendement immobilier %">
-<input id="ta" placeholder="Durée (années)">
-<button class="btn" onclick="compareAssets()">Comparer</button>
-<canvas id="chart2"></canvas>
-<div id="analysis2" class="analysis"></div>
-</div>
-</div>
-
-<script>
-let chart1,chart2;
-
-function showPage(id){
-document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-document.getElementById(id).classList.add('active');
-window.scrollTo(0,0);
-}
-
-function compareInvest(){
-const capital=+m.value,years=+t.value,riVal=+ri.value/100,reVal=+re.value/100;
-let labels=[],inv=[],sav=[];
-for(let i=0;i<=years;i++){
-labels.push("Année "+i);
-inv.push(capital*Math.pow(1+riVal,i));
-sav.push(capital*Math.pow(1+reVal,i));
-}
-if(chart1)chart1.destroy();
-chart1=new Chart(chart1Canvas(),{
-type:'line',
-data:{
-labels,
-datasets:[
-{label:'Investir',data:inv,borderColor:'#d4af37',fill:false},
-{label:'Épargner',data:sav,borderColor:'#4fa3ff',fill:false}
-]
-}
-);
-const diff=inv[years]-sav[years];
-analysis1.innerHTML=`Après ${years} ans, l’investissement génère <b>${diff.toFixed(0)} DH</b> de plus que l’épargne. 
-Plus l’horizon est long, plus l’écart se creuse.`;
-}
-
-function compareAssets(){
-const capital=+c.value,years=+ta.value,raVal=+ra.value/100,riVal=+rim.value/100;
-let labels=[],act=[],immo=[];
-for(let i=0;i<=years;i++){
-labels.push("Année "+i);
-act.push(capital*Math.pow(1+raVal,i));
-immo.push(capital*Math.pow(1+riVal,i));
-}
-if(chart2)chart2.destroy();
-chart2=new Chart(chart2Canvas(),{
-type:'line',
-data:{
-labels,
-datasets:[
-{label:'Actions',data:act,borderColor:'#d4af37',fill:false},
-{label:'Immobilier',data:immo,borderColor:'#4fa3ff',fill:false}
-]
-}
-);
-analysis2.innerHTML=`Les actions offrent un potentiel de rendement supérieur mais plus volatile. 
-L’immobilier reste plus stable et orienté long terme.`;
-}
-
-function chart1Canvas(){return document.getElementById('chart1')}
-function chart2Canvas(){return document.getElementById('chart2')}
-</script>
+<footer>
+© The Moroccan Community
+</footer>
 
 </body>
 </html>
