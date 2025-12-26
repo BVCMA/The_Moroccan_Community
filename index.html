@@ -5,75 +5,88 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Moroccan Community | Excellence Financière</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    
     <style>
         :root {
-            --primary: #006241; /* Vert Marocain */
+            --primary: #006241; /* Vert Émeraude */
             --secondary: #c0a062; /* Or Atlas */
-            --accent: #d4af37;
-            --dark: #1a1a1a;
+            --dark: #121212;
             --light: #fdfdfd;
+            --gray: #f4f7f6;
         }
 
         * { box-sizing: border-box; scroll-behavior: smooth; }
-        body { font-family: 'Montserrat', sans-serif; margin: 0; background: var(--light); color: var(--dark); }
+        body { font-family: 'Montserrat', sans-serif; margin: 0; background-color: var(--light); color: var(--dark); line-height: 1.6; }
 
         /* --- NAVIGATION --- */
         nav {
             display: flex; justify-content: space-between; align-items: center;
-            padding: 20px 5%; background: white; position: sticky; top: 0; z-index: 1000;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            padding: 20px 8%; background: white; position: sticky; top: 0; z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
         }
-        .logo { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--primary); }
-        .nav-links a { text-decoration: none; color: var(--dark); margin-left: 20px; font-weight: 600; font-size: 0.9rem; }
+        .logo { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--primary); font-weight: bold; }
+        .nav-links a { text-decoration: none; color: var(--dark); margin-left: 25px; font-weight: 600; transition: 0.3s; }
+        .nav-links a:hover { color: var(--secondary); }
 
         /* --- HERO --- */
         .hero {
-            height: 70vh; background: linear-gradient(rgba(0,98,65,0.8), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1539667468225-eebb663053e6?auto=format&fit=crop&w=1350&q=80');
+            height: 60vh; background: linear-gradient(rgba(0,98,65,0.85), rgba(0,0,0,0.7)), 
+            url('https://images.unsplash.com/photo-1539667468225-eebb663053e6?auto=format&fit=crop&w=1350&q=80');
             background-size: cover; background-position: center; display: flex; flex-direction: column;
-            justify-content: center; align-items: center; color: white; text-align: center;
+            justify-content: center; align-items: center; color: white; text-align: center; padding: 0 20px;
         }
-        .hero h1 { font-family: 'Playfair Display', serif; font-size: 3.5rem; margin: 0; }
+        .hero h1 { font-family: 'Playfair Display', serif; font-size: 3.5rem; margin-bottom: 10px; }
+        .hero p { font-size: 1.2rem; max-width: 800px; font-weight: 300; }
 
-        /* --- SECTION STRUCTURE --- */
-        section { padding: 80px 10%; }
+        /* --- SECTIONS --- */
+        section { padding: 80px 8%; }
         h2 { font-family: 'Playfair Display', serif; font-size: 2.5rem; color: var(--primary); text-align: center; margin-bottom: 50px; }
+        .section-desc { text-align: center; max-width: 700px; margin: -30px auto 50px; color: #666; }
 
-        /* --- SIMULATEURS (SÉPARÉS) --- */
-        .sim-container {
-            background: white; border-radius: 15px; padding: 30px; margin-bottom: 50px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08); border-top: 5px solid var(--secondary);
-            display: grid; grid-template-columns: 1fr 1.2fr; gap: 40px;
+        /* --- SIMULATEURS --- */
+        .sim-grid { display: grid; grid-template-columns: 1fr; gap: 40px; }
+        .sim-card { 
+            background: white; border-radius: 20px; display: grid; grid-template-columns: 1fr 1fr; 
+            gap: 30px; padding: 40px; box-shadow: 0 15px 40px rgba(0,0,0,0.05); border: 1px solid #eee;
         }
-        @media (max-width: 900px) { .sim-container { grid-template-columns: 1fr; } }
+        @media (max-width: 900px) { .sim-card { grid-template-columns: 1fr; } }
 
-        .input-group { display: flex; flex-direction: column; gap: 15px; }
-        input, select { padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem; }
-        .btn-calc { background: var(--primary); color: white; border: none; padding: 15px; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.3s; }
-        .btn-calc:hover { background: var(--secondary); }
+        .sim-inputs { display: flex; flex-direction: column; gap: 15px; }
+        .sim-inputs h3 { color: var(--primary); margin-top: 0; }
+        input, select { padding: 12px; border: 1.5px solid #ddd; border-radius: 8px; font-family: inherit; transition: 0.3s; }
+        input:focus { border-color: var(--secondary); outline: none; }
+        
+        .btn { background: var(--primary); color: white; border: none; padding: 14px; border-radius: 8px; cursor: pointer; font-weight: 700; transition: 0.3s; }
+        .btn:hover { background: var(--secondary); transform: translateY(-2px); }
 
-        .analysis-box { background: #f9f9f9; padding: 20px; border-radius: 10px; border-left: 4px solid var(--secondary); margin-top: 20px; }
-        canvas { max-width: 100%; height: 250px !important; }
+        .sim-result { background: var(--gray); padding: 25px; border-radius: 12px; position: relative; }
+        .analysis-text { margin-top: 20px; font-size: 0.95rem; border-left: 4px solid var(--secondary); padding-left: 15px; color: #444; }
+        canvas { max-width: 100% !important; height: 200px !important; }
 
         /* --- FORMATIONS --- */
-        .formation-card {
-            background: white; border-radius: 12px; overflow: hidden; margin-bottom: 30px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05); border: 1px solid #eee;
-        }
-        .formation-header { padding: 20px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
-        .formation-content { display: none; padding: 30px; background: #fafafa; border-top: 1px solid #eee; }
-        .price-tag { background: var(--secondary); color: white; padding: 5px 15px; border-radius: 20px; font-weight: bold; }
+        .formation-container { max-width: 900px; margin: auto; }
+        .f-item { background: white; margin-bottom: 20px; border-radius: 12px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .f-header { padding: 25px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: 0.3s; }
+        .f-header:hover { background: #fdfaf4; }
+        .f-header h3 { margin: 0; color: var(--primary); }
+        .price { font-weight: 700; color: var(--secondary); font-size: 1.2rem; }
+        .f-content { display: none; padding: 30px; background: #fafafa; border-top: 1px solid #eee; }
+        .f-content ul { padding-left: 20px; margin-bottom: 20px; }
 
         /* --- CONTACT --- */
-        .contact-flex { display: flex; gap: 50px; align-items: center; }
-        form { flex: 1; display: flex; flex-direction: column; gap: 15px; }
-        textarea { padding: 12px; border-radius: 8px; border: 1px solid #ddd; height: 120px; }
+        .contact-box { background: var(--primary); color: white; border-radius: 25px; padding: 50px; display: grid; grid-template-columns: 1fr 1fr; gap: 50px; }
+        @media (max-width: 800px) { .contact-box { grid-template-columns: 1fr; } }
+        .contact-box input, .contact-box textarea { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white; margin-bottom: 15px; width: 100%; }
+        .contact-box input::placeholder, .contact-box textarea::placeholder { color: #ccc; }
+
+        footer { text-align: center; padding: 40px; background: #121212; color: #777; font-size: 0.9rem; }
     </style>
 </head>
 <body>
 
 <nav>
-    <div class="logo">The Moroccan Community</div>
+    <div class="logo">THE MOROCCAN COMMUNITY</div>
     <div class="nav-links">
         <a href="#home">Accueil</a>
         <a href="#simulators">Simulateurs</a>
@@ -83,184 +96,274 @@
 </nav>
 
 <div id="home" class="hero">
-    <h1>L'Élite Financière du Maroc</h1>
-    <p>Outils de pointe pour bâtir votre patrimoine au Royaume.</p>
-    <a href="#simulators" class="btn-calc" style="text-decoration: none; margin-top: 20px;">Explorer les Outils</a>
+    <h1>L'Élite Financière du Royaume</h1>
+    <p>La première plateforme dédiée à la croissance du patrimoine des Marocains. Outils pro, analyses locales et éducation financière de pointe.</p>
 </div>
 
 <section id="simulators">
-    <h2>Simulateurs de Précision</h2>
+    <h2>Nos Simulateurs de Précision</h2>
+    <p class="section-desc">Des outils exclusifs pour analyser vos finances personnelles et professionnelles avec une perspective marocaine.</p>
 
-    <div class="sim-container">
-        <div class="input-group">
-            <h3>📈 Croissance de l'Épargne</h3>
-            <p>Visualisez la puissance du temps sur votre capital.</p>
-            <input type="number" id="cap_init" placeholder="Capital Initial (DH)">
-            <input type="number" id="versement" placeholder="Versement mensuel (DH)">
-            <input type="number" id="taux" placeholder="Taux annuel (%)">
-            <input type="number" id="duree" placeholder="Durée (Années)">
-            <button class="btn-calc" onclick="simuInterets()">Générer l'Analyse</button>
+    <div class="sim-grid">
+        
+        <div class="sim-card">
+            <div class="sim-inputs">
+                <h3>📈 Croissance du Capital</h3>
+                <label>Capital Initial (DH)</label>
+                <input type="number" id="ic_init" value="10000">
+                <label>Épargne Mensuelle (DH)</label>
+                <input type="number" id="ic_mens" value="1000">
+                <label>Taux de rendement annuel (%)</label>
+                <input type="number" id="ic_taux" value="8">
+                <label>Durée (Années)</label>
+                <input type="number" id="ic_duree" value="10">
+                <button class="btn" onclick="calcIC()">Lancer l'Analyse</button>
+            </div>
+            <div class="sim-result">
+                <canvas id="chartIC"></canvas>
+                <div id="resIC" class="analysis-text">Cliquez pour voir la projection de votre fortune.</div>
+            </div>
         </div>
-        <div>
-            <canvas id="chartInterets"></canvas>
-            <div id="anaInterets" class="analysis-box">Entrez vos données pour voir l'analyse...</div>
+
+        <div class="sim-card">
+            <div class="sim-inputs">
+                <h3>⚖️ Équilibre Budgétaire</h3>
+                <label>Votre Revenu Net Mensuel (DH)</label>
+                <input type="number" id="b_rev" placeholder="ex: 12000">
+                <button class="btn" onclick="calcBudget()">Répartir mes revenus</button>
+            </div>
+            <div class="sim-result">
+                <canvas id="chartBudget"></canvas>
+                <div id="resBudget" class="analysis-text">Analyse de votre structure de dépenses.</div>
+            </div>
         </div>
+
+        <div class="sim-card">
+            <div class="sim-inputs">
+                <h3>👨‍💻 Net Auto-Entrepreneur</h3>
+                <label>Chiffre d'Affaires Mensuel (DH)</label>
+                <input type="number" id="ae_ca" value="20000">
+                <label>Secteur d'activité</label>
+                <select id="ae_type">
+                    <option value="0.005">Services (0.5%)</option>
+                    <option value="0.02">Commerce / Industrie (2%)</option>
+                </select>
+                <button class="btn" onclick="calcAE()">Calculer le Net</button>
+            </div>
+            <div class="sim-result">
+                <canvas id="chartAE"></canvas>
+                <div id="resAE" class="analysis-text">Détail des taxes et revenu net réel.</div>
+            </div>
+        </div>
+
+        <div class="sim-card">
+            <div class="sim-inputs">
+                <h3>🏠 Rendement Locatif</h3>
+                <label>Prix d'achat du bien (DH)</label>
+                <input type="number" id="im_prix" value="800000">
+                <label>Loyer mensuel estimé (DH)</label>
+                <input type="number" id="im_loyer" value="4500">
+                <button class="btn" onclick="calcImmo()">Calculer la rentabilité</button>
+            </div>
+            <div class="sim-result">
+                <canvas id="chartImmo"></canvas>
+                <div id="resImmo" class="analysis-text">Performance de votre investissement.</div>
+            </div>
+        </div>
+
+        <div class="sim-card">
+            <div class="sim-inputs">
+                <h3>🏢 Seuil de Rentabilité (Point Mort)</h3>
+                <label>Charges Fixes Mensuelles (DH)</label>
+                <input type="number" id="sr_fixes" value="15000">
+                <label>Marge sur Coût Variable (%)</label>
+                <input type="number" id="sr_marge" value="40">
+                <button class="btn" onclick="calcSR()">Trouver mon équilibre</button>
+            </div>
+            <div class="sim-result">
+                <canvas id="chartSR"></canvas>
+                <div id="resSR" class="analysis-text">Analyse du CA minimal à réaliser.</div>
+            </div>
+        </div>
+
+        <div class="sim-card">
+            <div class="sim-inputs">
+                <h3>💰 Calculateur TVA</h3>
+                <label>Montant Hors Taxe (HT)</label>
+                <input type="number" id="tva_ht" value="1000">
+                <label>Taux de TVA</label>
+                <select id="tva_taux">
+                    <option value="0.20">20% (Taux Normal)</option>
+                    <option value="0.14">14% (Transport/Élec)</option>
+                    <option value="0.10">10% (Restauration/Hôtellerie)</option>
+                    <option value="0.07">7% (Produits Eau/Sucre)</option>
+                </select>
+                <button class="btn" onclick="calcTVA()">Calculer TTC</button>
+            </div>
+            <div class="sim-result">
+                <canvas id="chartTVA"></canvas>
+                <div id="resTVA" class="analysis-text">Ventilation HT / TVA / TTC.</div>
+            </div>
+        </div>
+
     </div>
-
-    <div class="sim-container">
-        <div class="input-group">
-            <h3>⚖️ Équilibre Budgétaire</h3>
-            <p>La règle d'or pour une gestion saine au Maroc.</p>
-            <input type="number" id="revenu_total" placeholder="Revenu Net Mensuel (DH)">
-            <button class="btn-calc" onclick="simuBudget()">Répartir mes Revenus</button>
-        </div>
-        <div>
-            <canvas id="chartBudget"></canvas>
-            <div id="anaBudget" class="analysis-box">Analyse de répartition ici...</div>
-        </div>
-    </div>
-
-    <div class="sim-container">
-        <div class="input-group">
-            <h3>🏢 Seuil de Rentabilité</h3>
-            <p>Idéal pour les entrepreneurs et startups locales.</p>
-            <input type="number" id="charges_fixes" placeholder="Charges Fixes Mensuelles (DH)">
-            <input type="number" id="prix_vente" placeholder="Prix de vente moyen (DH)">
-            <input type="number" id="cout_variable" placeholder="Coût variable par unité (DH)">
-            <button class="btn-calc" onclick="simuSeuil()">Calculer le Point Mort</button>
-        </div>
-        <div>
-            <canvas id="chartSeuil"></canvas>
-            <div id="anaSeuil" class="analysis-box">Analyse de viabilité...</div>
-        </div>
-    </div>
-
-    <p style="text-align:center; font-style:italic;">+ 3 autres simulateurs disponibles dans la version membre (Immobilier, TVA, Net Freelance).</p>
 </section>
 
 <section id="formations">
-    <h2>Nos Formations d'Excellence</h2>
+    <h2>Formations d'Excellence</h2>
+    <div class="formation-container">
+        
+        <div class="f-item">
+            <div class="f-header" onclick="toggleF('f1')">
+                <h3>1. Masterclass : Investir au Maroc</h3>
+                <span class="price">2 900 DH</span>
+            </div>
+            <div id="f1" class="f-content">
+                <p><strong>Programme :</strong> Immobilier locatif, Bourse de Casablanca (VGR), et placement en OPCVM.</p>
+                <ul>
+                    <li>12 modules vidéo haute définition</li>
+                    <li>Calculateur Excel de rentabilité offert</li>
+                    <li>Accès au groupe privé Telegram "Elite Community"</li>
+                </ul>
+                <p><strong>Moyens de paiement :</strong> Virement CIH/Attijari, Wafacash ou CB (Stripe).</p>
+                <button class="btn">S'inscrire à la session</button>
+            </div>
+        </div>
 
-    <div class="formation-card">
-        <div class="formation-header" onclick="toggleF('f1')">
-            <h3>Formation : "Investir au Maroc" (Bourse & Immobilier)</h3>
-            <span class="price-tag">2 500 DH</span>
+        <div class="f-item">
+            <div class="f-header" onclick="toggleF('f2')">
+                <h3>2. E-commerce & COD Mastery</h3>
+                <span class="price">1 500 DH</span>
+            </div>
+            <div id="f2" class="f-content">
+                <p><strong>Programme :</strong> Créer sa marque, sourcing en Chine/Maroc, et gestion de la livraison (Cash on Delivery).</p>
+                <p><strong>Paiement :</strong> PayPal, Virement, ou Paiement en 2x sans frais.</p>
+                <button class="btn">Démarrer mon business</button>
+            </div>
         </div>
-        <div id="f1" class="formation-content">
-            <p><strong>Détails :</strong> Un programme complet pour comprendre le marché local, de la CDG aux SCPI en passant par le LMNP à Marrakech ou Casablanca.</p>
-            <ul>
-                <li>Accès à vie aux vidéos</li>
-                <li>Modèles de contrats de bail inclus</li>
-                <li>Groupe WhatsApp privé</li>
-            </ul>
-            <p><strong>Paiement :</strong> Virement bancaire, Wafacash, ou Carte Bancaire (Stripe).</p>
-            <button class="btn-calc">Réserver ma place</button>
-        </div>
-    </div>
 
-    <div class="formation-card">
-        <div class="formation-header" onclick="toggleF('f2')">
-            <h3>E-commerce Local & Dropshipping</h3>
-            <span class="price-tag">1 800 DH</span>
+        <div class="f-item">
+            <div class="f-header" onclick="toggleF('f3')">
+                <h3>3. Fiscalité & Structuration Pro</h3>
+                <span class="price">1 200 DH</span>
+            </div>
+            <div id="f3" class="f-content">
+                <p><strong>Programme :</strong> Passer de l'Auto-entrepreneur à la SARL AU, optimiser ses impôts au Maroc.</p>
+                <p><strong>Paiement :</strong> Carte Bancaire, Facture professionnelle disponible.</p>
+                <button class="btn">Optimiser ma fiscalité</button>
+            </div>
         </div>
-        <div id="f2" class="formation-content">
-            <p><strong>Détails :</strong> Maîtrisez le Cash On Delivery (COD) au Maroc, la gestion des livreurs et Facebook Ads.</p>
-            <p><strong>Paiement :</strong> Virement CIH/Attijari ou PayPal.</p>
-            <button class="btn-calc">Réserver ma place</button>
-        </div>
+
     </div>
 </section>
 
 <section id="contact">
-    <h2>Rejoignez la Communauté</h2>
-    <div class="contact-flex">
+    <div class="contact-box">
         <div>
-            <h3>Une question ?</h3>
-            <p>Notre équipe vous répond sous 24h pour toute demande de conseil ou de support sur les formations.</p>
-            <p>📍 Casablanca, Finance City</p>
-            <p>📧 contact@themoroccancommunity.ma</p>
+            <h2>Contactez-nous</h2>
+            <p>Une question sur nos outils ou nos formations ? Nos experts vous répondent sous 24h.</p>
+            <p>📍 Casablanca Finance City, Maroc</p>
+            <p>📧 contact@themoroccancommunity.com</p>
         </div>
         <form>
             <input type="text" placeholder="Nom complet">
-            <input type="email" placeholder="Email">
-            <textarea placeholder="Votre message..."></textarea>
-            <button type="submit" class="btn-calc">Envoyer le message</button>
+            <input type="email" placeholder="Email professionnel">
+            <textarea rows="5" placeholder="Votre message..."></textarea>
+            <button type="submit" class="btn" style="background: var(--secondary);">Envoyer le message</button>
         </form>
     </div>
 </section>
 
+<footer>
+    <p>&copy; 2025 THE MOROCCAN COMMUNITY. Tous droits réservés. L'excellence au service de votre patrimoine.</p>
+</footer>
+
 <script>
-    // Navigation interactivité
+    // Navigation / UI
     function toggleF(id) {
-        const el = document.getElementById(id);
-        el.style.display = (el.style.display === 'block') ? 'none' : 'block';
+        const content = document.getElementById(id);
+        content.style.display = (content.style.display === 'block') ? 'none' : 'block';
     }
 
     let charts = {};
 
-    // 1. SIMULATEUR INTERETS COMPOSES
-    function simuInterets() {
-        const p = parseFloat(document.getElementById('cap_init').value) || 0;
-        const m = parseFloat(document.getElementById('versement').value) || 0;
-        const r = (parseFloat(document.getElementById('taux').value) / 100);
-        const t = parseInt(document.getElementById('duree').value) || 0;
-
-        let annees = [];
-        let data = [];
-        let total = p;
-
-        for (let i = 0; i <= t; i++) {
-            annees.push("Année " + i);
-            data.push(Math.round(total));
-            total = (total + (m * 12)) * (1 + r);
-        }
-
-        updateChart('chartInterets', 'line', annees, data, 'Évolution du Capital (DH)');
-        document.getElementById('anaInterets').innerHTML = `<strong>Analyse :</strong> En ${t} ans, votre capital atteindra <strong>${data[t].toLocaleString()} DH</strong>. L'effort d'épargne cumulé est de ${(p + m*12*t).toLocaleString()} DH. Le gain pur via intérêts est de ${(data[t] - (p + m*12*t)).toLocaleString()} DH.`;
-    }
-
-    // 2. SIMULATEUR BUDGET
-    function simuBudget() {
-        const rev = parseFloat(document.getElementById('revenu_total').value) || 0;
-        const labels = ['Besoins (50%)', 'Envies (30%)', 'Épargne (20%)'];
-        const data = [rev * 0.5, rev * 0.3, rev * 0.2];
-
-        updateChart('chartBudget', 'pie', labels, data, 'Répartition du Budget');
-        document.getElementById('anaBudget').innerHTML = `<strong>Analyse :</strong> Pour un revenu de ${rev} DH, vous devriez allouer max <strong>${data[0]} DH</strong> à vos charges fixes. Votre capacité d'investissement idéale est de <strong>${data[2]} DH/mois</strong>.`;
-    }
-
-    // 3. SIMULATEUR SEUIL DE RENTABILITÉ
-    function simuSeuil() {
-        const fixes = parseFloat(document.getElementById('charges_fixes').value) || 0;
-        const prix = parseFloat(document.getElementById('prix_vente').value) || 0;
-        const variable = parseFloat(document.getElementById('cout_variable').value) || 0;
-
-        const margeUnitaire = prix - variable;
-        const seuilUnites = Math.ceil(fixes / margeUnitaire);
-        const seuilDH = seuilUnites * prix;
-
-        updateChart('chartSeuil', 'bar', ['Charges Fixes', 'Seuil de Rentabilité (DH)'], [fixes, seuilDH], 'Objectifs Business');
-        document.getElementById('anaSeuil').innerHTML = `<strong>Analyse :</strong> Vous devez vendre au minimum <strong>${seuilUnites} unités</strong> par mois pour ne pas perdre d'argent. Votre CA critique est de <strong>${seuilDH.toLocaleString()} DH</strong>.`;
-    }
-
-    // FONCTION UNIVERSELLE POUR LES GRAPHES
-    function updateChart(canvasId, type, labels, data, label) {
-        if (charts[canvasId]) charts[canvasId].destroy();
-        const ctx = document.getElementById(canvasId).getContext('2d');
-        charts[canvasId] = new Chart(ctx, {
+    function updateChart(id, type, labels, data, labelName) {
+        if (charts[id]) charts[id].destroy();
+        const ctx = document.getElementById(id).getContext('2d');
+        charts[id] = new Chart(ctx, {
             type: type,
             data: {
                 labels: labels,
                 datasets: [{
-                    label: label,
+                    label: labelName,
                     data: data,
-                    backgroundColor: ['#006241', '#c0a062', '#1a1a1a', '#d4af37'],
+                    backgroundColor: ['#006241', '#c0a062', '#121212', '#ddd'],
                     borderColor: '#006241',
                     borderWidth: 1
                 }]
             },
             options: { responsive: true, maintainAspectRatio: false }
         });
+    }
+
+    // --- LOGIQUES SIMULATEURS ---
+
+    // 1. Intérêts Composés
+    function calcIC() {
+        let p = parseFloat(document.getElementById('ic_init').value);
+        let m = parseFloat(document.getElementById('ic_mens').value);
+        let r = (parseFloat(document.getElementById('ic_taux').value)/100)/12;
+        let t = parseInt(document.getElementById('ic_duree').value)*12;
+        
+        let total = p * Math.pow(1+r, t) + m * ((Math.pow(1+r, t)-1)/r);
+        updateChart('chartIC', 'line', ['Départ', 'Milieu', 'Fin'], [p, total/2, total], 'Fortune estimée');
+        document.getElementById('resIC').innerHTML = `<strong>Analyse :</strong> Dans ${t/12} ans, votre capital sera de <strong>${Math.round(total).toLocaleString()} DH</strong>. Le temps est votre meilleur allié.`;
+    }
+
+    // 2. Budget
+    function calcBudget() {
+        let r = parseFloat(document.getElementById('b_rev').value) || 0;
+        let d = [r*0.5, r*0.3, r*0.2];
+        updateChart('chartBudget', 'pie', ['Besoins', 'Envies', 'Épargne'], d, 'Répartition');
+        document.getElementById('resBudget').innerHTML = `<strong>Analyse :</strong> Allouez <strong>${d[2]} DH</strong> à l'épargne dès le début du mois pour garantir votre liberté.`;
+    }
+
+    // 3. Auto-Entrepreneur
+    function calcAE() {
+        let ca = parseFloat(document.getElementById('ae_ca').value);
+        let taux = parseFloat(document.getElementById('ae_type').value);
+        let impot = ca * taux;
+        let net = ca - impot;
+        updateChart('chartAE', 'bar', ['CA Brut', 'Impôt', 'Net'], [ca, impot, net], 'DH');
+        document.getElementById('resAE').innerHTML = `<strong>Analyse :</strong> Après impôt de ${(taux*100)}%, il vous reste <strong>${net.toLocaleString()} DH</strong>. Profitez de ce régime simplifié !`;
+    }
+
+    // 4. Immo
+    function calcImmo() {
+        let p = parseFloat(document.getElementById('im_prix').value);
+        let l = parseFloat(document.getElementById('im_loyer').value);
+        let rend = ((l*12)/p)*100;
+        updateChart('chartImmo', 'doughnut', ['Rendement', 'Coût'], [rend, 100-rend], '%');
+        document.getElementById('resImmo').innerHTML = `<strong>Analyse :</strong> Votre rendement brut est de <strong>${rend.toFixed(2)}%</strong>. Un bon score au Maroc se situe entre 5% et 8%.`;
+    }
+
+    // 5. Seuil Rentabilité
+    function calcSR() {
+        let f = parseFloat(document.getElementById('sr_fixes').value);
+        let m = parseFloat(document.getElementById('sr_marge').value)/100;
+        let sr = f / m;
+        updateChart('chartSR', 'bar', ['Charges Fixes', 'CA Seuil'], [f, sr], 'DH');
+        document.getElementById('resSR').innerHTML = `<strong>Analyse :</strong> Vous devez générer <strong>${Math.round(sr).toLocaleString()} DH</strong> de CA mensuel pour commencer à faire du profit.`;
+    }
+
+    // 6. TVA
+    function calcTVA() {
+        let ht = parseFloat(document.getElementById('tva_ht').value);
+        let t = parseFloat(document.getElementById('tva_taux').value);
+        let tva = ht * t;
+        let ttc = ht + tva;
+        updateChart('chartTVA', 'pie', ['HT', 'TVA'], [ht, tva], 'DH');
+        document.getElementById('resTVA').innerHTML = `<strong>Analyse :</strong> Le montant TTC est de <strong>${ttc.toLocaleString()} DH</strong>. La TVA à reverser est de ${tva} DH.`;
     }
 </script>
 
