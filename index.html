@@ -3,273 +3,387 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Moroccan Community | Excellence & Éducation Financière</title>
+    <title>The Moroccan Community | Analyst & CFO</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #006241; /* Vert Émeraude */
-            --secondary: #c0a062; /* Or Atlas */
-            --dark: #121212;
-            --light: #ffffff;
-            --bg-soft: #f4f7f6;
+            --brand: #000000;
+            --gold: #c5a059;
+            --text: #333;
+            --light-bg: #f9f9f9;
+            --white: #ffffff;
+            --border: #e1e1e1;
         }
 
-        * { box-sizing: border-box; transition: all 0.3s ease; }
-        body { font-family: 'Montserrat', sans-serif; margin: 0; background: var(--bg-soft); color: var(--dark); overflow-x: hidden; }
+        * { box-sizing: border-box; transition: all 0.2s ease-in-out; }
+        body { font-family: 'Inter', sans-serif; margin: 0; background: var(--light-bg); color: var(--text); line-height: 1.6; }
+
+        /* --- BOURSE TICKER --- */
+        .ticker-wrap { background: var(--brand); color: white; padding: 10px 0; overflow: hidden; position: sticky; top: 0; z-index: 1100; }
+        .ticker { display: flex; white-space: nowrap; animation: ticker 30s linear infinite; }
+        .ticker span { padding: 0 40px; font-weight: bold; font-size: 0.85rem; }
+        .up { color: #2ecc71; } .down { color: #e74c3c; }
+        @keyframes ticker { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
 
         /* --- NAVIGATION --- */
-        nav {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 20px 8%; background: white; position: sticky; top: 0; z-index: 1000;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-        }
-        .logo { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--primary); font-weight: bold; cursor: pointer; }
-        .nav-links a { text-decoration: none; color: var(--dark); margin-left: 25px; font-weight: 600; cursor: pointer; font-size: 0.9rem; }
-        .nav-links a:hover { color: var(--secondary); }
-
-        /* --- GESTION DES PAGES --- */
-        .page { display: none; animation: fadeIn 0.6s ease-in-out; }
-        .page.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* --- HOME PAGE STYLE --- */
-        .hero { 
-            height: 90vh; display: flex; flex-direction: column; justify-content: center; align-items: center;
-            text-align: center; background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1548013146-72479768bbaa?auto=format&fit=crop&w=1500&q=80');
-            background-size: cover; color: white; padding: 0 10%;
-        }
-        .hero h1 { font-family: 'Playfair Display', serif; font-size: 4rem; margin: 0; }
-        .hero p { font-size: 1.3rem; max-width: 800px; margin: 20px 0; font-weight: 300; }
-        .btn-gold { background: var(--secondary); color: white; padding: 18px 45px; border: none; border-radius: 50px; font-size: 1rem; font-weight: bold; cursor: pointer; text-decoration: none; display: inline-block; }
+        header { background: var(--white); border-bottom: 1px solid var(--border); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 40px; z-index: 1000; }
+        .logo-box { display: flex; flex-direction: column; }
+        .logo-main { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--brand); letter-spacing: -1px; }
+        .logo-sub { font-size: 0.7rem; color: var(--gold); font-weight: bold; letter-spacing: 2px; }
         
-        .story-section { padding: 100px 10%; background: white; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
-        .story-content h2 { font-family: 'Playfair Display', serif; color: var(--primary); font-size: 2.5rem; }
-        .story-text { font-size: 1.1rem; line-height: 1.8; color: #555; }
+        nav a { text-decoration: none; color: var(--text); margin-left: 20px; font-size: 0.9rem; font-weight: 600; cursor: pointer; }
+        nav a:hover { color: var(--gold); }
+
+        /* --- LAYOUT --- */
+        .container { max-width: 1200px; margin: auto; padding: 40px 20px; }
+        .page-view { display: none; animation: fadeIn 0.4s ease; }
+        .page-view.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* --- HERO & HOME --- */
+        .hero { text-align: center; padding: 100px 0; background: white; border-bottom: 1px solid var(--border); border-radius: 0 0 40px 40px; }
+        .hero h1 { font-family: 'Playfair Display', serif; font-size: 3.5rem; margin: 0; }
+        .hero p { max-width: 700px; margin: 20px auto; font-size: 1.1rem; color: #666; }
+        .social-links { margin-top: 30px; }
+        .btn-social { padding: 10px 20px; border: 1px solid var(--border); border-radius: 5px; text-decoration: none; color: var(--brand); font-weight: bold; margin: 0 10px; }
+        .btn-social:hover { background: var(--brand); color: white; }
+
+        /* --- SIMULATEURS GRID --- */
+        .sim-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; }
+        .sim-card { background: white; padding: 30px; border-radius: 15px; border: 1px solid var(--border); box-shadow: 0 4px 10px rgba(0,0,0,0.02); }
+        .sim-card h3 { font-family: 'Playfair Display', serif; margin-top: 0; color: var(--brand); border-bottom: 2px solid var(--gold); display: inline-block; padding-bottom: 5px; }
+        .guide-text { font-size: 0.8rem; color: #777; background: #fef9e7; padding: 10px; border-radius: 5px; margin: 15px 0; }
         
-        .stat-banner { background: var(--primary); color: white; padding: 60px 10%; display: flex; justify-content: space-around; text-align: center; }
-        .stat-item h3 { font-size: 2.5rem; margin: 0; color: var(--secondary); }
+        input, select { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; }
+        .btn-calc { width: 100%; padding: 15px; background: var(--brand); color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        .btn-calc:hover { background: var(--gold); }
 
-        /* --- SIMULATEURS HUB --- */
-        .hub-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; padding: 50px 0; }
-        .hub-card { background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); text-align: center; border: 1px solid #eee; cursor: pointer; }
-        .hub-card:hover { border-color: var(--secondary); transform: translateY(-10px); }
-        .hub-card i { font-size: 3rem; color: var(--secondary); margin-bottom: 20px; display: block; }
+        .analysis-result { margin-top: 25px; padding: 20px; background: #f4f7f6; border-radius: 10px; border-left: 4px solid var(--gold); }
+        .chart-container { height: 250px; margin-top: 20px; }
 
-        /* --- SIMULATEUR DETAIL --- */
-        .sim-detail-wrapper { max-width: 1200px; margin: auto; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 40px; }
-        @media (max-width: 900px) { .sim-detail-wrapper { grid-template-columns: 1fr; } }
-        
-        .sim-panel { background: white; padding: 40px; border-radius: 25px; box-shadow: 0 15px 45px rgba(0,0,0,0.08); }
-        .guide-box { background: #eef5f2; padding: 25px; border-radius: 15px; margin-top: 30px; font-size: 0.9rem; border-left: 5px solid var(--primary); }
-        .analysis-box { background: var(--dark); color: white; padding: 30px; border-radius: 20px; margin-top: 25px; }
-        .analysis-box h4 { color: var(--secondary); margin-top: 0; }
+        /* --- FORMATIONS & RESOURCES --- */
+        .resource-card { background: white; border-radius: 15px; overflow: hidden; display: flex; margin-bottom: 30px; border: 1px solid var(--border); }
+        .res-type { background: var(--gold); color: white; padding: 20px; font-weight: bold; display: flex; align-items: center; }
+        .res-content { padding: 30px; flex: 1; }
+        .price { font-size: 1.5rem; font-weight: bold; color: var(--brand); }
 
-        label { display: block; margin-bottom: 8px; font-weight: 600; color: var(--primary); }
-        input, select { width: 100%; padding: 15px; margin-bottom: 20px; border: 1px solid #ddd; border-radius: 10px; font-size: 1rem; }
+        /* --- FAQ --- */
+        .faq-item { background: white; margin-bottom: 10px; border-radius: 8px; border: 1px solid var(--border); }
+        .faq-question { padding: 20px; font-weight: bold; cursor: pointer; display: flex; justify-content: space-between; }
 
-        /* --- FORMATIONS --- */
-        .formation-card { background: white; border-radius: 25px; overflow: hidden; display: flex; margin-bottom: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
-        .f-img { width: 300px; background: var(--primary); display: flex; align-items: center; justify-content: center; color: white; font-size: 4rem; }
-        .f-body { padding: 40px; flex: 1; }
-        .f-price { font-size: 1.8rem; font-weight: bold; color: var(--secondary); margin: 15px 0; }
-        .f-menu { display: none; padding: 20px; background: #fafafa; border-radius: 10px; margin-top: 20px; border: 1px dashed var(--secondary); }
-
+        footer { text-align: center; padding: 50px; border-top: 1px solid var(--border); margin-top: 50px; font-size: 0.8rem; color: #999; }
     </style>
 </head>
 <body>
 
-<nav>
-    <div class="logo" onclick="showPage('home')">THE MOROCCAN COMMUNITY</div>
-    <div class="nav-links">
+<div class="ticker-wrap">
+    <div class="ticker">
+        <span>MASI: 14,230.50 <b class="up">+0.45%</b></span>
+        <span>IAM: 108.50 <b class="down">-0.12%</b></span>
+        <span>ATTIJARI: 520.00 <b class="up">+1.20%</b></span>
+        <span>BCP: 295.00 <b class="up">+0.30%</b></span>
+        <span>LAFARGE: 1,850.00 <b class="down">-0.50%</b></span>
+        <span>BOA: 192.00 <b class="up">+0.15%</b></span>
+        <span>LABEL VIE: 4,500.00 <b class="up">+2.10%</b></span>
+    </div>
+</div>
+
+<header>
+    <div class="logo-box" onclick="showPage('home')">
+        <span class="logo-main">THE MOROCCAN COMMUNITY</span>
+        <span class="logo-sub">ANALYST • CFO • BOURSE</span>
+    </div>
+    <nav>
         <a onclick="showPage('home')">Accueil</a>
-        <a onclick="showPage('sim-hub')">Simulateurs</a>
-        <a onclick="showPage('formations')">Formations</a>
+        <a onclick="showPage('simulators')">Simulateurs</a>
+        <a onclick="showPage('courses')">Formations</a>
+        <a onclick="showPage('resources')">Ressources</a>
+        <a onclick="showPage('about')">À Propos</a>
         <a onclick="showPage('contact')">Contact</a>
-    </div>
-</nav>
+    </nav>
+</header>
 
-<div id="home" class="page active">
-    <header class="hero">
-        <h1>Bâtissez votre Héritage.</h1>
-        <p>Plus qu'une communauté, une académie financière dédiée à la réussite des Marocains, au pays comme ailleurs.</p>
-        <button class="btn-gold" onclick="showPage('sim-hub')">Utiliser nos outils gratuits</button>
-    </header>
+<div class="container">
 
-    <section class="story-section">
-        <div class="story-content">
-            <h2>Notre Histoire</h2>
-            <p class="story-text">
-                "The Moroccan Community" est née d'un constat simple : l'indépendance financière est le socle de la liberté. Nous avons créé cet espace pour offrir aux Marocains les outils de calcul, les stratégies d'investissement et l'éducation fiscale nécessaires pour naviguer dans l'économie moderne.<br><br>
-                Notre mission est d'élever le niveau de littératie financière du Royaume en rendant complexe ce qui est simple : l'argent.
-            </p>
+    <div id="home" class="page-view active">
+        <div class="hero">
+            <h1>L'Intelligence Financière au Maroc</h1>
+            <p>Fusion de <b>The Moroccan Analyst</b> et <b>The Moroccan CFO</b>. Nous décryptons la Bourse de Casablanca et la Finance d'Entreprise pour les investisseurs et professionnels exigeants.</p>
+            <div class="social-links">
+                <a href="https://www.youtube.com/@The_Moroccan_Analyst" target="_blank" class="btn-social">YouTube Analyst</a>
+                <a href="https://www.youtube.com/@TheMoroccanCFO" target="_blank" class="btn-social">YouTube CFO</a>
+                <a href="https://www.instagram.com/the_moroccananalyst/" target="_blank" class="btn-social">Instagram</a>
+            </div>
         </div>
-        <div style="background: var(--bg-soft); border-radius: 30px; height: 400px; display: flex; align-items: center; justify-content: center; font-style: italic; color: var(--primary); padding: 40px; text-align: center;">
-            "Le meilleur moment pour investir était il y a 20 ans. Le deuxième meilleur moment est maintenant."
-        </div>
-    </section>
 
-    <div class="stat-banner">
-        <div class="stat-item"><h3>+15k</h3><p>Membres actifs</p></div>
-        <div class="stat-item"><h3>DH 20M+</h3><p>Patrimoine optimisé</p></div>
-        <div class="stat-item"><h3>6</h3><p>Outils de précision</p></div>
+        <section style="margin-top: 60px;">
+            <h2>FAQ - Questions Fréquentes</h2>
+            <div class="faq-item">
+                <div class="faq-question">Comment accéder aux fichiers Excel premium ? <span>+</span></div>
+                <div style="padding:0 20px 20px; display:none;" class="faq-answer">Les fichiers sont réservés aux membres payants de la chaîne The Moroccan Analyst et aux inscrits aux formations.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">Les simulateurs sont-ils adaptés au marché marocain ? <span>+</span></div>
+                <div style="padding:0 20px 20px; display:none;" class="faq-answer">Oui, les taux de TVA, les impôts (IS/AE) et les calculs de rendement sont basés sur les normes du Royaume.</div>
+            </div>
+        </section>
     </div>
-</div>
 
-<div id="sim-hub" class="page" style="padding: 80px 10%;">
-    <center>
-        <h2 style="font-family: 'Playfair Display', serif; font-size: 3rem;">L'Ingénierie Financière</h2>
-        <p style="max-width: 600px; color: #666;">Choisissez un outil pour débuter votre analyse détaillée et recevoir un constat professionnel.</p>
-    </center>
-    <div class="hub-grid">
-        <div class="hub-card" onclick="openSim('ic')"><i>📈</i><h3>Capital & Intérêts</h3><p>Calculer la force des intérêts composés sur votre épargne.</p></div>
-        <div class="hub-card" onclick="openSim('immo')"><i>🏠</i><h3>Immobilier Locatif</h3><p>Analyser la rentabilité réelle d'un bien au Maroc.</p></div>
-        <div class="hub-card" onclick="openSim('ae')"><h3>👨‍💻 Auto-Entrepreneur</h3><p>Simuler vos revenus nets après impôts et charges.</p></div>
-        <div class="hub-card" onclick="openSim('budget')"><h3>⚖️ Règle du Budget</h3><p>Optimiser votre répartition de salaire mensuelle.</p></div>
-        <div class="hub-card" onclick="openSim('business')"><h3>🏢 Point Mort Pro</h3><p>Calculer le seuil de rentabilité de votre entreprise.</p></div>
-        <div class="hub-card" onclick="openSim('tva')"><h3>💰 Expert TVA</h3><p>Détail complet des taxes pour vos devis et factures.</p></div>
-    </div>
-</div>
+    <div id="simulators" class="page-view">
+        <h2 style="font-family: 'Playfair Display', serif; font-size: 2.5rem;">Terminal d'Analyse Financière</h2>
+        <div class="sim-grid">
+            
+            <div class="sim-card">
+                <h3>💎 Valorisation DCF (Simplifiée)</h3>
+                <div class="guide-text"><b>Guide :</b> Estimez la valeur intrinsèque d'une action en projetant ses flux de trésorerie libres.</div>
+                <label>Flux de trésorerie (DH)</label>
+                <input type="number" id="dcf_fcf" value="1000000">
+                <label>Taux de croissance (%)</label>
+                <input type="number" id="dcf_g" value="5">
+                <label>Taux d'actualisation (WACC %)</label>
+                <input type="number" id="dcf_wacc" value="10">
+                <button class="btn-calc" onclick="calcDCF()">Calculer la Valeur</button>
+                <div id="res_dcf" class="analysis-result" style="display:none;"></div>
+                <div class="chart-container"><canvas id="chart_dcf"></canvas></div>
+            </div>
 
-<div id="sim-detail" class="page" style="padding: 50px 10%;">
-    <button onclick="showPage('sim-hub')" style="cursor: pointer; border: none; background: none; font-weight: bold; color: var(--primary);">← Retour aux outils</button>
-    <div class="sim-detail-wrapper">
-        <div class="sim-panel">
-            <div id="sim-form"></div>
-            <div class="guide-box" id="sim-guide"></div>
+            <div class="sim-card">
+                <h3>💰 Yield & Payback Bourse</h3>
+                <div class="guide-text"><b>Guide :</b> Calculez combien d'années il faut pour récupérer votre mise via les dividendes.</div>
+                <label>Prix d'achat (DH)</label>
+                <input type="number" id="div_prix" value="500">
+                <label>Dividende par action (DH)</label>
+                <input type="number" id="div_val" value="25">
+                <button class="btn-calc" onclick="calcDiv()">Analyser le Rendement</button>
+                <div id="res_div" class="analysis-result" style="display:none;"></div>
+                <div class="chart-container"><canvas id="chart_div"></canvas></div>
+            </div>
+
+            <div class="sim-card">
+                <h3>🏗️ Coût Moyen Pondéré (WACC)</h3>
+                <div class="guide-text"><b>Guide :</b> Outil CFO pour déterminer le coût de financement de l'entreprise.</div>
+                <label>Coût des fonds propres (%)</label>
+                <input type="number" id="w_ke" value="12">
+                <label>Coût de la dette (%)</label>
+                <input type="number" id="w_kd" value="5">
+                <label>Levier (Dette/Total %)</label>
+                <input type="number" id="w_levier" value="40">
+                <button class="btn-calc" onclick="calcWACC()">Calculer WACC</button>
+                <div id="res_wacc" class="analysis-result" style="display:none;"></div>
+                <div class="chart-container"><canvas id="chart_wacc"></canvas></div>
+            </div>
+
+            <div class="sim-card">
+                <h3>🏠 Rentabilité Immo Maroc</h3>
+                <label>Prix d'acquisition (DH)</label><input type="number" id="im_prix" value="1000000">
+                <label>Loyer mensuel (DH)</label><input type="number" id="im_loyer" value="5000">
+                <button class="btn-calc" onclick="calcImmo()">Calculer Rentabilité</button>
+                <div id="res_immo" class="analysis-result" style="display:none;"></div>
+                <div class="chart-container"><canvas id="chart_immo"></canvas></div>
+            </div>
+
+            <div class="sim-card">
+                <h3>📊 Simulation Portefeuille</h3>
+                <label>Capital investi (DH)</label><input type="number" id="port_cap" value="100000">
+                <label>Performance annuelle (%)</label><input type="number" id="port_perf" value="8">
+                <label>Durée (ans)</label><input type="number" id="port_ans" value="10">
+                <button class="btn-calc" onclick="calcPort()">Projeter</button>
+                <div id="res_port" class="analysis-result" style="display:none;"></div>
+                <div class="chart-container"><canvas id="chart_port"></canvas></div>
+            </div>
+
+            <div class="sim-card">
+                <h3>🏢 Fiscalité Corporate</h3>
+                <label>Résultat Fiscal (DH)</label><input type="number" id="fis_res" value="200000">
+                <select id="fis_type"><option value="0.10">IS 10% (< 300k)</option><option value="0.20">IS 20%</option></select>
+                <button class="btn-calc" onclick="calcFis()">Calculer Impôt</button>
+                <div id="res_fis" class="analysis-result" style="display:none;"></div>
+                <div class="chart-container"><canvas id="chart_fis"></canvas></div>
+            </div>
+
         </div>
-        <div class="sim-results">
-            <canvas id="mainChart" style="background: white; border-radius: 20px; padding: 20px;"></canvas>
-            <div class="analysis-box" id="analysis-text">
-                <h4>Analyse de l'Expert</h4>
-                <p>Modifiez les valeurs pour voir l'impact financier immédiat.</p>
+    </div>
+
+    <div id="courses" class="page-view">
+        <h2>Formations Professionnelles</h2>
+        <div class="resource-card">
+            <div class="res-type">BOURSE</div>
+            <div class="res-content">
+                <h3>Analyse Fondamentale : Bourse de Casablanca</h3>
+                <p>Maîtrisez les bilans, les ratios (P/E, EV/EBITDA) et la lecture des rapports financiers des sociétés cotées au Maroc.</p>
+                <div class="price">2 500 DH</div>
+                <button class="btn-calc" style="width:200px">S'inscrire</button>
+            </div>
+        </div>
+        <div class="resource-card">
+            <div class="res-type">FINANCE</div>
+            <div class="res-content">
+                <h3>Corporate Finance & Modélisation Excel</h3>
+                <p>Évaluation d'entreprise, Business Plan, et finance d'entreprise de A à Z.</p>
+                <div class="price">3 500 DH</div>
+                <button class="btn-calc" style="width:200px">S'inscrire</button>
+            </div>
+        </div>
+        <div class="resource-card">
+            <div class="res-type">CARRIÈRE</div>
+            <div class="res-content">
+                <h3>Coaching Carrière Finance</h3>
+                <p>Préparation aux entretiens, optimisation LinkedIn, CV et Lettre de motivation pour les métiers de la finance.</p>
+                <div class="price">1 500 DH</div>
+                <button class="btn-calc" style="width:200px">S'inscrire</button>
             </div>
         </div>
     </div>
-</div>
 
-<div id="formations" class="page" style="padding: 80px 10%;">
-    <center><h2 style="font-family: 'Playfair Display', serif; font-size: 2.5rem;">Programmes d'Élite</h2></center>
-    
-    <div class="formation-card">
-        <div class="f-img">🏛️</div>
-        <div class="f-body">
-            <h3>Mastery : Bourse & Immobilier Maroc</h3>
-            <p>Le guide ultime pour investir au pays : de la CDG Capital au locatif à Tanger.</p>
-            <div class="f-price">3 200 DH</div>
-            <button class="btn-gold" onclick="toggleF('f1')">Détails du programme & Paiement</button>
-            <div id="f1" class="f-menu">
-                <ul>
-                    <li>Module 1 : Fiscalité immobilière locale (LMNP vs SCI)</li>
-                    <li>Module 2 : Analyse technique de la Bourse de Casa</li>
-                    <li>Module 3 : Montage de dossier bancaire pour crédit</li>
-                </ul>
-                <p><strong>Paiement :</strong> Virement bancaire, Wafacash ou Stripe (CB).</p>
+    <div id="resources" class="page-view">
+        <h2>Ressources & Fichiers</h2>
+        <div class="sim-grid">
+            <div class="sim-card">
+                <span style="color:var(--gold)">GRATUIT</span>
+                <h3>Checklist Analyse Action</h3>
+                <p>Un PDF pour ne rien oublier avant d'acheter une action sur le MASI.</p>
+                <button class="btn-calc">Télécharger</button>
+            </div>
+            <div class="sim-card">
+                <span style="color:var(--brand)">PREMIUM</span>
+                <h3>Modèle DCF Automatisé (Excel)</h3>
+                <p>Le template complet utilisé par The Moroccan CFO.</p>
+                <button class="btn-calc">Acheter (300 DH)</button>
             </div>
         </div>
     </div>
 
-    <div class="formation-card">
-        <div class="f-img">📈</div>
-        <div class="f-body">
-            <h3>Freelance : De Zéro à 50k DH / Mois</h3>
-            <p>Apprenez à structurer votre activité, trouver des clients premium et optimiser votre fiscalité.</p>
-            <div class="f-price">1 500 DH</div>
-            <button class="btn-gold" onclick="toggleF('f2')">Détails du programme & Paiement</button>
-            <div id="f2" class="f-menu">
-                <p>Inclut : Template de contrat, guide de négociation et calcul de TJM.</p>
+    <div id="contact" class="page-view">
+        <center>
+            <h2>Contact & Support</h2>
+            <p>Pour toute question relative aux formations ou aux partenariats.</p>
+            <div class="sim-card" style="max-width: 500px; text-align: left;">
+                <p><b>Email :</b> themoroccananalyst@gmail.com</p>
+                <p><b>Instagram :</b> @the_moroccananalyst</p>
+                <hr>
+                <input type="text" placeholder="Votre Nom">
+                <input type="email" placeholder="Votre Email">
+                <textarea style="width:100%; height:100px; padding:10px; border-radius:8px; border:1px solid #ddd;" placeholder="Votre Message..."></textarea>
+                <button class="btn-calc">Envoyer</button>
             </div>
-        </div>
+        </center>
     </div>
+
+    <div id="about" class="page-view">
+        <h2>À Propos de The Moroccan Community</h2>
+        <p>Lancée par un passionné des marchés financiers et de la gestion d'entreprise, cette plateforme est le point de rencontre entre l'analyse boursière rigoureuse (The Moroccan Analyst) et la stratégie financière corporate (The Moroccan CFO).</p>
+        <p>Notre but est de démocratiser l'accès à une information financière de qualité au Maroc.</p>
+    </div>
+
 </div>
 
-<div id="contact" class="page" style="padding: 80px 10%;">
-    <div style="max-width: 600px; margin: auto; background: white; padding: 50px; border-radius: 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.05);">
-        <center><h2>Rejoignez le Cercle</h2></center>
-        <input type="text" placeholder="Nom complet">
-        <input type="email" placeholder="Email">
-        <textarea placeholder="Votre message ou projet..." style="width: 100%; padding: 15px; border-radius: 10px; border: 1px solid #ddd; height: 120px; margin-bottom: 20px;"></textarea>
-        <button class="btn-gold" style="width: 100%;">Envoyer ma demande</button>
-    </div>
-</div>
+<footer>
+    <p>&copy; 2025 THE MOROCCAN COMMUNITY. Tous droits réservés. <br> Les analyses ne constituent pas des conseils en investissement.</p>
+</footer>
 
 <script>
-    let currentChart = null;
-
+    // --- GESTION NAVIGATION ---
     function showPage(id) {
-        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.querySelectorAll('.page-view').forEach(p => p.classList.remove('active'));
         document.getElementById(id).classList.add('active');
         window.scrollTo(0,0);
     }
 
-    function toggleF(id) {
-        const el = document.getElementById(id);
-        el.style.display = (el.style.display === 'block') ? 'none' : 'block';
-    }
+    // --- FAQ ACCORDION ---
+    document.querySelectorAll('.faq-question').forEach(q => {
+        q.addEventListener('click', () => {
+            const ans = q.nextElementSibling;
+            ans.style.display = ans.style.display === 'block' ? 'none' : 'block';
+        });
+    });
 
-    function openSim(type) {
-        showPage('sim-detail');
-        const form = document.getElementById('sim-form');
-        const guide = document.getElementById('sim-guide');
+    // --- GRAPHIQUES & CALCULS ---
+    let charts = {};
 
-        if(type === 'ic') {
-            form.innerHTML = `<h2>Capital & Intérêts</h2>
-                <label>Capital Initial (DH)</label><input type="number" id="v1" value="10000">
-                <label>Versement Mensuel (DH)</label><input type="number" id="v2" value="1000">
-                <label>Taux Annuel (%)</label><input type="number" id="v3" value="8">
-                <label>Nombre d'années</label><input type="number" id="v4" value="10">
-                <button class="btn-gold" style="width:100%" onclick="calcIC()">Calculer l'Impact</button>`;
-            guide.innerHTML = `<strong>Guide :</strong> Utilisez cet outil pour voir comment l'argent travaille pour vous. "Capital Initial" est votre base, et "Versement" est votre discipline mensuelle.`;
-        } else if(type === 'immo') {
-            form.innerHTML = `<h2>Rentabilité Immobilière</h2>
-                <label>Prix d'achat (DH)</label><input type="number" id="v1" value="800000">
-                <label>Loyer Mensuel (DH)</label><input type="number" id="v2" value="4500">
-                <label>Charges Annuelles (DH)</label><input type="number" id="v3" value="10000">
-                <button class="btn-gold" style="width:100%" onclick="calcImmo()">Analyser le bien</button>`;
-            guide.innerHTML = `<strong>Guide :</strong> Entrez le prix total d'acquisition. N'oubliez pas d'inclure les frais de notaire dans le prix d'achat pour une analyse réelle.`;
-        }
-        // ... (Autres simulateurs sur le même modèle)
-    }
-
-    function updateChart(type, labels, data, label) {
-        if (currentChart) currentChart.destroy();
-        const ctx = document.getElementById('mainChart').getContext('2d');
-        currentChart = new Chart(ctx, {
+    function renderChart(id, type, labels, data, label) {
+        if (charts[id]) charts[id].destroy();
+        const ctx = document.getElementById(id).getContext('2d');
+        charts[id] = new Chart(ctx, {
             type: type,
             data: {
                 labels: labels,
                 datasets: [{
                     label: label,
                     data: data,
-                    backgroundColor: ['#006241', '#c0a062', '#121212'],
-                    borderWidth: 0
+                    backgroundColor: ['#c5a059', '#333', '#eee'],
+                    borderColor: '#c5a059',
+                    borderWidth: 1
                 }]
             },
             options: { responsive: true, maintainAspectRatio: false }
         });
     }
 
-    // CALCULATEURS LOGIQUE
-    function calcIC() {
-        const p = parseFloat(document.getElementById('v1').value);
-        const m = parseFloat(document.getElementById('v2').value);
-        const r = (parseFloat(document.getElementById('v3').value)/100)/12;
-        const n = parseInt(document.getElementById('v4').value)*12;
-        let total = p * Math.pow(1+r, n) + m * ((Math.pow(1+r, n)-1)/r);
-        
-        updateChart('line', ['Départ', 'Année 5', 'Année 10'], [p, total*0.4, total], 'Fortune (DH)');
-        document.getElementById('analysis-text').innerHTML = `<h4>Constat de l'Expert</h4><p>En 10 ans, votre capital de départ a généré <strong>${Math.round(total - (p + m*n)).toLocaleString()} DH</strong> d'intérêts purs. C'est la magie des intérêts composés. La clé est la patience.</p>`;
+    // 1. DCF
+    function calcDCF() {
+        let fcf = parseFloat(document.getElementById('dcf_fcf').value);
+        let g = parseFloat(document.getElementById('dcf_g').value)/100;
+        let w = parseFloat(document.getElementById('dcf_wacc').value)/100;
+        let valeur = fcf / (w - g);
+        document.getElementById('res_dcf').style.display = 'block';
+        document.getElementById('res_dcf').innerHTML = `<b>Constat Analyste :</b> La valeur terminale de l'entreprise est estimée à <b>${Math.round(valeur).toLocaleString()} DH</b>. Si la capitalisation boursière actuelle est inférieure, l'action est potentiellement sous-évaluée.`;
+        renderChart('chart_dcf', 'bar', ['Année N', 'Valeur Terminale'], [fcf, valeur], 'DH');
     }
 
+    // 2. DIVIDENDE
+    function calcDiv() {
+        let p = parseFloat(document.getElementById('div_prix').value);
+        let v = parseFloat(document.getElementById('div_val').value);
+        let yield = (v/p)*100;
+        let payback = p/v;
+        document.getElementById('res_div').style.display = 'block';
+        document.getElementById('res_div').innerHTML = `<b>Constat Analyste :</b> Rendement (Yield) : <b>${yield.toFixed(2)}%</b>. Il vous faudra <b>${payback.toFixed(1)} ans</b> de dividendes pour rembourser votre investissement initial.`;
+        renderChart('chart_div', 'doughnut', ['Rendement', 'Prix'], [v, p-v], 'DH');
+    }
+
+    // 3. WACC
+    function calcWACC() {
+        let ke = parseFloat(document.getElementById('w_ke').value)/100;
+        let kd = parseFloat(document.getElementById('w_kd').value)/100;
+        let lev = parseFloat(document.getElementById('w_levier').value)/100;
+        let wacc = (ke * (1 - lev)) + (kd * lev * 0.8); // 0.8 pour économie d'impôt simplifiée
+        document.getElementById('res_wacc').style.display = 'block';
+        document.getElementById('res_wacc').innerHTML = `<b>Constat CFO :</b> Votre coût moyen du capital est de <b>${(wacc*100).toFixed(2)}%</b>. Tout projet doit avoir un TRI supérieur à ce taux pour créer de la valeur.`;
+        renderChart('chart_wacc', 'pie', ['Fonds Propres', 'Dette'], [1-lev, lev], 'Structure');
+    }
+
+    // 4. IMMO
     function calcImmo() {
-        const prix = parseFloat(document.getElementById('v1').value);
-        const loyer = parseFloat(document.getElementById('v2').value);
-        const charges = parseFloat(document.getElementById('v3').value);
-        const rend = (((loyer * 12) - charges) / prix) * 100;
-
-        updateChart('doughnut', ['Revenu Net', 'Charges'], [rend, 100-rend], '% Rendement');
-        document.getElementById('analysis-text').innerHTML = `<h4>Constat de l'Expert</h4><p>Votre rendement net est de <strong>${rend.toFixed(2)}%</strong>. Au Maroc, un bon investissement locatif doit se situer entre 6% et 9% brut. Vérifiez si l'emplacement justifie ce rendement.</p>`;
+        let p = parseFloat(document.getElementById('im_prix').value);
+        let l = parseFloat(document.getElementById('im_loyer').value);
+        let rend = ((l*12)/p)*100;
+        document.getElementById('res_immo').style.display = 'block';
+        document.getElementById('res_immo').innerHTML = `<b>Analyse :</b> Rendement Brut de <b>${rend.toFixed(2)}%</b>.`;
+        renderChart('chart_immo', 'bar', ['Loyer Annuel', 'Prix'], [l*12, p], 'DH');
     }
+
+    // 5. PORTFOLIO
+    function calcPort() {
+        let c = parseFloat(document.getElementById('port_cap').value);
+        let p = parseFloat(document.getElementById('port_perf').value)/100;
+        let a = parseInt(document.getElementById('port_ans').value);
+        let total = c * Math.pow(1+p, a);
+        document.getElementById('res_port').style.display = 'block';
+        document.getElementById('res_port').innerHTML = `<b>Projection :</b> Capital final : <b>${Math.round(total).toLocaleString()} DH</b>.`;
+        renderChart('chart_port', 'line', ['An 0', 'Milieu', 'Fin'], [c, total/2, total], 'Croissance');
+    }
+
+    // 6. FISCALITÉ
+    function calcFis() {
+        let r = parseFloat(document.getElementById('fis_res').value);
+        let t = parseFloat(document.getElementById('fis_type').value);
+        let imp = r * t;
+        document.getElementById('res_fis').style.display = 'block';
+        document.getElementById('res_fis').innerHTML = `<b>Impôt sur les sociétés :</b> <b>${imp.toLocaleString()} DH</b>.`;
+        renderChart('chart_fis', 'bar', ['Net', 'IS'], [r-imp, imp], 'DH');
+    }
+
 </script>
 
 </body>
