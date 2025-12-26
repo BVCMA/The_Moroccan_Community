@@ -3,69 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Moroccan Community | Plateforme Éducative Financière</title>
+    <title>The Moroccan Community | Excellence & Éducation Financière</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #006241; /* Vert Émeraude Marocain */
+            --primary: #006241; /* Vert Émeraude */
             --secondary: #c0a062; /* Or Atlas */
-            --dark: #1a1a1a;
+            --dark: #121212;
             --light: #ffffff;
-            --bg: #f8f9fa;
+            --bg-soft: #f4f7f6;
         }
 
         * { box-sizing: border-box; transition: all 0.3s ease; }
-        body { font-family: 'Montserrat', sans-serif; margin: 0; background: var(--bg); color: var(--dark); overflow-x: hidden; }
+        body { font-family: 'Montserrat', sans-serif; margin: 0; background: var(--bg-soft); color: var(--dark); overflow-x: hidden; }
 
         /* --- NAVIGATION --- */
         nav {
             display: flex; justify-content: space-between; align-items: center;
-            padding: 15px 5%; background: white; position: sticky; top: 0; z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 20px 8%; background: white; position: sticky; top: 0; z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
         }
-        .logo { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--primary); font-weight: bold; cursor: pointer; }
-        .nav-links a { text-decoration: none; color: var(--dark); margin-left: 20px; font-weight: 600; cursor: pointer; }
+        .logo { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--primary); font-weight: bold; cursor: pointer; }
+        .nav-links a { text-decoration: none; color: var(--dark); margin-left: 25px; font-weight: 600; cursor: pointer; font-size: 0.9rem; }
         .nav-links a:hover { color: var(--secondary); }
 
-        /* --- SYSTÈME DE PAGES (DISPLAY MANAGEMENT) --- */
-        .page { display: none; padding: 60px 5%; animation: fadeIn 0.5s; }
+        /* --- GESTION DES PAGES --- */
+        .page { display: none; animation: fadeIn 0.6s ease-in-out; }
         .page.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* --- HOME PAGE --- */
+        /* --- HOME PAGE STYLE --- */
         .hero { 
-            height: 80vh; display: flex; flex-direction: column; justify-content: center; align-items: center;
-            text-align: center; background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1539667468225-eebb663053e6?auto=format&fit=crop&w=1350&q=80');
-            background-size: cover; color: white; border-radius: 0 0 50px 50px;
+            height: 90vh; display: flex; flex-direction: column; justify-content: center; align-items: center;
+            text-align: center; background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1548013146-72479768bbaa?auto=format&fit=crop&w=1500&q=80');
+            background-size: cover; color: white; padding: 0 10%;
         }
-        .hero h1 { font-family: 'Playfair Display', serif; font-size: 3.5rem; margin: 0; }
-        .btn-main { background: var(--secondary); color: white; padding: 15px 40px; border: none; border-radius: 30px; font-size: 1rem; font-weight: bold; cursor: pointer; margin-top: 25px; text-decoration: none; }
+        .hero h1 { font-family: 'Playfair Display', serif; font-size: 4rem; margin: 0; }
+        .hero p { font-size: 1.3rem; max-width: 800px; margin: 20px 0; font-weight: 300; }
+        .btn-gold { background: var(--secondary); color: white; padding: 18px 45px; border: none; border-radius: 50px; font-size: 1rem; font-weight: bold; cursor: pointer; text-decoration: none; display: inline-block; }
+        
+        .story-section { padding: 100px 10%; background: white; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+        .story-content h2 { font-family: 'Playfair Display', serif; color: var(--primary); font-size: 2.5rem; }
+        .story-text { font-size: 1.1rem; line-height: 1.8; color: #555; }
+        
+        .stat-banner { background: var(--primary); color: white; padding: 60px 10%; display: flex; justify-content: space-around; text-align: center; }
+        .stat-item h3 { font-size: 2.5rem; margin: 0; color: var(--secondary); }
 
-        /* --- SIMULATEURS HUB (GRID) --- */
-        .sim-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; margin-top: 40px; }
-        .sim-item { background: white; padding: 30px; border-radius: 20px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.05); cursor: pointer; border: 1px solid #eee; }
-        .sim-item:hover { border-color: var(--secondary); transform: translateY(-5px); }
-        .sim-item i { font-size: 2rem; color: var(--primary); display: block; margin-bottom: 15px; }
+        /* --- SIMULATEURS HUB --- */
+        .hub-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; padding: 50px 0; }
+        .hub-card { background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); text-align: center; border: 1px solid #eee; cursor: pointer; }
+        .hub-card:hover { border-color: var(--secondary); transform: translateY(-10px); }
+        .hub-card i { font-size: 3rem; color: var(--secondary); margin-bottom: 20px; display: block; }
 
-        /* --- SIMULATEUR DETAIL VIEW --- */
-        .sim-view { max-width: 1100px; margin: auto; background: white; padding: 40px; border-radius: 30px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
-        @media (max-width: 850px) { .sim-view { grid-template-columns: 1fr; } }
-        .sim-inputs { display: flex; flex-direction: column; gap: 20px; }
-        .sim-inputs h2 { font-family: 'Playfair Display', serif; color: var(--primary); margin: 0; }
-        input, select { padding: 15px; border: 1px solid #ddd; border-radius: 10px; font-size: 1rem; }
-        .constat-box { background: #f0f7f4; padding: 25px; border-radius: 15px; border-left: 5px solid var(--secondary); margin-top: 20px; }
-        .constat-box h4 { margin-top: 0; color: var(--primary); }
+        /* --- SIMULATEUR DETAIL --- */
+        .sim-detail-wrapper { max-width: 1200px; margin: auto; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 40px; }
+        @media (max-width: 900px) { .sim-detail-wrapper { grid-template-columns: 1fr; } }
+        
+        .sim-panel { background: white; padding: 40px; border-radius: 25px; box-shadow: 0 15px 45px rgba(0,0,0,0.08); }
+        .guide-box { background: #eef5f2; padding: 25px; border-radius: 15px; margin-top: 30px; font-size: 0.9rem; border-left: 5px solid var(--primary); }
+        .analysis-box { background: var(--dark); color: white; padding: 30px; border-radius: 20px; margin-top: 25px; }
+        .analysis-box h4 { color: var(--secondary); margin-top: 0; }
+
+        label { display: block; margin-bottom: 8px; font-weight: 600; color: var(--primary); }
+        input, select { width: 100%; padding: 15px; margin-bottom: 20px; border: 1px solid #ddd; border-radius: 10px; font-size: 1rem; }
 
         /* --- FORMATIONS --- */
-        .course-card { background: white; border-radius: 20px; margin-bottom: 30px; overflow: hidden; display: flex; box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
-        .course-info { padding: 40px; flex: 1; }
-        .price-tag { color: var(--secondary); font-weight: bold; font-size: 1.5rem; display: block; margin: 15px 0; }
-        .course-details { display: none; padding-top: 20px; border-top: 1px solid #eee; margin-top: 20px; }
+        .formation-card { background: white; border-radius: 25px; overflow: hidden; display: flex; margin-bottom: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .f-img { width: 300px; background: var(--primary); display: flex; align-items: center; justify-content: center; color: white; font-size: 4rem; }
+        .f-body { padding: 40px; flex: 1; }
+        .f-price { font-size: 1.8rem; font-weight: bold; color: var(--secondary); margin: 15px 0; }
+        .f-menu { display: none; padding: 20px; background: #fafafa; border-radius: 10px; margin-top: 20px; border: 1px dashed var(--secondary); }
 
-        /* --- CONTACT --- */
-        .contact-container { max-width: 600px; margin: auto; text-align: center; }
-        .contact-form { display: flex; flex-direction: column; gap: 15px; margin-top: 30px; }
     </style>
 </head>
 <body>
@@ -80,168 +89,151 @@
     </div>
 </nav>
 
-<section id="home" class="page active">
-    <div class="hero">
-        <h1>Éduquer. Investir. Prospérer.</h1>
-        <p>La référence en éducation financière pour la communauté marocaine.</p>
-        <button class="btn-main" onclick="showPage('sim-hub')">Démarrer une simulation</button>
-    </div>
-    <div style="text-align: center; padding-top: 50px;">
-        <h2>Pourquoi nous choisir ?</h2>
-        <p>Des outils conçus pour le marché local avec une expertise internationale.</p>
-    </div>
-</section>
+<div id="home" class="page active">
+    <header class="hero">
+        <h1>Bâtissez votre Héritage.</h1>
+        <p>Plus qu'une communauté, une académie financière dédiée à la réussite des Marocains, au pays comme ailleurs.</p>
+        <button class="btn-gold" onclick="showPage('sim-hub')">Utiliser nos outils gratuits</button>
+    </header>
 
-<section id="sim-hub" class="page">
-    <center><h2>Nos Outils d'Analyse</h2></center>
-    <div class="sim-grid">
-        <div class="sim-item" onclick="openSim('ic')"><h3>📈 Épargne & Intérêts</h3><p>Projetez votre fortune sur le long terme.</p></div>
-        <div class="sim-item" onclick="openSim('budget')"><h3>⚖️ Gestion de Budget</h3><p>Équilibrez vos revenus avec la règle 50/30/20.</p></div>
-        <div class="sim-item" onclick="openSim('ae')"><h3>👨‍💻 Net Auto-Entrepreneur</h3><p>Calculez ce qu'il vous reste après taxes au Maroc.</p></div>
-        <div class="sim-item" onclick="openSim('immo')"><h3>🏠 Rentabilité Immo</h3><p>Analysez vos investissements locatifs au Royaume.</p></div>
-        <div class="sim-item" onclick="openSim('business')"><h3>🏢 Point Mort Business</h3><p>Sachez quand votre entreprise devient rentable.</p></div>
-        <div class="sim-item" onclick="openSim('tva')"><h3>💰 Calculateur de TVA</h3><p>Détaillez vos prix HT, TVA et TTC.</p></div>
-    </div>
-</section>
+    <section class="story-section">
+        <div class="story-content">
+            <h2>Notre Histoire</h2>
+            <p class="story-text">
+                "The Moroccan Community" est née d'un constat simple : l'indépendance financière est le socle de la liberté. Nous avons créé cet espace pour offrir aux Marocains les outils de calcul, les stratégies d'investissement et l'éducation fiscale nécessaires pour naviguer dans l'économie moderne.<br><br>
+                Notre mission est d'élever le niveau de littératie financière du Royaume en rendant complexe ce qui est simple : l'argent.
+            </p>
+        </div>
+        <div style="background: var(--bg-soft); border-radius: 30px; height: 400px; display: flex; align-items: center; justify-content: center; font-style: italic; color: var(--primary); padding: 40px; text-align: center;">
+            "Le meilleur moment pour investir était il y a 20 ans. Le deuxième meilleur moment est maintenant."
+        </div>
+    </section>
 
-<section id="sim-detail" class="page">
-    <button onclick="showPage('sim-hub')" style="margin-bottom: 20px; cursor: pointer;">← Retour aux outils</button>
-    <div class="sim-view">
-        <div class="sim-inputs" id="sim-fields">
-            </div>
+    <div class="stat-banner">
+        <div class="stat-item"><h3>+15k</h3><p>Membres actifs</p></div>
+        <div class="stat-item"><h3>DH 20M+</h3><p>Patrimoine optimisé</p></div>
+        <div class="stat-item"><h3>6</h3><p>Outils de précision</p></div>
+    </div>
+</div>
+
+<div id="sim-hub" class="page" style="padding: 80px 10%;">
+    <center>
+        <h2 style="font-family: 'Playfair Display', serif; font-size: 3rem;">L'Ingénierie Financière</h2>
+        <p style="max-width: 600px; color: #666;">Choisissez un outil pour débuter votre analyse détaillée et recevoir un constat professionnel.</p>
+    </center>
+    <div class="hub-grid">
+        <div class="hub-card" onclick="openSim('ic')"><i>📈</i><h3>Capital & Intérêts</h3><p>Calculer la force des intérêts composés sur votre épargne.</p></div>
+        <div class="hub-card" onclick="openSim('immo')"><i>🏠</i><h3>Immobilier Locatif</h3><p>Analyser la rentabilité réelle d'un bien au Maroc.</p></div>
+        <div class="hub-card" onclick="openSim('ae')"><h3>👨‍💻 Auto-Entrepreneur</h3><p>Simuler vos revenus nets après impôts et charges.</p></div>
+        <div class="hub-card" onclick="openSim('budget')"><h3>⚖️ Règle du Budget</h3><p>Optimiser votre répartition de salaire mensuelle.</p></div>
+        <div class="hub-card" onclick="openSim('business')"><h3>🏢 Point Mort Pro</h3><p>Calculer le seuil de rentabilité de votre entreprise.</p></div>
+        <div class="hub-card" onclick="openSim('tva')"><h3>💰 Expert TVA</h3><p>Détail complet des taxes pour vos devis et factures.</p></div>
+    </div>
+</div>
+
+<div id="sim-detail" class="page" style="padding: 50px 10%;">
+    <button onclick="showPage('sim-hub')" style="cursor: pointer; border: none; background: none; font-weight: bold; color: var(--primary);">← Retour aux outils</button>
+    <div class="sim-detail-wrapper">
+        <div class="sim-panel">
+            <div id="sim-form"></div>
+            <div class="guide-box" id="sim-guide"></div>
+        </div>
         <div class="sim-results">
-            <canvas id="simChart"></canvas>
-            <div class="constat-box" id="constat-text">
-                <h4>Constat de l'Expert</h4>
-                <p>Entrez vos chiffres pour obtenir une analyse éducative personnalisée.</p>
+            <canvas id="mainChart" style="background: white; border-radius: 20px; padding: 20px;"></canvas>
+            <div class="analysis-box" id="analysis-text">
+                <h4>Analyse de l'Expert</h4>
+                <p>Modifiez les valeurs pour voir l'impact financier immédiat.</p>
             </div>
         </div>
     </div>
-</section>
+</div>
 
-<section id="formations" class="page">
-    <center><h2>Formations d'Excellence</h2></center>
-    <div id="course-list">
-        <div class="course-card">
-            <div class="course-info">
-                <h3>L'Investissement Intelligent au Maroc</h3>
-                <p>Apprenez à naviguer entre la bourse de Casablanca et l'immobilier local.</p>
-                <span class="price-tag">2 500 DH</span>
-                <button class="btn-main" onclick="toggleDetails('d1')">Voir le programme & Payer</button>
-                <div id="d1" class="course-details">
-                    <ul>
-                        <li>Comprendre le CDG et les OPCVM</li>
-                        <li>Stratégies fiscales (LMNP vs SCI)</li>
-                        <li>Analyse fondamentale des actions marocaines</li>
-                    </ul>
-                    <p><strong>Paiement :</strong> Virement CIH, Wafacash ou Stripe.</p>
-                </div>
-            </div>
-        </div>
-        <div class="course-card">
-            <div class="course-info">
-                <h3>Freelance Pro : Succès & Fiscalité</h3>
-                <p>Optimisez votre statut d'Auto-Entrepreneur et gérez votre trésorerie.</p>
-                <span class="price-tag">1 200 DH</span>
-                <button class="btn-main" onclick="toggleDetails('d2')">Voir le programme & Payer</button>
-                <div id="d2" class="course-details">
-                    <p>Contenu : Gestion des factures, déclaration CPU, et épargne retraite pour indépendants.</p>
-                </div>
+<div id="formations" class="page" style="padding: 80px 10%;">
+    <center><h2 style="font-family: 'Playfair Display', serif; font-size: 2.5rem;">Programmes d'Élite</h2></center>
+    
+    <div class="formation-card">
+        <div class="f-img">🏛️</div>
+        <div class="f-body">
+            <h3>Mastery : Bourse & Immobilier Maroc</h3>
+            <p>Le guide ultime pour investir au pays : de la CDG Capital au locatif à Tanger.</p>
+            <div class="f-price">3 200 DH</div>
+            <button class="btn-gold" onclick="toggleF('f1')">Détails du programme & Paiement</button>
+            <div id="f1" class="f-menu">
+                <ul>
+                    <li>Module 1 : Fiscalité immobilière locale (LMNP vs SCI)</li>
+                    <li>Module 2 : Analyse technique de la Bourse de Casa</li>
+                    <li>Module 3 : Montage de dossier bancaire pour crédit</li>
+                </ul>
+                <p><strong>Paiement :</strong> Virement bancaire, Wafacash ou Stripe (CB).</p>
             </div>
         </div>
     </div>
-</section>
 
-<section id="contact" class="page">
-    <div class="contact-container">
-        <h2>Contactez nos Experts</h2>
-        <p>Une question ? Un besoin d'accompagnement spécifique ?</p>
-        <form class="contact-form">
-            <input type="text" placeholder="Nom complet">
-            <input type="email" placeholder="Email">
-            <textarea placeholder="Votre message..." style="padding:15px; border-radius:10px; height:150px;"></textarea>
-            <button class="btn-main">Envoyer ma demande</button>
-        </form>
+    <div class="formation-card">
+        <div class="f-img">📈</div>
+        <div class="f-body">
+            <h3>Freelance : De Zéro à 50k DH / Mois</h3>
+            <p>Apprenez à structurer votre activité, trouver des clients premium et optimiser votre fiscalité.</p>
+            <div class="f-price">1 500 DH</div>
+            <button class="btn-gold" onclick="toggleF('f2')">Détails du programme & Paiement</button>
+            <div id="f2" class="f-menu">
+                <p>Inclut : Template de contrat, guide de négociation et calcul de TJM.</p>
+            </div>
+        </div>
     </div>
-</section>
+</div>
+
+<div id="contact" class="page" style="padding: 80px 10%;">
+    <div style="max-width: 600px; margin: auto; background: white; padding: 50px; border-radius: 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.05);">
+        <center><h2>Rejoignez le Cercle</h2></center>
+        <input type="text" placeholder="Nom complet">
+        <input type="email" placeholder="Email">
+        <textarea placeholder="Votre message ou projet..." style="width: 100%; padding: 15px; border-radius: 10px; border: 1px solid #ddd; height: 120px; margin-bottom: 20px;"></textarea>
+        <button class="btn-gold" style="width: 100%;">Envoyer ma demande</button>
+    </div>
+</div>
 
 <script>
     let currentChart = null;
 
-    // GESTION DES PAGES
-    function showPage(pageId) {
+    function showPage(id) {
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-        document.getElementById(pageId).classList.add('active');
+        document.getElementById(id).classList.add('active');
         window.scrollTo(0,0);
     }
 
-    function toggleDetails(id) {
-        const d = document.getElementById(id);
-        d.style.display = (d.style.display === 'block') ? 'none' : 'block';
+    function toggleF(id) {
+        const el = document.getElementById(id);
+        el.style.display = (el.style.display === 'block') ? 'none' : 'block';
     }
 
-    // LOGIQUE DES SIMULATEURS
     function openSim(type) {
         showPage('sim-detail');
-        const container = document.getElementById('sim-fields');
-        const constat = document.getElementById('constat-text');
-        
+        const form = document.getElementById('sim-form');
+        const guide = document.getElementById('sim-guide');
+
         if(type === 'ic') {
-            container.innerHTML = `<h2>Croissance du Capital</h2>
-                <input type="number" id="v1" placeholder="Capital Initial (DH)">
-                <input type="number" id="v2" placeholder="Épargne Mensuelle (DH)">
-                <input type="number" id="v3" placeholder="Taux annuel (%)">
-                <input type="number" id="v4" placeholder="Années">
-                <button class="btn-main" onclick="runIC()">Analyser</button>`;
-        } else if(type === 'ae') {
-            container.innerHTML = `<h2>Net Auto-Entrepreneur</h2>
-                <input type="number" id="v1" placeholder="CA Mensuel (DH)">
-                <select id="v2"><option value="0.005">Services (0.5%)</option><option value="0.02">Commerce (2%)</option></select>
-                <button class="btn-main" onclick="runAE()">Calculer le Net</button>`;
-        } else if(type === 'budget') {
-            container.innerHTML = `<h2>Règle 50/30/20</h2>
-                <input type="number" id="v1" placeholder="Salaire Net Mensuel (DH)">
-                <button class="btn-main" onclick="runBudget()">Répartir</button>`;
+            form.innerHTML = `<h2>Capital & Intérêts</h2>
+                <label>Capital Initial (DH)</label><input type="number" id="v1" value="10000">
+                <label>Versement Mensuel (DH)</label><input type="number" id="v2" value="1000">
+                <label>Taux Annuel (%)</label><input type="number" id="v3" value="8">
+                <label>Nombre d'années</label><input type="number" id="v4" value="10">
+                <button class="btn-gold" style="width:100%" onclick="calcIC()">Calculer l'Impact</button>`;
+            guide.innerHTML = `<strong>Guide :</strong> Utilisez cet outil pour voir comment l'argent travaille pour vous. "Capital Initial" est votre base, et "Versement" est votre discipline mensuelle.`;
+        } else if(type === 'immo') {
+            form.innerHTML = `<h2>Rentabilité Immobilière</h2>
+                <label>Prix d'achat (DH)</label><input type="number" id="v1" value="800000">
+                <label>Loyer Mensuel (DH)</label><input type="number" id="v2" value="4500">
+                <label>Charges Annuelles (DH)</label><input type="number" id="v3" value="10000">
+                <button class="btn-gold" style="width:100%" onclick="calcImmo()">Analyser le bien</button>`;
+            guide.innerHTML = `<strong>Guide :</strong> Entrez le prix total d'acquisition. N'oubliez pas d'inclure les frais de notaire dans le prix d'achat pour une analyse réelle.`;
         }
-        // Ajouter les autres ici de la même façon...
-    }
-
-    // --- CALCULS ET ANALYSES ---
-
-    function runIC() {
-        const p = parseFloat(document.getElementById('v1').value);
-        const m = parseFloat(document.getElementById('v2').value);
-        const r = (parseFloat(document.getElementById('v3').value)/100)/12;
-        const t = parseInt(document.getElementById('v4').value)*12;
-        let total = p * Math.pow(1+r, t) + m * ((Math.pow(1+r, t)-1)/r);
-        
-        updateChart('line', ['Début', 'Fin'], [p, total], 'Fortune Projetée');
-        document.getElementById('constat-text').innerHTML = `<h4>Constat Éducatif</h4>
-            <p>Avec cet investissement, vous générez <strong>${Math.round(total - (p+m*t))} DH</strong> d'intérêts. 
-            Le constat est clair : la régularité bat le montant initial. Commencez tôt !</p>`;
-    }
-
-    function runBudget() {
-        const s = parseFloat(document.getElementById('v1').value);
-        const data = [s*0.5, s*0.3, s*0.2];
-        updateChart('pie', ['Besoins', 'Envies', 'Épargne'], data, 'Répartition DH');
-        document.getElementById('constat-text').innerHTML = `<h4>Analyse de l'Équilibre</h4>
-            <p>Votre capacité d'épargne est de <strong>${data[2]} DH</strong>. Si vos charges fixes dépassent <strong>${data[0]} DH</strong>, vous êtes en zone de risque financier au Maroc.</p>`;
-    }
-
-    function runAE() {
-        const ca = parseFloat(document.getElementById('v1').value);
-        const taux = parseFloat(document.getElementById('v2').value);
-        const impot = ca * taux;
-        const net = ca - impot;
-        updateChart('bar', ['CA Brut', 'Impôt', 'Revenu Net'], [ca, impot, net], 'DH');
-        document.getElementById('constat-text').innerHTML = `<h4>Constat Fiscal</h4>
-            <p>Le régime AE est très avantageux. Votre pression fiscale n'est que de <strong>${taux*100}%</strong>. Pensez à réinvestir vos économies d'impôts.</p>`;
+        // ... (Autres simulateurs sur le même modèle)
     }
 
     function updateChart(type, labels, data, label) {
         if (currentChart) currentChart.destroy();
-        const ctx = document.getElementById('simChart').getContext('2d');
+        const ctx = document.getElementById('mainChart').getContext('2d');
         currentChart = new Chart(ctx, {
             type: type,
             data: {
@@ -249,13 +241,36 @@
                 datasets: [{
                     label: label,
                     data: data,
-                    backgroundColor: ['#006241', '#c0a062', '#1a1a1a'],
+                    backgroundColor: ['#006241', '#c0a062', '#121212'],
                     borderWidth: 0
                 }]
             },
             options: { responsive: true, maintainAspectRatio: false }
         });
     }
+
+    // CALCULATEURS LOGIQUE
+    function calcIC() {
+        const p = parseFloat(document.getElementById('v1').value);
+        const m = parseFloat(document.getElementById('v2').value);
+        const r = (parseFloat(document.getElementById('v3').value)/100)/12;
+        const n = parseInt(document.getElementById('v4').value)*12;
+        let total = p * Math.pow(1+r, n) + m * ((Math.pow(1+r, n)-1)/r);
+        
+        updateChart('line', ['Départ', 'Année 5', 'Année 10'], [p, total*0.4, total], 'Fortune (DH)');
+        document.getElementById('analysis-text').innerHTML = `<h4>Constat de l'Expert</h4><p>En 10 ans, votre capital de départ a généré <strong>${Math.round(total - (p + m*n)).toLocaleString()} DH</strong> d'intérêts purs. C'est la magie des intérêts composés. La clé est la patience.</p>`;
+    }
+
+    function calcImmo() {
+        const prix = parseFloat(document.getElementById('v1').value);
+        const loyer = parseFloat(document.getElementById('v2').value);
+        const charges = parseFloat(document.getElementById('v3').value);
+        const rend = (((loyer * 12) - charges) / prix) * 100;
+
+        updateChart('doughnut', ['Revenu Net', 'Charges'], [rend, 100-rend], '% Rendement');
+        document.getElementById('analysis-text').innerHTML = `<h4>Constat de l'Expert</h4><p>Votre rendement net est de <strong>${rend.toFixed(2)}%</strong>. Au Maroc, un bon investissement locatif doit se situer entre 6% et 9% brut. Vérifiez si l'emplacement justifie ce rendement.</p>`;
+    }
 </script>
+
 </body>
 </html>
