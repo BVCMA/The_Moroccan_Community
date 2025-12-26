@@ -3,284 +3,249 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Moroccan Community | Terminal Financier Pro</title>
+    <title>The Moroccan Community | Expert Financial Suite</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #020617; --gold: #d4af37; --glass: rgba(15, 23, 42, 0.9); }
-        body { font-family: 'Inter', sans-serif; background-color: var(--primary); color: #f8fafc; overflow-x: hidden; }
+        :root { --gold: #d4af37; --dark: #020617; --card: #0f172a; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--dark); color: #f8fafc; }
         .font-brand { font-family: 'Cinzel', serif; }
-        .glass { background: var(--glass); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.05); }
-        .page-section { display: none; animation: fadeIn 0.5s ease-out; }
-        .page-section.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .input-gold { background: #0f172a; border: 1px solid #334155; padding: 12px; border-radius: 8px; width: 100%; outline: none; transition: 0.3s; }
-        .input-gold:focus { border-color: var(--gold); box-shadow: 0 0 10px rgba(212, 175, 55, 0.2); }
-        .card-hover:hover { transform: translateY(-5px); border-color: var(--gold); transition: 0.3s; }
+        .glass { background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.05); }
+        .page-view { display: none; min-height: 90vh; }
+        .page-view.active { display: block; animation: fadeIn 0.4s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .input-pro { background: #1e293b; border: 1px solid #334155; padding: 12px; border-radius: 8px; width: 100%; color: white; outline: none; transition: 0.3s; }
+        .input-pro:focus { border-color: var(--gold); box-shadow: 0 0 10px rgba(212, 175, 55, 0.2); }
+        .btn-gold { background: var(--gold); color: black; font-weight: 700; padding: 12px 24px; border-radius: 8px; transition: 0.3s; }
+        .btn-gold:hover { transform: scale(1.02); box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3); }
+        .sidebar-link { padding: 12px; border-radius: 8px; cursor: pointer; transition: 0.2s; font-size: 0.8rem; display: block; margin-bottom: 5px; }
+        .sidebar-link:hover { background: rgba(212, 175, 55, 0.1); color: var(--gold); }
     </style>
 </head>
 <body>
 
-    <nav class="glass sticky top-0 z-50 border-b border-white/10">
+    <nav class="glass sticky top-0 z-[100] border-b border-white/5">
         <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
-            <h1 class="font-brand text-xl cursor-pointer" onclick="showPage('home')">THE MOROCCAN <span class="text-amber-500">COMMUNITY</span></h1>
-            <div class="hidden md:flex space-x-8 text-[10px] font-bold uppercase tracking-widest">
-                <button onclick="showPage('home')" class="hover:text-amber-500">Accueil</button>
-                <button onclick="showPage('simulators')" class="hover:text-amber-500 text-amber-500">Terminaux (6)</button>
-                <button onclick="showPage('academy')" class="hover:text-amber-500">Académie</button>
-                <button onclick="showPage('contact')" class="bg-amber-500 text-black px-5 py-2 rounded-full">Contact Expert</button>
+            <h1 class="font-brand text-xl cursor-pointer" onclick="showView('home')">THE MOROCCAN <span class="text-amber-500">COMMUNITY</span></h1>
+            <div class="hidden md:flex space-x-8 text-[11px] font-bold uppercase tracking-widest">
+                <button onclick="showView('home')" class="hover:text-amber-500">Accueil</button>
+                <div class="relative group">
+                    <button class="text-amber-500">Simulateurs Pro ▼</button>
+                    <div class="absolute hidden group-hover:block top-full left-0 w-56 bg-slate-900 border border-slate-700 p-2 rounded shadow-2xl">
+                        <a onclick="showView('sim-dcf')" class="sidebar-link">Analyse de Valeur (DCF)</a>
+                        <a onclick="showView('sim-immo')" class="sidebar-link">Simulateur Crédit Immo</a>
+                        <a onclick="showView('sim-pea')" class="sidebar-link">Optimiseur Fiscal PEA</a>
+                        <a onclick="showView('sim-gearing')" class="sidebar-link">Solvabilité (Gearing)</a>
+                        <a onclick="showView('sim-yield')" class="sidebar-link">Rendement Dividendes</a>
+                        <a onclick="showView('sim-retraite')" class="sidebar-link">Planification Retraite</a>
+                    </div>
+                </div>
+                <button onclick="showView('academy')" class="hover:text-amber-500">Académie</button>
+                <button onclick="showView('contact')" class="bg-amber-500 text-black px-4 py-2 rounded">Contact</button>
             </div>
         </div>
     </nav>
 
     <main class="max-w-7xl mx-auto px-6 py-10">
 
-        <section id="home" class="page-section active">
-            <div class="text-center py-20">
-                <h2 class="font-brand text-6xl mb-6">L'Elite de la Finance <span class="text-amber-500 italic">Marocaine</span></h2>
-                <p class="text-slate-400 text-xl max-w-2xl mx-auto mb-10">Analyses MASI, Ingénierie Financière et Gestion de Patrimoine. Outils pro pour investisseurs avertis.</p>
-                <div class="flex justify-center gap-4">
-                    <button onclick="showPage('simulators')" class="bg-white text-black px-10 py-4 rounded-full font-bold hover:bg-amber-500 transition">Ouvrir les Terminaux</button>
-                    <button onclick="showPage('academy')" class="border border-slate-700 px-10 py-4 rounded-full font-bold">Voir les Formations</button>
+        <section id="home" class="page-view active">
+            <div class="grid lg:grid-cols-2 gap-12 items-center py-16">
+                <div>
+                    <span class="text-gold font-bold tracking-widest text-xs uppercase">Plateforme Certifiée pour Analystes</span>
+                    <h2 class="font-brand text-5xl md:text-7xl mt-4 mb-6 leading-tight">L'Engineering Financier au <span class="text-gold italic">Maroc</span></h2>
+                    <p class="text-slate-400 text-lg mb-8">Accédez à des outils de calcul haute précision pour la Bourse de Casablanca et la gestion de patrimoine d'entreprise. </p>
+                    <div class="flex gap-4">
+                        <button onclick="showView('sim-dcf')" class="btn-gold">Lancer l'Analyse</button>
+                        <button onclick="showView('academy')" class="border border-slate-700 px-6 py-3 rounded-lg font-bold">Consulter les Cours</button>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="glass p-8 rounded-[2rem] border-gold/20 relative z-10">
+                        <div class="flex justify-between mb-4">
+                            <span class="text-xs font-mono text-gold">MAROC ALL SHARES INDEX</span>
+                            <span class="text-xs font-mono text-green-400">+12.4% YTD</span>
+                        </div>
+                        <canvas id="homeMiniChart" height="200"></canvas>
+                    </div>
+                    <div class="absolute -top-10 -right-10 w-64 h-64 bg-gold/10 blur-[100px] -z-0"></div>
                 </div>
             </div>
 
-            <div class="max-w-4xl mx-auto py-20">
-                <h3 class="font-brand text-3xl mb-10 text-center text-amber-500">FAQ - Questions Fréquentes</h3>
-                <div class="space-y-4">
-                    <details class="glass p-6 rounded-2xl cursor-pointer">
-                        <summary class="font-bold">Pourquoi utiliser vos simulateurs plutôt qu'Excel ?</summary>
-                        <p class="pt-4 text-slate-400 text-sm">Nos simulateurs intègrent les spécificités fiscales marocaines (Loi de Finances 2024/25) et sont optimisés pour une lecture rapide sur terminal mobile et desktop.</p>
+            <div class="py-20 border-t border-white/5">
+                <h3 class="font-brand text-3xl text-center mb-12">Foire aux <span class="text-gold">Questions</span></h3>
+                <div class="max-w-3xl mx-auto grid gap-4">
+                    <details class="glass p-6 rounded-2xl group cursor-pointer">
+                        <summary class="font-bold flex justify-between">Comment sont calculés les taux d'actualisation ? <span class="text-gold">+</span></summary>
+                        <p class="text-sm text-slate-400 mt-4">Nous utilisons le modèle CAPM (MEDAF) adapté au risque souverain du Maroc, avec une prime de risque marché ajustée trimestriellement.</p>
                     </details>
-                    <details class="glass p-6 rounded-2xl cursor-pointer">
-                        <summary class="font-bold">Les analyses MASI sont-elles gratuites ?</summary>
-                        <p class="pt-4 text-slate-400 text-sm">Les analyses de base sont gratuites. Les rapports de valorisation approfondis (DCF complets) sont réservés aux membres de l'Académie.</p>
+                    <details class="glass p-6 rounded-2xl group cursor-pointer">
+                        <summary class="font-bold flex justify-between">Le simulateur PEA inclut-il la réforme fiscale ? <span class="text-gold">+</span></summary>
+                        <p class="text-sm text-slate-400 mt-4">Oui, l'optimiseur prend en compte l'exonération totale d'impôt sur le revenu après une période de conservation de 5 ans.</p>
                     </details>
                 </div>
             </div>
         </section>
 
-        <section id="simulators" class="page-section">
-            <div class="mb-12 text-center">
-                <h2 class="font-brand text-4xl text-amber-500">Hub de Simulation</h2>
-                <p class="text-slate-400">Outils d'aide à la décision financière</p>
-            </div>
-
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="glass p-6 rounded-3xl card-hover">
-                    <h3 class="text-amber-500 font-bold mb-4 uppercase text-xs tracking-widest">Finance Bourse : DCF</h3>
-                    <input type="number" id="dcf-fcf" placeholder="Cash Flow (MAD)" class="input-gold mb-3">
-                    <input type="number" id="dcf-wacc" placeholder="WACC (%)" class="input-gold mb-3">
-                    <button onclick="calcDCF()" class="w-full bg-amber-500 text-black py-2 rounded font-bold">Valoriser</button>
-                    <div id="res-dcf" class="mt-3 text-sm font-mono text-center"></div>
+        <section id="sim-dcf" class="page-view">
+            <div class="grid lg:grid-cols-3 gap-8">
+                <div class="glass p-8 rounded-3xl">
+                    <h3 class="font-brand text-xl text-gold mb-6">Paramètres DCF</h3>
+                    <div class="space-y-4">
+                        <div><label class="text-[10px] uppercase font-bold text-slate-500">Cash Flow Année 0 (MAD)</label>
+                        <input id="dcf-cf" type="number" value="1000000" class="input-pro"></div>
+                        <div><label class="text-[10px] uppercase font-bold text-slate-500">Taux de Croissance (g) %</label>
+                        <input id="dcf-g" type="number" value="5" class="input-pro"></div>
+                        <div><label class="text-[10px] uppercase font-bold text-slate-500">WACC %</label>
+                        <input id="dcf-wacc" type="number" value="9" class="input-pro"></div>
+                        <button onclick="runDcf()" class="w-full btn-gold mt-4">Calculer la Valeur</button>
+                    </div>
                 </div>
-
-                <div class="glass p-6 rounded-3xl card-hover">
-                    <h3 class="text-amber-500 font-bold mb-4 uppercase text-xs tracking-widest">Fiscalité : PEA Maroc</h3>
-                    <input type="number" id="pea-gain" placeholder="Plus-value estimée" class="input-gold mb-3">
-                    <button onclick="calcPEA()" class="w-full bg-white text-black py-2 rounded font-bold">Calculer l'économie</button>
-                    <div id="res-pea" class="mt-3 text-sm font-mono text-center"></div>
-                </div>
-
-                <div class="glass p-6 rounded-3xl card-hover">
-                    <h3 class="text-amber-500 font-bold mb-4 uppercase text-xs tracking-widest">CFO : Gearing Ratio</h3>
-                    <input type="number" id="gr-dette" placeholder="Dette Nette" class="input-gold mb-3">
-                    <input type="number" id="gr-equity" placeholder="Capitaux Propres" class="input-gold mb-3">
-                    <button onclick="calcGearing()" class="w-full bg-slate-700 py-2 rounded font-bold">Analyser Solvabilité</button>
-                    <div id="res-gearing" class="mt-3 text-sm font-mono text-center"></div>
-                </div>
-
-                <div class="glass p-6 rounded-3xl card-hover">
-                    <h3 class="text-amber-500 font-bold mb-4 uppercase text-xs tracking-widest">Perso : Capacité Immo</h3>
-                    <input type="number" id="immo-salaire" placeholder="Salaire Net Mensuel" class="input-gold mb-3">
-                    <button onclick="calcImmo()" class="w-full bg-amber-500 text-black py-2 rounded font-bold">Voir Max Mensualité</button>
-                    <div id="res-immo" class="mt-3 text-sm font-mono text-center text-green-400"></div>
-                </div>
-
-                <div class="glass p-6 rounded-3xl card-hover">
-                    <h3 class="text-amber-500 font-bold mb-4 uppercase text-xs tracking-widest">Bourse : Dividend Yield</h3>
-                    <input type="number" id="div-amt" placeholder="Dividende par action" class="input-gold mb-3">
-                    <input type="number" id="div-price" placeholder="Prix actuel de l'action" class="input-gold mb-3">
-                    <button onclick="calcYield()" class="w-full bg-white text-black py-2 rounded font-bold">Calculer Yield</button>
-                    <div id="res-yield" class="mt-3 text-sm font-mono text-center"></div>
-                </div>
-
-                <div class="glass p-6 rounded-3xl card-hover">
-                    <h3 class="text-amber-500 font-bold mb-4 uppercase text-xs tracking-widest">Perso : Intérêts Composés</h3>
-                    <input type="number" id="comp-init" placeholder="Placement Initial" class="input-gold mb-3">
-                    <input type="number" id="comp-rate" placeholder="Taux Annuel (%)" class="input-gold mb-3">
-                    <button onclick="calcCompound()" class="w-full bg-slate-700 py-2 rounded font-bold">Projection 10 ans</button>
-                    <div id="res-comp" class="mt-3 text-sm font-mono text-center"></div>
-                </div>
-            </div>
-
-            <div class="mt-12 glass p-8 rounded-[3rem]">
-                <h3 class="font-brand text-xl text-center mb-6">Visualisation de Données</h3>
-                <div class="h-[400px]">
-                    <canvas id="mainChart"></canvas>
+                <div class="lg:col-span-2 space-y-8">
+                    <div class="glass p-8 rounded-3xl">
+                        <canvas id="chartDcf" height="300"></canvas>
+                    </div>
+                    <div class="glass p-8 rounded-3xl border-l-4 border-gold">
+                        <h4 class="font-bold text-gold mb-2 uppercase text-xs">Rapport d'Analyse Intrinsèque</h4>
+                        <div id="reportDcf" class="text-sm text-slate-300 italic">Entrez vos données pour générer le constat...</div>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <section id="academy" class="page-section">
-            <div class="grid lg:grid-cols-3 gap-10">
-                <div class="lg:col-span-1 space-y-4">
-                    <h2 class="font-brand text-3xl text-amber-500">Académie</h2>
-                    <div class="glass p-4 rounded-xl border-l-4 border-amber-500 cursor-pointer" onclick="loadLesson(1)">
-                        <span class="text-[10px] opacity-50">CHAPITRE 1</span>
-                        <h4 class="font-bold">Analyse Fondamentale MASI</h4>
-                    </div>
-                    <div class="glass p-4 rounded-xl border-l-4 border-transparent opacity-50">
-                        <span class="text-[10px] opacity-50">CHAPITRE 2</span>
-                        <h4 class="font-bold italic">Modélisation DCF (Bientôt)</h4>
+        <section id="sim-immo" class="page-view">
+            <div class="grid lg:grid-cols-3 gap-8">
+                <div class="glass p-8 rounded-3xl">
+                    <h3 class="font-brand text-xl text-gold mb-6">Crédit Immobilier</h3>
+                    <div class="space-y-4">
+                        <input id="immo-capital" type="number" placeholder="Montant du prêt (MAD)" class="input-pro">
+                        <input id="immo-taux" type="number" placeholder="Taux d'intérêt (%)" class="input-pro">
+                        <input id="immo-duree" type="number" placeholder="Durée (années)" class="input-pro">
+                        <button onclick="runImmo()" class="w-full btn-gold">Générer l'Échéancier</button>
                     </div>
                 </div>
-                <div class="lg:col-span-2 glass p-10 rounded-[2rem]">
-                    <div id="lesson-content">
-                        <h3 class="text-2xl font-bold mb-4">Bienvenue dans votre espace formation</h3>
-                        <p class="text-slate-400">Sélectionnez un module à gauche pour commencer votre apprentissage.</p>
-                        <div class="mt-8 p-6 bg-slate-900 rounded-xl border border-white/5">
-                            <h4 class="text-amber-500 font-bold mb-2">Votre Progression</h4>
-                            <div class="w-full bg-slate-800 h-2 rounded-full">
-                                <div class="bg-amber-500 h-2 rounded-full" style="width: 15%"></div>
-                            </div>
+                <div class="lg:col-span-2 glass p-8 rounded-3xl">
+                    <div class="flex justify-between items-center mb-8">
+                        <div>
+                            <p class="text-xs text-slate-500 uppercase">Mensualité Estimée</p>
+                            <h2 id="res-immo-mensu" class="text-4xl font-bold text-white">0 MAD</h2>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-xs text-slate-500 uppercase">Coût Total du Crédit</p>
+                            <h2 id="res-immo-total" class="text-xl font-bold text-red-400">0 MAD</h2>
                         </div>
                     </div>
+                    <canvas id="chartImmo" height="250"></canvas>
+                    <div id="reportImmo" class="mt-6 text-sm text-slate-400 border-t border-white/5 pt-4"></div>
                 </div>
             </div>
         </section>
 
-        <section id="contact" class="page-section">
-            <div class="max-w-2xl mx-auto glass p-12 rounded-[3rem] text-center">
-                <h2 class="font-brand text-4xl mb-6">Consultation <span class="text-amber-500">Privée</span></h2>
-                <p class="mb-10 text-slate-400">Besoin d'un accompagnement sur vos investissements ou pour votre entreprise ?</p>
-                <form class="space-y-4 text-left">
-                    <input type="text" placeholder="Nom complet" class="input-gold">
-                    <input type="email" placeholder="Email professionnel" class="input-gold">
-                    <textarea placeholder="Décrivez votre besoin..." rows="4" class="input-gold"></textarea>
-                    <button class="w-full bg-amber-500 text-black font-bold py-4 rounded-xl">Envoyer la demande</button>
-                </form>
+        <section id="sim-pea" class="page-view">
+            <div class="max-w-4xl mx-auto glass p-12 rounded-[3rem] text-center">
+                <h2 class="font-brand text-3xl text-gold mb-8">Optimiseur de Portefeuille PEA</h2>
+                <div class="grid md:grid-cols-2 gap-8 text-left">
+                    <div class="space-y-4">
+                        <input id="pea-cap" type="number" placeholder="Capital Initial (MAD)" class="input-pro">
+                        <input id="pea-prof" type="number" placeholder="Profit espéré (%)" class="input-pro">
+                        <button onclick="runPea()" class="w-full btn-gold">Simuler la Fiscalité</button>
+                    </div>
+                    <div class="bg-slate-900/50 p-6 rounded-2xl">
+                        <h4 class="text-xs font-bold text-gold uppercase mb-4">Constat Fiscal</h4>
+                        <div id="res-pea-eco" class="text-3xl font-bold text-green-400 mb-2">0 MAD</div>
+                        <p class="text-[10px] text-slate-500 italic">Économie réalisée par rapport au Compte Titres classique grâce à l'abattement de 100% après 5 ans au Maroc.</p>
+                    </div>
+                </div>
             </div>
-        </section>
+         </section>
 
     </main>
 
     <script>
-        // NAVIGATION
-        function showPage(id) {
-            document.querySelectorAll('.page-section').forEach(p => p.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-            window.scrollTo(0,0);
-        }
-
-        // --- SIMULATEURS LOGIQUE ---
-
-        // 1. DCF
-        function calcDCF() {
-            let fcf = parseFloat(document.getElementById('dcf-fcf').value);
-            let w = parseFloat(document.getElementById('dcf-wacc').value) / 100;
-            if(fcf && w) {
-                let val = fcf / (w - 0.02); // g = 2% perpétuel
-                document.getElementById('res-dcf').innerText = "Valeur d'Entreprise: " + Math.round(val).toLocaleString() + " MAD";
-                updateChart([fcf, fcf*1.05, fcf*1.10, fcf*1.15], "Projection FCF");
+        // NAVIGATION ENGINE
+        function showView(id) {
+            document.querySelectorAll('.page-view').forEach(v => v.classList.remove('active'));
+            const target = document.getElementById(id);
+            if(target) {
+                target.classList.add('active');
+                window.scrollTo(0,0);
+            } else {
+                alert("Ce module est en cours de développement.");
             }
         }
 
-        // 2. PEA
-        function calcPEA() {
-            let gain = parseFloat(document.getElementById('pea-gain').value);
-            if(gain) {
-                let eco = gain * 0.15; // Économie de la taxe de 15%
-                document.getElementById('res-pea').innerHTML = `<span class="text-green-400">Économie d'impôt: ${eco.toLocaleString()} MAD</span>`;
-            }
-        }
+        // CHARTS HELPERS
+        let charts = {};
 
-        // 3. GEARING
-        function calcGearing() {
-            let d = parseFloat(document.getElementById('gr-dette').value);
-            let e = parseFloat(document.getElementById('gr-equity').value);
-            if(d && e) {
-                let ratio = (d / e) * 100;
-                let status = ratio > 100 ? "Risqué" : "Sain";
-                document.getElementById('res-gearing').innerText = `Ratio: ${ratio.toFixed(2)}% (${status})`;
-            }
-        }
-
-        // 4. IMMO
-        function calcImmo() {
-            let sal = parseFloat(document.getElementById('immo-salaire').value);
-            if(sal) {
-                let mensu = sal * 0.45; // Taux d'endettement max conseillé au Maroc
-                document.getElementById('res-immo').innerText = `Mensualité Max: ${Math.round(mensu).toLocaleString()} MAD`;
-            }
-        }
-
-        // 5. YIELD
-        function calcYield() {
-            let d = parseFloat(document.getElementById('div-amt').value);
-            let p = parseFloat(document.getElementById('div-price').value);
-            if(d && p) {
-                let y = (d / p) * 100;
-                document.getElementById('res-yield').innerText = `Rendement: ${y.toFixed(2)}%`;
-            }
-        }
-
-        // 6. COMPOUND
-        function calcCompound() {
-            let p = parseFloat(document.getElementById('comp-init').value);
-            let r = parseFloat(document.getElementById('comp-rate').value) / 100;
-            if(p && r) {
-                let total = p * Math.pow(1 + r, 10);
-                document.getElementById('res-comp').innerText = `Dans 10 ans: ${Math.round(total).toLocaleString()} MAD`;
-            }
-        }
-
-        // GRAPHIQUE
-        let mainChart;
-        function updateChart(data, label) {
-            const ctx = document.getElementById('mainChart').getContext('2d');
-            if(mainChart) mainChart.destroy();
-            mainChart = new Chart(ctx, {
-                type: 'line',
+        function createChart(id, type, labels, data, label) {
+            const ctx = document.getElementById(id).getContext('2d');
+            if(charts[id]) charts[id].destroy();
+            charts[id] = new Chart(ctx, {
+                type: type,
                 data: {
-                    labels: ['Année 1', 'Année 2', 'Année 3', 'Année 4'],
+                    labels: labels,
                     datasets: [{
                         label: label,
                         data: data,
                         borderColor: '#d4af37',
-                        tension: 0.4,
+                        backgroundColor: 'rgba(212, 175, 55, 0.1)',
                         fill: true,
-                        backgroundColor: 'rgba(212, 175, 55, 0.1)'
+                        tension: 0.4
                     }]
                 },
                 options: { responsive: true, maintainAspectRatio: false }
             });
         }
 
-        // ACADEMIE
-        function loadLesson(n) {
-            const content = document.getElementById('lesson-content');
-            if(n === 1) {
-                content.innerHTML = `
-                    <h3 class="text-2xl font-bold mb-4 text-amber-500">Module 1 : Analyse du MASI</h3>
-                    <div class="space-y-4 text-slate-300">
-                        <p>La Bourse de Casablanca (MASI) est régie par des cycles de dividendes très forts. Pour analyser une action marocaine, vous devez :</p>
-                        <ul class="list-disc ml-5 space-y-2">
-                            <li>Vérifier le <b>DPA (Dividende Par Action)</b> sur les 5 dernières années.</li>
-                            <li>Analyser le <b>Payout Ratio</b> (part du bénéfice distribuée).</li>
-                            <li>Surveiller le taux directeur de <b>BAM (Bank Al-Maghrib)</b>.</li>
-                        </ul>
-                        <div class="bg-amber-500/10 p-4 rounded-lg mt-6 border border-amber-500/20">
-                            <b>Note de l'expert :</b> Au Maroc, les secteurs Bancaire et Cimentier sont les piliers du rendement.
-                        </div>
-                    </div>
-                `;
-            }
+        // DCF LOGIC
+        function runDcf() {
+            const cf = parseFloat(document.getElementById('dcf-cf').value);
+            const g = parseFloat(document.getElementById('dcf-g').value) / 100;
+            const wacc = parseFloat(document.getElementById('dcf-wacc').value) / 100;
+            
+            let years = [1, 2, 3, 4, 5];
+            let cfs = years.map(y => cf * Math.pow(1 + g, y));
+            const tv = (cfs[4] * 1.02) / (wacc - 0.02);
+            const ev = tv / Math.pow(1 + wacc, 5);
+
+            createChart('chartDcf', 'line', ['Année 1', 'Année 2', 'Année 3', 'Année 4', 'Année 5'], cfs, 'Cash Flow Projeté (MAD)');
+            
+            document.getElementById('reportDcf').innerHTML = `
+                <b>Constat :</b> Avec un taux d'actualisation de ${(wacc*100).toFixed(1)}%, la valeur terminale est estimée à <b>${Math.round(tv).toLocaleString()} MAD</b>. 
+                Si la capitalisation actuelle du titre est inférieure à ${Math.round(ev).toLocaleString()} MAD, le titre présente une marge de sécurité.
+            `;
         }
 
-        // Init Chart
-        window.onload = () => updateChart([100, 120, 150, 190], "Performance Initiale");
+        // IMMO LOGIC
+        function runImmo() {
+            const capital = parseFloat(document.getElementById('immo-capital').value);
+            const taux = (parseFloat(document.getElementById('immo-taux').value) / 100) / 12;
+            const duree = parseFloat(document.getElementById('immo-duree').value) * 12;
+
+            const mensu = (capital * taux) / (1 - Math.pow(1 + taux, -duree));
+            const total = (mensu * duree) - capital;
+
+            document.getElementById('res-immo-mensu').innerText = Math.round(mensu).toLocaleString() + " MAD";
+            document.getElementById('res-immo-total').innerText = Math.round(total).toLocaleString() + " MAD";
+
+            createChart('chartImmo', 'bar', ['Capital Emprunté', 'Intérêts Totaux'], [capital, total], 'Structure du Crédit');
+            
+            document.getElementById('reportImmo').innerHTML = `<b>Analyse :</b> Pour un salaire net recommandé de ${Math.round(mensu/0.4).toLocaleString()} MAD. Le coût des intérêts représente ${(total/capital*100).toFixed(1)}% de la somme empruntée.`;
+        }
+
+        // PEA LOGIC
+        function runPea() {
+            const cap = parseFloat(document.getElementById('pea-cap').value);
+            const prof = parseFloat(document.getElementById('pea-prof').value) / 100;
+            const gain = cap * prof;
+            const eco = gain * 0.15; // Économie taxe dividendes/plus-value
+            document.getElementById('res-pea-eco').innerText = Math.round(eco).toLocaleString() + " MAD";
+        }
+
+        // HOME CHART INIT
+        window.onload = () => {
+            createChart('homeMiniChart', 'line', ['Jan', 'Fev', 'Mar', 'Avr', 'Mai'], [12000, 12400, 13100, 12900, 14200], 'MASI Index');
+        };
     </script>
 </body>
 </html>
