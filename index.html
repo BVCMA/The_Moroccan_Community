@@ -24,7 +24,6 @@ margin:0;
 font-family:'Space Grotesk',sans-serif;
 background:var(--bg);
 color:var(--text);
-overflow-x:hidden;
 }
 .bg-anim{
 position:fixed;inset:0;
@@ -37,16 +36,15 @@ animation:float 18s infinite alternate;
 @keyframes float{to{transform:translateY(-40px)}}
 
 nav{
-position:sticky;top:0;z-index:100;
+position:sticky;top:0;
 display:flex;justify-content:space-between;align-items:center;
 padding:25px 6%;
-backdrop-filter:blur(15px);
 border-bottom:1px solid var(--border);
+backdrop-filter:blur(15px);
 }
 .logo{
 font-family:'Playfair Display',serif;
 font-size:1.6rem;
-font-style:italic;
 color:var(--accent);
 cursor:pointer;
 }
@@ -60,12 +58,12 @@ cursor:pointer;
 }
 .nav-links a:hover{color:var(--accent)}
 
-.page{display:none;padding:90px 6%;animation:fade .6s ease}
-.page.active{display:block}
-@keyframes fade{from{opacity:0;transform:translateY(30px)}to{opacity:1}}
+.page{display:none;padding:90px 6%}
+.page.active{display:block;animation:fade .5s ease}
+@keyframes fade{from{opacity:0;transform:translateY(25px)}to{opacity:1}}
 
 .hero{
-min-height:80vh;
+min-height:75vh;
 display:grid;
 grid-template-columns:1.2fr 1fr;
 gap:60px;
@@ -73,37 +71,28 @@ align-items:center;
 }
 .hero h1{font-size:clamp(3rem,7vw,5.2rem);margin:0}
 .hero span{color:var(--accent)}
-.hero p{font-size:1.2rem;color:var(--dim);margin:30px 0}
+.hero p{color:var(--dim);font-size:1.2rem;margin:30px 0}
+
 .btn{
 background:linear-gradient(135deg,var(--accent),var(--accent2));
 color:#000;
 padding:18px 40px;
 font-weight:700;
-letter-spacing:2px;
-cursor:pointer;
 border:none;
+cursor:pointer;
 }
 
 .grid{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-gap:35px;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:40px;
 }
 .card{
 background:var(--surface);
 border:1px solid var(--border);
 padding:35px;
-position:relative;
-overflow:hidden;
 }
-.card::after{
-content:"";
-position:absolute;
-inset:0;
-background:linear-gradient(120deg,transparent,rgba(255,255,255,.06),transparent);
-transform:translateX(-100%);
-}
-.card:hover::after{transform:translateX(100%)}
+.card h3{margin-top:0}
 
 input{
 width:100%;
@@ -116,6 +105,14 @@ margin-bottom:20px;
 font-size:1.05rem;
 }
 input:focus{outline:none;border-color:var(--accent)}
+
+.analysis{
+margin-top:25px;
+padding:20px;
+border-left:4px solid var(--accent);
+background:#1b1b22;
+color:var(--dim);
+}
 canvas{margin-top:30px}
 </style>
 </head>
@@ -127,9 +124,7 @@ canvas{margin-top:30px}
 <div class="logo" onclick="showPage('home')">The Moroccan Community.</div>
 <div class="nav-links">
 <a onclick="showPage('home')">Accueil</a>
-<a onclick="showPage('sim')">Simulateurs</a>
 <a onclick="showPage('compare')">Comparateurs</a>
-<a onclick="showPage('contact')">Contact</a>
 </div>
 </nav>
 
@@ -137,58 +132,44 @@ canvas{margin-top:30px}
 <div id="home" class="page active">
 <div class="hero">
 <div>
-<h1>Comprendre.<br><span>Comparer.</span><br>Décider.</h1>
-<p>Plateforme fintech marocaine d’analyse et de comparaison financière.</p>
-<button class="btn" onclick="showPage('compare')">Comparer maintenant</button>
+<h1>Comparer pour mieux<br><span>décider</span></h1>
+<p>Visualisez l’impact réel de vos décisions financières dans le temps.</p>
+<button class="btn" onclick="showPage('compare')">Lancer une comparaison</button>
 </div>
 <div class="grid">
-<div class="card"><h3>Analyse</h3><p>Décisions basées sur les données.</p></div>
-<div class="card"><h3>Visualisation</h3><p>Graphiques clairs et pédagogiques.</p></div>
+<div class="card"><h3>Évolution</h3><p>Analyse année par année.</p></div>
+<div class="card"><h3>Compréhension</h3><p>Messages clairs et pédagogiques.</p></div>
 </div>
-</div>
-</div>
-
-<!-- SIMULATORS -->
-<div id="sim" class="page">
-<h2>Simulateurs financiers</h2>
-<div class="grid">
-<div class="card"><h3>DCF</h3><p>Valeur intrinsèque</p></div>
-<div class="card"><h3>Rendement</h3><p>Dividend Yield</p></div>
-<div class="card"><h3>WACC</h3><p>Coût du capital</p></div>
 </div>
 </div>
 
 <!-- COMPARATORS -->
 <div id="compare" class="page">
-<h2>Comparateurs interactifs</h2>
+<h2>Comparateurs financiers</h2>
 
-<!-- Investir vs Epargner -->
+<!-- Invest vs Save -->
 <div class="card">
 <h3>Investir vs Épargner</h3>
-<input id="c1" placeholder="Montant initial (DH)">
-<input id="c2" placeholder="Durée (années)">
-<input id="c3" placeholder="Rendement investissement %">
-<input id="c4" placeholder="Taux épargne %">
+<input id="m" placeholder="Capital initial (DH)">
+<input id="t" placeholder="Durée (années)">
+<input id="ri" placeholder="Rendement investissement %">
+<input id="re" placeholder="Taux épargne %">
 <button class="btn" onclick="compareInvest()">Comparer</button>
 <canvas id="chart1"></canvas>
+<div id="analysis1" class="analysis"></div>
 </div>
 
-<!-- Action vs Immobilier -->
-<div class="card" style="margin-top:40px">
+<!-- Assets -->
+<div class="card" style="margin-top:50px">
 <h3>Actions vs Immobilier</h3>
-<input id="a1" placeholder="Capital initial (DH)">
-<input id="a2" placeholder="Rendement actions %">
-<input id="a3" placeholder="Rendement immobilier %">
-<input id="a4" placeholder="Durée (années)">
+<input id="c" placeholder="Capital initial (DH)">
+<input id="ra" placeholder="Rendement actions %">
+<input id="rim" placeholder="Rendement immobilier %">
+<input id="ta" placeholder="Durée (années)">
 <button class="btn" onclick="compareAssets()">Comparer</button>
 <canvas id="chart2"></canvas>
+<div id="analysis2" class="analysis"></div>
 </div>
-</div>
-
-<!-- CONTACT -->
-<div id="contact" class="page">
-<h2>Contact</h2>
-<p>📧 contact@themoroccancommunity.ma</p>
 </div>
 
 <script>
@@ -201,34 +182,54 @@ window.scrollTo(0,0);
 }
 
 function compareInvest(){
-const m=+c1.value,t=+c2.value,ri=+c3.value/100,re=+c4.value/100;
-const invest=m*Math.pow(1+ri,t);
-const save=m*Math.pow(1+re,t);
+const capital=+m.value,years=+t.value,riVal=+ri.value/100,reVal=+re.value/100;
+let labels=[],inv=[],sav=[];
+for(let i=0;i<=years;i++){
+labels.push("Année "+i);
+inv.push(capital*Math.pow(1+riVal,i));
+sav.push(capital*Math.pow(1+reVal,i));
+}
 if(chart1)chart1.destroy();
 chart1=new Chart(chart1Canvas(),{
-type:'bar',
+type:'line',
 data:{
-labels:['Investir','Épargner'],
-datasets:[{data:[invest,save],backgroundColor:['#d4af37','#4fa3ff']}]
+labels,
+datasets:[
+{label:'Investir',data:inv,borderColor:'#d4af37',fill:false},
+{label:'Épargner',data:sav,borderColor:'#4fa3ff',fill:false}
+]
 }
-});
+);
+const diff=inv[years]-sav[years];
+analysis1.innerHTML=`Après ${years} ans, l’investissement génère <b>${diff.toFixed(0)} DH</b> de plus que l’épargne. 
+Plus l’horizon est long, plus l’écart se creuse.`;
 }
-function chart1Canvas(){return document.getElementById('chart1');}
 
 function compareAssets(){
-const c=+a1.value,ra=+a2.value/100,ri=+a3.value/100,t=+a4.value;
-const action=c*Math.pow(1+ra,t);
-const immo=c*Math.pow(1+ri,t);
+const capital=+c.value,years=+ta.value,raVal=+ra.value/100,riVal=+rim.value/100;
+let labels=[],act=[],immo=[];
+for(let i=0;i<=years;i++){
+labels.push("Année "+i);
+act.push(capital*Math.pow(1+raVal,i));
+immo.push(capital*Math.pow(1+riVal,i));
+}
 if(chart2)chart2.destroy();
 chart2=new Chart(chart2Canvas(),{
-type:'bar',
+type:'line',
 data:{
-labels:['Actions','Immobilier'],
-datasets:[{data:[action,immo],backgroundColor:['#d4af37','#4fa3ff']}]
+labels,
+datasets:[
+{label:'Actions',data:act,borderColor:'#d4af37',fill:false},
+{label:'Immobilier',data:immo,borderColor:'#4fa3ff',fill:false}
+]
 }
-});
+);
+analysis2.innerHTML=`Les actions offrent un potentiel de rendement supérieur mais plus volatile. 
+L’immobilier reste plus stable et orienté long terme.`;
 }
-function chart2Canvas(){return document.getElementById('chart2');}
+
+function chart1Canvas(){return document.getElementById('chart1')}
+function chart2Canvas(){return document.getElementById('chart2')}
 </script>
 
 </body>
