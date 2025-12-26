@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guide Bourse de Casablanca - Interactif</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #F9FAFB; color: #1F2937; }
+        .chart-container { position: relative; width: 100%; max-width: 600px; margin: 0 auto; height: 350px; max-height: 400px; }
+        .step-card { transition: all 0.3s ease; border-left: 4px solid transparent; }
+        .step-card.active { border-left-color: #D97706; background-color: #FFFBEB; }
+        .interactive-panel { background: white; border-radius: 0.75rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
+        /* Custom scrollbar for checklist */
+        .checklist-item.checked { text-decoration: line-through; color: #9CA3AF; }
+    </style>
+    <!-- Chosen Palette: Warm Neutrals & Professional Gold. Background: #F9FAFB (Cool Gray 50). Accents: #D97706 (Amber 600) for actions/money, #4B5563 (Gray 600) for text. -->
+    <!-- Application Structure Plan: The app transforms the linear guide into a 5-step interactive journey: "Comprendre" (Intro), "Choisir" (Intermediary), "Ouvrir" (Docs & Account Type), "Calculer" (Fees & Taxes), and "Agir" (Trading Simulator). This structure breaks down complex financial info into actionable tasks. -->
+    <!-- Visualization & Content Choices: 
+         1. PEA vs CTO Simulator: Bar Chart. Goal: Inform/Compare. Justification: Visually demonstrates the massive tax advantage of the PEA mentioned in the report (0% vs 20%), making the abstract "fiscalité" concrete.
+         2. Cost Breakdown: Doughnut Chart. Goal: Inform/Organize. Justification: Shows the proportion of fees (Brokerage, VAT) relative to investment, clarifying the "Commissions" table.
+         3. Interactive Checklist: HTML/JS. Goal: Organize. Justification: Gamifies the document preparation step.
+         4. Order Simulator: Form/Interactive UI. Goal: Change/Learn. Justification: Demystifies the "Premier Ordre" section by letting users practice without risk.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+</head>
+<body class="bg-gray-50">
+
+    <!-- Navigation -->
+    <nav class="bg-white border-b border-gray-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <span class="text-2xl font-bold text-gray-800">🏛️ Bourse<span class="text-amber-600">Guide</span></span>
+                </div>
+                <div class="hidden sm:flex space-x-8 items-center">
+                    <button onclick="scrollToSection('intro')" class="text-gray-600 hover:text-amber-600 px-3 py-2 rounded-md text-sm font-medium">Introduction</button>
+                    <button onclick="scrollToSection('partner')" class="text-gray-600 hover:text-amber-600 px-3 py-2 rounded-md text-sm font-medium">Intermédiaire</button>
+                    <button onclick="scrollToSection('account')" class="text-gray-600 hover:text-amber-600 px-3 py-2 rounded-md text-sm font-medium">Fiscalité (PEA)</button>
+                    <button onclick="scrollToSection('fees')" class="text-gray-600 hover:text-amber-600 px-3 py-2 rounded-md text-sm font-medium">Frais</button>
+                    <button onclick="scrollToSection('trade')" class="text-gray-600 hover:text-amber-600 px-3 py-2 rounded-md text-sm font-medium">Simulateur</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header id="intro" class="bg-white shadow-sm pb-12 pt-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-4xl font-extrabold text-gray-900 tracking-tight sm:text-5xl mb-4">
+                Investir à la Bourse de Casablanca
+            </h1>
+            <p class="mt-4 max-w-2xl mx-auto text-xl text-gray-500">
+                Diversifiez votre patrimoine et préparez l'avenir. Un guide professionnel pour les résidents et non-résidents.
+            </p>
+            <div class="mt-8 flex justify-center gap-4">
+                <div class="bg-amber-50 p-4 rounded-lg text-amber-800 text-sm font-semibold border border-amber-200">
+                    💰 Dividendes
+                </div>
+                <div class="bg-amber-50 p-4 rounded-lg text-amber-800 text-sm font-semibold border border-amber-200">
+                    📈 Plus-values
+                </div>
+                <div class="bg-amber-50 p-4 rounded-lg text-amber-800 text-sm font-semibold border border-amber-200">
+                    🛡️ Épargne Réglementée
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-16">
+
+        <!-- STEP 1: Intermediary Selection -->
+        <section id="partner" class="grid md:grid-cols-12 gap-8">
+            <div class="md:col-span-4">
+                <h2 class="text-2xl font-bold text-gray-900 mb-4">1. Choisissez votre Allié</h2>
+                <p class="text-gray-600 mb-6">
+                    Impossible d'acheter directement. Vous devez passer par un intermédiaire agréé. C'est la première étape fondamentale.
+                </p>
+                <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+                    <h3 class="font-semibold text-lg mb-4">Documents Requis 📝</h3>
+                    <ul class="space-y-3" id="doc-checklist">
+                        <li class="flex items-center cursor-pointer p-2 hover:bg-gray-50 rounded" onclick="toggleCheck(this)">
+                            <span class="mr-3 text-2xl text-gray-300 status-icon">⬜</span>
+                            <span>Copie CIN / Carte Résidence</span>
+                        </li>
+                        <li class="flex items-center cursor-pointer p-2 hover:bg-gray-50 rounded" onclick="toggleCheck(this)">
+                            <span class="mr-3 text-2xl text-gray-300 status-icon">⬜</span>
+                            <span>Justificatif Domicile (< 3 mois)</span>
+                        </li>
+                        <li class="flex items-center cursor-pointer p-2 hover:bg-gray-50 rounded" onclick="toggleCheck(this)">
+                            <span class="mr-3 text-2xl text-gray-300 status-icon">⬜</span>
+                            <span>RIB Bancaire</span>
+                        </li>
+                        <li class="flex items-center cursor-pointer p-2 hover:bg-gray-50 rounded" onclick="toggleCheck(this)">
+                            <span class="mr-3 text-2xl text-gray-300 status-icon">⬜</span>
+                            <span>Convention Signée</span>
+                        </li>
+                    </ul>
+                    <p class="text-xs text-gray-400 mt-4 italic text-center">Cliquez pour cocher vos documents prêts</p>
+                </div>
+            </div>
+
+            <div class="md:col-span-8 grid md:grid-cols-2 gap-6">
+                <!-- Option 1 -->
+                <div class="interactive-panel p-6 border-t-4 border-blue-500 hover:shadow-lg transition-shadow">
+                    <div class="text-4xl mb-4">🏦</div>
+                    <h3 class="text-xl font-bold text-gray-900">Votre Banque</h3>
+                    <p class="text-sm text-blue-600 font-semibold mb-4">Réseau Bancaire Classique</p>
+                    <ul class="text-gray-600 text-sm space-y-2 mb-6">
+                        <li>✅ Simplicité : tout au même endroit.</li>
+                        <li>✅ Virements instantanés compte courant vers compte titres.</li>
+                        <li>✅ Idéal pour : Attijari, BCP, BoA, SG...</li>
+                    </ul>
+                    <button class="w-full py-2 bg-blue-50 text-blue-700 rounded hover:bg-blue-100 font-medium text-sm">Solution Pratique</button>
+                </div>
+                <!-- Option 2 -->
+                <div class="interactive-panel p-6 border-t-4 border-amber-500 hover:shadow-lg transition-shadow">
+                    <div class="text-4xl mb-4">📊</div>
+                    <h3 class="text-xl font-bold text-gray-900">Société de Bourse</h3>
+                    <p class="text-sm text-amber-600 font-semibold mb-4">Spécialiste Indépendant</p>
+                    <ul class="text-gray-600 text-sm space-y-2 mb-6">
+                        <li>✅ Conseils souvent plus pointus.</li>
+                        <li>✅ Plateformes de trading avancées.</li>
+                        <li>✅ Exemples : Valoris, CFG, CDG Capital...</li>
+                    </ul>
+                    <button class="w-full py-2 bg-amber-50 text-amber-700 rounded hover:bg-amber-100 font-medium text-sm">Solution Expert</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- STEP 2: Account Type & Tax Simulator -->
+        <section id="account" class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+            <div class="p-8 border-b border-gray-100">
+                <div class="max-w-3xl">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-2">2. Optimisez votre Fiscalité (Crucial)</h2>
+                    <p class="text-gray-600">
+                        Le choix entre un Compte Titres Ordinaire (CTO) et un Plan d'Épargne Actions (PEA) détermine combien d'impôts vous paierez sur vos gains. 
+                        <strong>Le PEA est recommandé pour le long terme (> 5 ans).</strong>
+                    </p>
+                </div>
+            </div>
+            
+            <div class="grid md:grid-cols-2">
+                <div class="p-8 bg-gray-50">
+                    <h3 class="font-bold text-lg mb-6">Comparateur de Gains Nets</h3>
+                    
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Investissement Initial (DH)</label>
+                        <input type="number" id="investInput" value="100000" class="w-full p-2 border border-gray-300 rounded focus:ring-amber-500 focus:border-amber-500">
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Plus-value estimée après 5 ans (%)</label>
+                        <input type="range" id="gainInput" min="5" max="100" value="30" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-amber-600">
+                        <div class="flex justify-between text-xs text-gray-500 mt-1">
+                            <span>5%</span>
+                            <span id="gainValueDisplay">30%</span>
+                            <span>100%</span>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center p-3 bg-white rounded border border-gray-200">
+                            <div>
+                                <span class="block font-bold text-gray-900">CTO (Ordinaire)</span>
+                                <span class="text-xs text-gray-500">Taxe: 20% sur profits</span>
+                            </div>
+                            <span id="ctoResult" class="font-mono text-red-600 font-bold">- DH</span>
+                        </div>
+                        <div class="flex justify-between items-center p-3 bg-amber-50 rounded border border-amber-200 relative">
+                            <div class="absolute -top-3 -right-3 bg-amber-600 text-white text-xs px-2 py-1 rounded-full shadow">Recommandé</div>
+                            <div>
+                                <span class="block font-bold text-amber-900">PEA (Plan Épargne)</span>
+                                <span class="text-xs text-amber-700">Taxe: 0% (si > 5 ans)</span>
+                            </div>
+                            <span id="peaResult" class="font-mono text-green-600 font-bold">- DH</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-8 flex items-center justify-center bg-white">
+                    <div class="chart-container">
+                        <canvas id="taxChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- STEP 3: Fees Breakdown -->
+        <section id="fees" class="grid md:grid-cols-12 gap-8 items-center">
+            <div class="md:col-span-5 order-2 md:order-1">
+                <div class="chart-container h-64">
+                    <canvas id="feesChart"></canvas>
+                </div>
+            </div>
+            <div class="md:col-span-7 order-1 md:order-2">
+                <h2 class="text-2xl font-bold text-gray-900 mb-4">3. Comprendre les Frais Réels</h2>
+                <p class="text-gray-600 mb-6">
+                    Investir comporte des coûts. Voici une estimation moyenne pour un ordre d'achat.
+                    <span class="block text-sm text-gray-400 mt-2">*Les taux varient selon les intermédiaires (0.6% - 1.1%).</span>
+                </p>
+
+                <div class="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Montant de votre ordre (DH)</label>
+                    <div class="flex gap-4">
+                        <input type="number" id="feeOrderInput" value="10000" class="flex-1 p-2 border border-gray-300 rounded focus:ring-amber-500 focus:border-amber-500">
+                        <button id="calculateFeesBtn" class="bg-gray-800 text-white px-6 py-2 rounded hover:bg-gray-700">Calculer</button>
+                    </div>
+                    
+                    <div class="mt-6 grid grid-cols-3 gap-4 text-center">
+                        <div>
+                            <span class="block text-xs text-gray-500 uppercase">Courtage (HT)</span>
+                            <span id="brokerageFee" class="block font-bold text-gray-800">0 DH</span>
+                        </div>
+                        <div>
+                            <span class="block text-xs text-gray-500 uppercase">TVA (10%)</span>
+                            <span id="vatFee" class="block font-bold text-gray-800">0 DH</span>
+                        </div>
+                        <div>
+                            <span class="block text-xs text-gray-500 uppercase">Total Frais</span>
+                            <span id="totalFee" class="block font-bold text-red-600">0 DH</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- STEP 4: Trading Simulator -->
+        <section id="trade" class="bg-gray-900 text-white rounded-2xl shadow-xl overflow-hidden">
+            <div class="p-8 md:p-12">
+                <div class="md:flex justify-between items-start mb-8">
+                    <div class="max-w-xl">
+                        <h2 class="text-3xl font-bold mb-4">4. Entraînez-vous : Passer un Ordre</h2>
+                        <p class="text-gray-400">
+                            Familiarisez-vous avec l'interface avant de vous lancer. 
+                            <strong>Conseil Pro :</strong> Privilégiez l'ordre "À cours limité" pour maîtriser votre prix d'achat.
+                        </p>
+                    </div>
+                    <div class="mt-4 md:mt-0 bg-gray-800 p-4 rounded-lg border border-gray-700">
+                        <span class="text-xs text-gray-400 uppercase tracking-wide">Solde Espèces (Fictif)</span>
+                        <div class="text-2xl font-mono text-green-400">50,000.00 MAD</div>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-12">
+                    <!-- Simulator Form -->
+                    <div class="bg-white text-gray-900 p-6 rounded-lg shadow-lg">
+                        <div class="flex justify-between items-center mb-6 border-b pb-4">
+                            <h3 class="font-bold text-lg">Ticket d'Ordre</h3>
+                            <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded font-bold">ACHAT</span>
+                        </div>
+
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Valeur</label>
+                                <select class="w-full p-2 border border-gray-300 rounded bg-gray-50">
+                                    <option>MAROC TELECOM (IAM)</option>
+                                    <option>ATTIJARIWAFA BANK (ATW)</option>
+                                    <option>CIMENTS DU MAROC (CMA)</option>
+                                </select>
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Quantité</label>
+                                    <input type="number" id="simQty" value="10" class="w-full p-2 border border-gray-300 rounded">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Type d'Ordre</label>
+                                    <select id="simType" class="w-full p-2 border border-gray-300 rounded" onchange="toggleLimitPrice()">
+                                        <option value="market">Au Marché (ATP)</option>
+                                        <option value="limit" selected>À Cours Limité</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div id="limitPriceGroup">
+                                <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Prix Limite (MAD)</label>
+                                <input type="number" id="simPrice" value="100.00" class="w-full p-2 border border-gray-300 rounded font-mono text-right">
+                                <p class="text-xs text-gray-500 mt-1">Vous n'acheterez pas au-dessus de ce prix.</p>
+                            </div>
+
+                            <div class="pt-4 border-t mt-4 flex justify-between items-center">
+                                <span class="text-sm font-bold text-gray-600">Estimation Total :</span>
+                                <span id="simTotal" class="text-xl font-bold text-gray-900">1,000.00 MAD</span>
+                            </div>
+
+                            <button onclick="simulateOrder()" class="w-full bg-amber-600 text-white font-bold py-3 rounded hover:bg-amber-700 transition transform active:scale-95">
+                                Valider l'Ordre
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Explanations -->
+                    <div class="space-y-6 flex flex-col justify-center">
+                        <div class="bg-gray-800 p-4 rounded border-l-4 border-amber-500">
+                            <h4 class="font-bold text-amber-500 mb-1">Ordre au Marché</h4>
+                            <p class="text-sm text-gray-300">Exécution immédiate au meilleur prix disponible. Risqué si le marché bouge vite !</p>
+                        </div>
+                        <div class="bg-gray-800 p-4 rounded border-l-4 border-green-500">
+                            <h4 class="font-bold text-green-500 mb-1">Ordre à Cours Limité (Recommandé)</h4>
+                            <p class="text-sm text-gray-300">Vous fixez votre prix plafond. L'ordre ne passe que si le marché touche votre prix. Sécurité maximale.</p>
+                        </div>
+                        <div id="orderFeedback" class="hidden bg-green-900/50 p-4 rounded text-center border border-green-500">
+                            <span class="text-2xl block mb-2">✅</span>
+                            <p class="font-bold text-green-400">Ordre Simulé avec Succès !</p>
+                            <p class="text-xs text-green-300 mt-1">Dans la réalité, vous recevriez une notification d'exécution.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Golden Rules -->
+        <section class="max-w-4xl mx-auto">
+            <h2 class="text-2xl font-bold text-center text-gray-900 mb-8">Les Règles d'Or de l'Investisseur</h2>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-white p-6 rounded shadow-sm border-t-4 border-gray-800">
+                    <span class="text-3xl mb-2 block">🌍</span>
+                    <h3 class="font-bold text-lg mb-2">Diversifiez</h3>
+                    <p class="text-gray-600 text-sm">Ne mettez pas tous vos œufs dans le même panier. Mélangez Banques, BTP, Mines...</p>
+                </div>
+                <div class="bg-white p-6 rounded shadow-sm border-t-4 border-gray-800">
+                    <span class="text-3xl mb-2 block">⏳</span>
+                    <h3 class="font-bold text-lg mb-2">Long Terme</h3>
+                    <p class="text-gray-600 text-sm">La bourse récompense la patience. N'investissez que l'argent dont vous n'avez pas besoin tout de suite.</p>
+                </div>
+                <div class="bg-white p-6 rounded shadow-sm border-t-4 border-gray-800">
+                    <span class="text-3xl mb-2 block">🔄</span>
+                    <h3 class="font-bold text-lg mb-2">Réinvestissez</h3>
+                    <p class="text-gray-600 text-sm">Utilisez les dividendes pour racheter des actions. C'est la magie des intérêts composés.</p>
+                </div>
+                <div class="bg-white p-6 rounded shadow-sm border-t-4 border-gray-800">
+                    <span class="text-3xl mb-2 block">📰</span>
+                    <h3 class="font-bold text-lg mb-2">Informez-vous</h3>
+                    <p class="text-gray-600 text-sm">Suivez les actualités sur le site officiel de la Bourse de Casablanca.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-gray-100 border-t border-gray-200 mt-12 py-8">
+        <div class="max-w-7xl mx-auto px-4 text-center text-gray-500 text-sm">
+            <p><strong>Avertissement :</strong> Ce guide est fourni à titre informatif et éducatif uniquement.</p>
+            <p>L'investissement en bourse comporte des risques de perte en capital. Les performances passées ne préjugent pas des performances futures.</p>
+            <p class="mt-4 text-gray-400">© 2025 Guide Interactif Bourse de Casablanca</p>
+        </div>
+    </footer>
+
+    <script>
+        // --- Navigation Logic ---
+        function scrollToSection(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // --- Checklist Logic ---
+        function toggleCheck(element) {
+            const icon = element.querySelector('.status-icon');
+            element.classList.toggle('bg-green-50');
+            
+            if (element.classList.contains('bg-green-50')) {
+                icon.innerText = '✅';
+                element.classList.add('line-through', 'text-gray-400');
+                icon.classList.remove('text-gray-300');
+            } else {
+                icon.innerText = '⬜';
+                element.classList.remove('line-through', 'text-gray-400');
+                icon.classList.add('text-gray-300');
+            }
+        }
+
+        // --- CHART 1: TAX SIMULATOR (CTO vs PEA) ---
+        const taxCtx = document.getElementById('taxChart').getContext('2d');
+        let taxChart;
+
+        function updateTaxSimulator() {
+            const investment = parseFloat(document.getElementById('investInput').value) || 0;
+            const gainPercent = parseFloat(document.getElementById('gainInput').value) || 0;
+            
+            document.getElementById('gainValueDisplay').innerText = gainPercent + '%';
+
+            const grossGain = investment * (gainPercent / 100);
+            
+            // Tax Calculation
+            // CTO: 20% on capital gains (TPBZ) roughly for this sim (ignoring dividends mix for simplicity of visualization)
+            const taxCTO = grossGain * 0.20;
+            const netGainCTO = grossGain - taxCTO;
+            const finalCTO = investment + netGainCTO;
+
+            // PEA: 0% tax after 5 years
+            const taxPEA = 0;
+            const netGainPEA = grossGain;
+            const finalPEA = investment + netGainPEA;
+
+            // Update Text
+            document.getElementById('ctoResult').innerText = finalCTO.toLocaleString('fr-MA', { style: 'currency', currency: 'MAD', maximumFractionDigits: 0 });
+            document.getElementById('peaResult').innerText = finalPEA.toLocaleString('fr-MA', { style: 'currency', currency: 'MAD', maximumFractionDigits: 0 });
+
+            // Update Chart
+            const data = {
+                labels: ['CTO (Compte Titres)', 'PEA (Plan Épargne)'],
+                datasets: [
+                    {
+                        label: 'Investissement Initial',
+                        data: [investment, investment],
+                        backgroundColor: '#E5E7EB', // Gray 200
+                        stack: 'Stack 0',
+                    },
+                    {
+                        label: 'Gain Net (Poche)',
+                        data: [netGainCTO, netGainPEA],
+                        backgroundColor: ['#FCA5A5', '#34D399'], // Red light, Green light
+                        borderColor: ['#EF4444', '#10B981'],
+                        borderWidth: 1,
+                        stack: 'Stack 0',
+                    },
+                    {
+                        label: 'Impôt payé (Perdu)',
+                        data: [taxCTO, taxPEA],
+                        backgroundColor: '#9CA3AF', // Gray 400
+                        stack: 'Stack 0',
+                    }
+                ]
+            };
+
+            if (taxChart) {
+                taxChart.data = data;
+                taxChart.update();
+            } else {
+                taxChart = new Chart(taxCtx, {
+                    type: 'bar',
+                    data: data,
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            title: { display: true, text: 'Capital Final après 5 ans' },
+                            tooltip: { mode: 'index', intersect: false }
+                        },
+                        scales: {
+                            x: { stacked: true },
+                            y: { stacked: true, beginAtZero: true }
+                        }
+                    }
+                });
+            }
+        }
+
+        // Listeners for Tax Sim
+        document.getElementById('investInput').addEventListener('input', updateTaxSimulator);
+        document.getElementById('gainInput').addEventListener('input', updateTaxSimulator);
+
+        // --- CHART 2: FEE BREAKDOWN ---
+        const feesCtx = document.getElementById('feesChart').getContext('2d');
+        let feesChart;
+
+        function updateFeeCalculator() {
+            const amount = parseFloat(document.getElementById('feeOrderInput').value) || 0;
+            
+            // Assumptions based on guide: Brokerage ~0.8% avg, VAT 10% of brokerage
+            const brokerageRate = 0.008; // 0.8%
+            const vatRate = 0.10; // 10%
+
+            const brokerage = amount * brokerageRate;
+            const vat = brokerage * vatRate;
+            const totalFees = brokerage + vat;
+            const investedAmount = amount; // Technicality: usually fees are added on top or deducted. Let's assume deducted for chart simplicity visualization of "Cost" vs "Value".
+            // Actually, usually you pay Amount + Fees. Let's visualize "Total Cost Breakdown".
+            
+            // Text Updates
+            document.getElementById('brokerageFee').innerText = brokerage.toFixed(2) + ' DH';
+            document.getElementById('vatFee').innerText = vat.toFixed(2) + ' DH';
+            document.getElementById('totalFee').innerText = totalFees.toFixed(2) + ' DH';
+
+            const data = {
+                labels: ['Investissement Réel', 'Commissions Courtier', 'TVA'],
+                datasets: [{
+                    data: [amount, brokerage, vat],
+                    backgroundColor: ['#D1D5DB', '#F59E0B', '#EF4444'], // Gray, Amber, Red
+                    borderWidth: 0
+                }]
+            };
+
+            if (feesChart) {
+                feesChart.data = data;
+                feesChart.update();
+            } else {
+                feesChart = new Chart(feesCtx, {
+                    type: 'doughnut',
+                    data: data,
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { position: 'bottom' },
+                            title: { display: true, text: 'Répartition du Coût Total' }
+                        },
+                        cutout: '60%'
+                    }
+                });
+            }
+        }
+        
+        document.getElementById('feeOrderInput').addEventListener('input', updateFeeCalculator);
+        document.getElementById('calculateFeesBtn').addEventListener('click', updateFeeCalculator);
+
+        // --- TRADING SIMULATOR LOGIC ---
+        function toggleLimitPrice() {
+            const type = document.getElementById('simType').value;
+            const limitGroup = document.getElementById('limitPriceGroup');
+            if (type === 'market') {
+                limitGroup.classList.add('opacity-50', 'pointer-events-none');
+            } else {
+                limitGroup.classList.remove('opacity-50', 'pointer-events-none');
+            }
+            calculateSimTotal();
+        }
+
+        function calculateSimTotal() {
+            const qty = parseFloat(document.getElementById('simQty').value) || 0;
+            const price = parseFloat(document.getElementById('simPrice').value) || 0;
+            const total = qty * price;
+            document.getElementById('simTotal').innerText = total.toLocaleString('fr-MA', { style: 'currency', currency: 'MAD' });
+        }
+
+        function simulateOrder() {
+            // Simple feedback animation
+            const feedback = document.getElementById('orderFeedback');
+            feedback.classList.remove('hidden');
+            setTimeout(() => {
+                feedback.classList.add('hidden');
+            }, 3000);
+        }
+
+        document.getElementById('simQty').addEventListener('input', calculateSimTotal);
+        document.getElementById('simPrice').addEventListener('input', calculateSimTotal);
+
+
+        // Initialize
+        window.onload = function() {
+            updateTaxSimulator();
+            updateFeeCalculator();
+        };
+
+    </script>
+</body>
+</html>
