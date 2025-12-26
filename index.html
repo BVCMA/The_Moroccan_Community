@@ -1,283 +1,268 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Moroccan Community | High-End Financial Hub</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Playfair+Display:ital,wght@1,700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg: #0a0a0c;
-            --surface: #16161a;
-            --accent: #d4af37; /* Or Royal */
-            --text: #e0e0e6;
-            --dim: #88888e;
-            --border: rgba(212, 175, 55, 0.2);
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        * { box-sizing: border-box; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
-        body { 
-            font-family: 'Space Grotesk', sans-serif; 
-            background: var(--bg); 
-            color: var(--text); 
-            margin: 0; 
-            overflow-x: hidden;
-        }
+<title>The Moroccan Community | Plateforme financière marocaine</title>
 
-        /* --- BACKGROUND DECOR --- */
-        .bg-glow {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at 10% 10%, rgba(212,175,55,0.05) 0%, transparent 50%);
-            pointer-events: none; z-index: -1;
-        }
+<meta name="description" content="The Moroccan Community est une plateforme fintech marocaine dédiée à la pédagogie financière, l’analyse d’investissement et la compréhension de la bourse de Casablanca.">
+<meta name="keywords" content="finance maroc, bourse de casablanca, investissement maroc, analyse financière, fintech maroc">
+<meta name="author" content="The Moroccan Community">
 
-        /* --- HEADER & NAV --- */
-        nav {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 30px 6%; border-bottom: 1px solid var(--border);
-            backdrop-filter: blur(20px); position: sticky; top: 0; z-index: 100;
-        }
-        .logo { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-style: italic; color: var(--accent); cursor: pointer; }
-        .nav-links a { 
-            color: var(--dim); text-decoration: none; margin-left: 30px; 
-            font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase;
-        }
-        .nav-links a:hover { color: var(--accent); }
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Playfair+Display:ital,wght@1,700&display=swap" rel="stylesheet">
 
-        /* --- PAGES --- */
-        .page { display: none; padding: 60px 6%; animation: slideUp 0.6s ease; }
-        .page.active { display: block; }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+<style>
+:root{
+--bg:#0a0a0c;
+--surface:#151518;
+--accent:#d4af37;
+--text:#eaeaf0;
+--dim:#8c8c95;
+--border:rgba(212,175,55,.25);
+}
+*{box-sizing:border-box}
+body{
+margin:0;
+font-family:'Space Grotesk',sans-serif;
+background:var(--bg);
+color:var(--text);
+line-height:1.7;
+}
+a{text-decoration:none;color:inherit}
+.bg{
+position:fixed;inset:0;
+background:radial-gradient(circle at 10% 10%,rgba(212,175,55,.08),transparent 50%);
+z-index:-1;
+}
+nav{
+position:sticky;top:0;z-index:100;
+display:flex;justify-content:space-between;align-items:center;
+padding:28px 6%;
+border-bottom:1px solid var(--border);
+backdrop-filter:blur(15px);
+}
+.logo{
+font-family:'Playfair Display',serif;
+font-size:1.6rem;
+font-style:italic;
+color:var(--accent);
+}
+.nav-links a{
+margin-left:30px;
+font-size:.75rem;
+letter-spacing:2px;
+text-transform:uppercase;
+color:var(--dim);
+}
+.nav-links a:hover{color:var(--accent)}
 
-        /* --- HOME DESIGN --- */
-        .hero { min-height: 70vh; display: flex; flex-direction: column; justify-content: center; }
-        .hero h1 { font-size: clamp(3rem, 8vw, 6rem); margin: 0; line-height: 1; letter-spacing: -2px; }
-        .hero span { color: var(--accent); }
-        .hero p { max-width: 600px; color: var(--dim); font-size: 1.2rem; margin: 30px 0; }
+section{padding:100px 6%}
+.hero{
+min-height:85vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+}
+.hero h1{
+font-size:clamp(3rem,7vw,5.5rem);
+letter-spacing:-2px;
+line-height:1.05;
+margin:0;
+}
+.hero span{color:var(--accent)}
+.hero p{
+max-width:680px;
+font-size:1.2rem;
+color:var(--dim);
+margin:35px 0 50px;
+}
+.btn{
+display:inline-block;
+background:var(--accent);
+color:var(--bg);
+padding:20px 45px;
+font-weight:700;
+letter-spacing:2px;
+}
 
-        .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; margin: 100px 0; }
-        .info-card { 
-            background: var(--surface); padding: 40px; border-radius: 2px; 
-            border: 1px solid var(--border); position: relative;
-        }
-        .info-card::before {
-            content: ""; position: absolute; top: 0; left: 0; width: 2px; height: 100%; background: var(--accent);
-        }
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:45px;
+}
+.card{
+background:var(--surface);
+border:1px solid var(--border);
+padding:45px;
+position:relative;
+}
+.card::before{
+content:"";
+position:absolute;
+top:0;left:0;
+width:3px;height:100%;
+background:var(--accent);
+}
+.card h3{margin-top:0}
 
-        /* --- FAQ SECTION --- */
-        .faq-section { margin: 100px 0; }
-        .faq-item { border-bottom: 1px solid var(--border); padding: 20px 0; cursor: pointer; }
-        .faq-question { display: flex; justify-content: space-between; font-size: 1.2rem; font-weight: 500; }
-        .faq-answer { display: none; padding: 20px 0; color: var(--dim); line-height: 1.8; }
+.dark{
+background:#0d0d10;
+}
 
-        /* --- SIMULATORS GRID --- */
-        .sim-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-        .sim-box { 
-            aspect-ratio: 1/1; background: var(--surface); border: 1px solid var(--border);
-            display: flex; flex-direction: column; justify-content: flex-end; padding: 30px;
-            cursor: pointer; position: relative; overflow: hidden;
-        }
-        .sim-box:hover { border-color: var(--accent); }
-        .sim-box h3 { font-size: 1.5rem; margin: 0; z-index: 2; }
-        .sim-box .num { position: absolute; top: 20px; right: 20px; font-size: 4rem; font-weight: 700; opacity: 0.05; }
+h2{
+font-size:2.8rem;
+margin-bottom:70px;
+}
+h2 span{color:var(--accent)}
 
-        /* --- MODAL SIMULATEUR --- */
-        .modal {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--bg); z-index: 1000; display: none; padding: 60px; overflow-y: auto;
-        }
-        .modal-content { max-width: 1200px; margin: auto; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; }
-        .close-modal { position: fixed; top: 30px; right: 30px; font-size: 2rem; cursor: pointer; color: var(--accent); }
-
-        /* --- FORM ELEMENTS --- */
-        input { 
-            background: transparent; border: none; border-bottom: 2px solid var(--border);
-            width: 100%; padding: 15px 0; color: white; font-size: 1.2rem; outline: none; margin-bottom: 30px;
-        }
-        input:focus { border-color: var(--accent); }
-        .btn-premium { 
-            background: var(--accent); color: var(--bg); padding: 20px 40px; 
-            border: none; font-weight: 700; cursor: pointer; letter-spacing: 2px;
-        }
-
-        .analysis-box { background: #1a1a20; padding: 30px; border-radius: 10px; margin-top: 30px; border-left: 4px solid var(--accent); }
-
-    </style>
+footer{
+padding:60px 6%;
+border-top:1px solid var(--border);
+color:var(--dim);
+font-size:.9rem;
+display:flex;
+justify-content:space-between;
+flex-wrap:wrap;
+gap:20px;
+}
+</style>
 </head>
-<body>
 
-<div class="bg-glow"></div>
+<body>
+<div class="bg"></div>
 
 <nav>
-    <div class="logo" onclick="showPage('home')">The Moroccan Community.</div>
-    <div class="nav-links">
-        <a onclick="showPage('home')">Accueil</a>
-        <a onclick="showPage('sim-page')">Terminal</a>
-        <a onclick="showPage('edu-page')">Formations</a>
-        <a onclick="showPage('contact-page')">Contact</a>
-    </div>
+<div class="logo">The Moroccan Community.</div>
+<div class="nav-links">
+<a href="#solution">Notre mission</a>
+<a href="#process">Méthode</a>
+<a href="#trust">Confiance</a>
+<a href="#contact">Contact</a>
+</div>
 </nav>
 
-<div id="home" class="page active">
-    <div class="hero">
-        <h1>THE <span>ANALYST</span><br>& THE <span>CFO</span></h1>
-        <p>L'élite de l'ingénierie financière marocaine. Nous fusionnons l'analyse boursière de précision et la stratégie corporate.</p>
-    </div>
+<!-- HERO -->
+<section class="hero">
+<h1>Comprendre, analyser et maîtriser<br><span>la finance marocaine</span></h1>
+<p>
+The Moroccan Community est une plateforme fintech éducative dédiée à
+la compréhension de l’investissement, de la bourse de Casablanca et de
+la finance d’entreprise au Maroc.
+</p>
+<a href="#solution" class="btn">Découvrir la plateforme</a>
+</section>
 
-    <div class="info-grid">
-        <div class="info-card">
-            <h3>Bourse de Casablanca</h3>
-            <p>Le MASI n'est pas qu'un indice, c'est le reflet de l'économie marocaine. Nous décortiquons chaque action, des télécoms à l'énergie, pour identifier la valeur réelle.</p>
-        </div>
-        <div class="info-card">
-            <h3>Finance Corporate</h3>
-            <p>Maîtriser son WACC, optimiser sa structure de capital et modéliser ses flux de trésorerie (DCF) sont les piliers de la croissance d'entreprise.</p>
-        </div>
-    </div>
-
-    <section class="faq-section">
-        <h2>F.A.Q <span>Précision</span></h2>
-        <div class="faq-item" onclick="toggleFaq(this)">
-            <div class="faq-question">Qu'est-ce que l'analyse fondamentale ? <span>+</span></div>
-            <div class="faq-answer">C'est l'étude de la santé financière d'une entreprise (bilans, bénéfices, dettes) pour déterminer si son prix en bourse est justifié.</div>
-        </div>
-        <div class="faq-item" onclick="toggleFaq(this)">
-            <div class="faq-question">Comment utiliser vos simulateurs ? <span>+</span></div>
-            <div class="faq-answer">Nos outils sont basés sur les formules académiques de finance (DCF, WACC). Il vous suffit d'insérer les données financières pour obtenir une analyse instantanée.</div>
-        </div>
-        <div class="faq-item" onclick="toggleFaq(this)">
-            <div class="faq-question">Les formations sont-elles adaptées aux débutants ? <span>+</span></div>
-            <div class="faq-answer">Oui, nous avons un cursus allant des bases de la bourse (BVC) jusqu'à la modélisation financière complexe sur Excel.</div>
-        </div>
-    </section>
+<!-- MISSION -->
+<section id="solution">
+<h2>Notre <span>mission</span></h2>
+<div class="grid">
+<div class="card">
+<h3>Démocratiser la finance</h3>
+<p>
+Nous rendons la finance compréhensible pour tous : investisseurs,
+entrepreneurs, étudiants et professionnels.
+</p>
 </div>
-
-<div id="sim-page" class="page">
-    <h2 style="font-size: 3rem; margin-bottom: 50px;">Terminal de <span>Calcul</span></h2>
-    <div class="sim-grid">
-        <div class="sim-box" onclick="openModal('dcf')">
-            <span class="num">01</span>
-            <h3>Modèle DCF</h3>
-            <p>Valeur Intrinsèque</p>
-        </div>
-        <div class="sim-box" onclick="openModal('yield')">
-            <span class="num">02</span>
-            <h3>Dividend Yield</h3>
-            <p>Rendement Boursier</p>
-        </div>
-        <div class="sim-box" onclick="openModal('wacc')">
-            <span class="num">03</span>
-            <h3>Coût du Capital</h3>
-            <p>Modèle WACC</p>
-        </div>
-    </div>
+<div class="card">
+<h3>Valoriser l’expertise marocaine</h3>
+<p>
+Nos analyses sont adaptées au contexte économique marocain,
+aux entreprises locales et à la Bourse de Casablanca.
+</p>
 </div>
-
-<div id="sim-modal" class="modal">
-    <span class="close-modal" onclick="closeModal()">&times;</span>
-    <div class="modal-content">
-        <div class="controls">
-            <h2 id="modal-title" style="font-size: 2.5rem; color: var(--accent);">Simulateur</h2>
-            <div id="modal-inputs"></div>
-            <button class="btn-premium" id="calc-btn">Lancer l'Analyse</button>
-            <div id="modal-guide" style="margin-top: 40px; color: var(--dim);"></div>
-        </div>
-        <div class="results">
-            <div style="height: 300px;"><canvas id="modalChart"></canvas></div>
-            <div id="modal-analysis" class="analysis-box">
-                <h4>Rapport de l'Expert</h4>
-                <p>En attente de données...</p>
-            </div>
-        </div>
-    </div>
+<div class="card">
+<h3>Favoriser des décisions éclairées</h3>
+<p>
+Comprendre avant d’investir. Analyser avant de décider.
+La rigueur avant la spéculation.
+</p>
 </div>
+</div>
+</section>
 
-<script>
-    let currentChart = null;
+<!-- PROCESS -->
+<section id="process" class="dark">
+<h2>Comment ça <span>fonctionne</span></h2>
+<div class="grid">
+<div class="card">
+<h3>1. Apprendre</h3>
+<p>
+Comprendre les bases de la finance, des marchés financiers
+et des mécanismes de création de valeur.
+</p>
+</div>
+<div class="card">
+<h3>2. Analyser</h3>
+<p>
+Utiliser des méthodes reconnues : valorisation, rendement,
+analyse financière et logique long terme.
+</p>
+</div>
+<div class="card">
+<h3>3. Décider</h3>
+<p>
+Prendre des décisions alignées avec vos objectifs,
+votre horizon et le marché marocain.
+</p>
+</div>
+</div>
+</section>
 
-    function showPage(id) {
-        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-        document.getElementById(id).classList.add('active');
-        window.scrollTo(0,0);
-    }
+<!-- TRUST -->
+<section id="trust">
+<h2>Pourquoi nous <span>faire confiance</span></h2>
+<div class="grid">
+<div class="card">
+<h3>Transparence totale</h3>
+<p>
+Aucun rendement promis. Aucune illusion.
+Uniquement des méthodes claires et expliquées.
+</p>
+</div>
+<div class="card">
+<h3>Approche long terme</h3>
+<p>
+Nous privilégions la création de valeur durable
+plutôt que la spéculation court terme.
+</p>
+</div>
+<div class="card">
+<h3>Pédagogie avant tout</h3>
+<p>
+Notre priorité est la compréhension.
+Un investisseur informé est un investisseur responsable.
+</p>
+</div>
+</div>
+</section>
 
-    function toggleFaq(el) {
-        const ans = el.querySelector('.faq-answer');
-        ans.style.display = ans.style.display === 'block' ? 'none' : 'block';
-    }
+<!-- CTA -->
+<section class="dark">
+<h2>Une finance plus <span>intelligente</span></h2>
+<p style="max-width:650px;color:var(--dim);margin-bottom:50px;">
+The Moroccan Community n’est pas un courtier, ni un vendeur de rêves.
+C’est un espace de compréhension, d’analyse et de réflexion financière.
+</p>
+<a href="#contact" class="btn">Nous contacter</a>
+</section>
 
-    function openModal(type) {
-        const modal = document.getElementById('sim-modal');
-        const inputs = document.getElementById('modal-inputs');
-        const guide = document.getElementById('modal-guide');
-        const title = document.getElementById('modal-title');
-        
-        modal.style.display = 'block';
-        document.body.style.overflow = 'hidden';
+<!-- CONTACT -->
+<section id="contact">
+<h2>Contact & <span>partenariats</span></h2>
+<p style="max-width:600px;color:var(--dim);">
+Vous êtes investisseur, étudiant, entreprise ou institution ?
+Contactez-nous pour collaborations, formations ou contenus financiers.
+</p>
+<p style="margin-top:30px;">
+📧 contact@themoroccancommunity.ma
+</p>
+</section>
 
-        if(type === 'dcf') {
-            title.innerText = "Discounted Cash Flow";
-            inputs.innerHTML = `
-                <label>Flux de Trésorerie (DH)</label><input type="number" id="v1" value="5000000">
-                <label>Taux de Croissance (%)</label><input type="number" id="v2" value="4">
-                <label>Taux d'Actualisation (%)</label><input type="number" id="v3" value="10">
-            `;
-            guide.innerHTML = "<b>Guide :</b> Projetez les cash-flows futurs d'une société du MASI et actualisez-les pour connaître sa valeur réelle aujourd'hui.";
-            document.getElementById('calc-btn').onclick = runDCF;
-        }
-        if(type === 'yield') {
-            title.innerText = "Analyse du Rendement";
-            inputs.innerHTML = `
-                <label>Cours de l'action (DH)</label><input type="number" id="v1" value="150">
-                <label>Dividende versé (DH)</label><input type="number" id="v2" value="10">
-            `;
-            guide.innerHTML = "<b>Guide :</b> Calculez le rendement dividende net. Idéal pour les valeurs de 'Bon Père de famille' à Casablanca.";
-            document.getElementById('calc-btn').onclick = runYield;
-        }
-    }
-
-    function closeModal() {
-        document.getElementById('sim-modal').style.display = 'none';
-        document.body.style.overflow = 'auto';
-    }
-
-    function updateChart(labels, data, label) {
-        if (currentChart) currentChart.destroy();
-        const ctx = document.getElementById('modalChart').getContext('2d');
-        currentChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: labels,
-                datasets: [{
-                    label: label,
-                    data: data,
-                    backgroundColor: '#d4af37',
-                    borderColor: '#d4af37',
-                    borderWidth: 1
-                }]
-            },
-            options: { responsive: true, maintainAspectRatio: false, scales: { y: { grid: { color: '#222' } } } }
-        });
-    }
-
-    function runDCF() {
-        const fcf = parseFloat(document.getElementById('v1').value);
-        const g = parseFloat(document.getElementById('v2').value)/100;
-        const w = parseFloat(document.getElementById('v3').value)/100;
-        const val = fcf / (w - g);
-        updateChart(['Aujourd\'hui', 'Valeur Intrinsèque'], [fcf, val], 'Capital (DH)');
-        document.getElementById('modal-analysis').innerHTML = `<h4>Constat Analyste</h4><p>La valeur de l'entreprise est estimée à <b>${Math.round(val).toLocaleString()} DH</b>. Une marge de sécurité de 20% est conseillée avant tout investissement.</p>`;
-    }
-
-    function runYield() {
-        const cours = parseFloat(document.getElementById('v1').value);
-        const div = parseFloat(document.getElementById('v2').value);
-        const yield = (div / cours) * 100;
-        updateChart(['Cours', 'Rendement x10'], [cours, yield*10], 'Ratio');
-        document.getElementById('modal-analysis').innerHTML = `<h4>Constat Analyste</h4><p>Rendement actuel : <b>${yield.toFixed(2)}%</b>. Un rendement supérieur à 6% au Maroc est considéré comme attractif pour une stratégie de rente.</p>`;
-    }
-</script>
+<footer>
+<div>© 2025 The Moroccan Community</div>
+<div>Plateforme financière marocaine indépendante</div>
+</footer>
 
 </body>
 </html>
