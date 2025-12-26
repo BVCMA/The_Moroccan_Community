@@ -3,267 +3,329 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Moroccan Community | Financial Engineering & Analytics</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <title>FinancePro - Outils & Formations</title>
     <style>
-        :root { --gold: #c5a059; --dark: #05070a; --slate: #0f172a; }
-        body { font-family: 'Inter', sans-serif; background-color: var(--dark); color: #e2e8f0; scroll-behavior: smooth; }
-        .font-brand { font-family: 'Cinzel', serif; }
-        .glass { background: rgba(15, 23, 42, 0.9); backdrop-filter: blur(10px); border: 1px solid rgba(197, 160, 89, 0.1); }
-        .page-view { display: none; min-height: 100vh; padding-top: 40px; }
-        .page-view.active { display: block; animation: fadeIn 0.6s ease; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        .btn-premium { background: linear-gradient(135deg, #c5a059 0%, #92743a 100%); color: black; font-weight: 700; transition: 0.3s; }
-        .btn-premium:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(197, 160, 89, 0.2); }
-        .input-dark { background: #020617; border: 1px solid #1e293b; padding: 14px; border-radius: 12px; width: 100%; outline: none; }
-        .input-dark:focus { border-color: var(--gold); }
+        /* --- STYLES GÉNÉRAUX --- */
+        :root {
+            --primary: #2c3e50;
+            --secondary: #27ae60;
+            --accent: #f39c12;
+            --light: #f4f7f6;
+            --dark: #1a252f;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            line-height: 1.6;
+            background-color: var(--light);
+            color: var(--dark);
+        }
+
+        header {
+            background: var(--primary);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .hero {
+            background: linear-gradient(rgba(44, 62, 80, 0.8), rgba(44, 62, 80, 0.8)), url('https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            color: white;
+            padding: 100px 20px;
+            text-align: center;
+        }
+
+        section { padding: 60px 20px; max-width: 1200px; margin: auto; }
+
+        h2 { text-align: center; border-bottom: 3px solid var(--secondary); display: inline-block; padding-bottom: 10px; margin-bottom: 40px; }
+
+        /* --- GRILLE SIMULATEURS --- */
+        .grid-sim {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .sim-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .sim-card input {
+            width: 100%;
+            padding: 8px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .result {
+            font-weight: bold;
+            color: var(--secondary);
+            margin-top: 10px;
+        }
+
+        /* --- FORMATIONS --- */
+        .formation-card {
+            background: white;
+            margin-bottom: 20px;
+            border-left: 5px solid var(--accent);
+            padding: 20px;
+            border-radius: 5px;
+        }
+
+        .details-menu {
+            display: none;
+            background: #eef2f3;
+            padding: 15px;
+            margin-top: 10px;
+            border-radius: 5px;
+        }
+
+        .btn {
+            background: var(--secondary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .btn-detail { background: var(--primary); }
+
+        /* --- CONTACT --- */
+        .contact-form {
+            max-width: 600px;
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .contact-form input, .contact-form textarea {
+            margin-bottom: 15px;
+            padding: 12px;
+            border: 1px solid #ccc;
+        }
+
     </style>
 </head>
 <body>
 
-    <nav class="glass sticky top-0 z-[100] border-b border-gold/10">
-        <div class="max-w-7xl mx-auto px-6 h-24 flex justify-between items-center">
-            <div class="cursor-pointer" onclick="showView('home')">
-                <h1 class="font-brand text-2xl tracking-widest text-white">THE MOROCCAN <span class="text-gold">COMMUNITY</span></h1>
-                <p class="text-[9px] uppercase tracking-[0.4em] text-gold/60">Intelligence & Patrimoine</p>
+    <header>
+        <nav>
+            <div style="font-size: 1.5rem;">🚀 FinancePro</div>
+            <a href="#home">Accueil</a>
+            <a href="#simulators">Simulateurs</a>
+            <a href="#formations">Formations</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </header>
+
+    <div id="home" class="hero">
+        <h1>Prenez le contrôle de vos Finances</h1>
+        <p>Calculateurs gratuits et formations certifiantes pour particuliers et professionnels.</p>
+    </div>
+
+    <section id="simulators">
+        <center><h2>Nos Simulateurs Financiers</h2></center>
+        
+        <div class="grid-sim">
+            <div class="sim-card">
+                <h3>📈 Intérêts Composés</h3>
+                <input type="number" id="cap-init" placeholder="Capital Initial (€)">
+                <input type="number" id="placement-mensuel" placeholder="Épargne Mensuelle (€)">
+                <input type="number" id="taux" placeholder="Taux annuel (%)">
+                <input type="number" id="annees" placeholder="Nombre d'années">
+                <button class="btn" onclick="calcInterets()">Calculer</button>
+                <div id="res-interet" class="result"></div>
             </div>
-            <div class="hidden lg:flex space-x-10 text-[11px] font-bold uppercase tracking-widest">
-                <button onclick="showView('home')" class="hover:text-gold transition">Expertise</button>
-                <div class="relative group">
-                    <button class="text-gold">Terminaux Pro ▼</button>
-                    <div class="absolute hidden group-hover:block top-full left-0 w-64 bg-slate-950 border border-gold/20 p-4 rounded-xl shadow-2xl mt-2">
-                        <a onclick="showView('sim-dcf')" class="block py-3 border-b border-white/5 hover:text-gold">01. Analyse de Valeur DCF</a>
-                        <a onclick="showView('sim-immo')" class="block py-3 border-b border-white/5 hover:text-gold">02. Crédit & Amortissement</a>
-                        <a onclick="showView('sim-pea')" class="block py-3 hover:text-gold">03. Optimisation PEA</a>
-                    </div>
-                </div>
-                <button onclick="showView('academy')" class="hover:text-gold transition">L'Académie</button>
-                <button onclick="showView('contact')" class="btn-premium px-6 py-2 rounded-lg text-[10px]">Contact Privé</button>
+
+            <div class="sim-card">
+                <h3>🏠 Capacité d'Emprunt</h3>
+                <input type="number" id="revenus" placeholder="Revenus Mensuels Nets (€)">
+                <input type="number" id="charges" placeholder="Charges Mensuelles (€)">
+                <button class="btn" onclick="calcEmprunt()">Estimer</button>
+                <div id="res-emprunt" class="result"></div>
+            </div>
+
+            <div class="sim-card">
+                <h3>📊 Budget 50/30/20</h3>
+                <input type="number" id="salaire-net" placeholder="Votre Salaire Net (€)">
+                <button class="btn" onclick="calcBudget()">Répartir</button>
+                <div id="res-budget" class="result"></div>
+            </div>
+
+            <div class="sim-card">
+                <h3>🏢 Seuil de Rentabilité</h3>
+                <input type="number" id="charges-fixes" placeholder="Charges Fixes Annuelles (€)">
+                <input type="number" id="marge" placeholder="Taux de Marge (%)">
+                <button class="btn" onclick="calcSeuil()">Calculer</button>
+                <div id="res-seuil" class="result"></div>
+            </div>
+
+            <div class="sim-card">
+                <h3>💰 Calcul de TVA</h3>
+                <input type="number" id="montant-ht" placeholder="Montant HT (€)">
+                <select id="taux-tva" style="width: 100%; padding: 8px; margin-bottom: 10px;">
+                    <option value="0.20">20% (Normal)</option>
+                    <option value="0.055">5.5% (Réduit)</option>
+                </select>
+                <button class="btn" onclick="calcTva()">Convertir</button>
+                <div id="res-tva" class="result"></div>
+            </div>
+
+            <div class="sim-card">
+                <h3>👨‍💻 Net Freelance (Micro)</h3>
+                <input type="number" id="ca-mensuel" placeholder="Chiffre d'Affaire Mensuel (€)">
+                <button class="btn" onclick="calcFreelance()">Estimer le Net</button>
+                <div id="res-free" class="result"></div>
             </div>
         </div>
-    </nav>
+    </section>
 
-    <main class="max-w-7xl mx-auto px-6">
+    <section id="formations">
+        <center><h2>Nos Formations</h2></center>
 
-        <section id="home" class="page-view active">
-            <div class="py-20 text-center">
-                <h2 class="font-brand text-5xl md:text-8xl mb-8 leading-tight">L'Excellence Financière à la portée du <span class="text-gold italic">Maroc.</span></h2>
-                <p class="max-w-3xl mx-auto text-slate-400 text-lg leading-relaxed mb-12">
-                    Nous fusionnons l'analyse quantitative de haut niveau avec une connaissance profonde du marché des capitaux marocain. 
-                    Que vous soyez un investisseur institutionnel ou un particulier averti, nos terminaux vous offrent la précision nécessaire pour naviguer sur le MASI.
-                </p>
-                <div class="flex justify-center gap-6">
-                    <button onclick="showView('sim-dcf')" class="btn-premium px-10 py-5 rounded-full uppercase text-xs tracking-widest">Lancer l'Analyse Boursière</button>
-                </div>
+        <div class="formation-card">
+            <h3>🎓 Masterclass : Liberté Financière</h3>
+            <p>Apprenez à gérer votre budget et investir en bourse sereinement.</p>
+            <p><strong>Prix : 199 €</strong></p>
+            <button class="btn btn-detail" onclick="toggle('f1')">Détails & Paiement ↓</button>
+            <div id="f1" class="details-menu">
+                <ul>
+                    <li>Module 1 : Éliminer ses dettes</li>
+                    <li>Module 2 : Stratégie ETF et Actions</li>
+                    <li>Module 3 : Automatisation de l'épargne</li>
+                </ul>
+                <p>💳 <strong>Paiement :</strong> Par Carte Bancaire ou PayPal (Sécurisé par Stripe).</p>
+                <button class="btn">S'inscrire maintenant</button>
             </div>
+        </div>
 
-            <div class="grid md:grid-cols-3 gap-8 py-10">
-                <div class="glass p-10 rounded-[2rem]">
-                    <div class="text-gold text-4xl mb-6">01</div>
-                    <h3 class="font-brand text-xl mb-4">Analyse MASI</h3>
-                    <p class="text-sm text-slate-400 leading-relaxed">Couverture quotidienne des 76 valeurs de la cote. Nos algorithmes détectent les anomalies de valorisation entre le prix de marché et la valeur intrinsèque.</p>
-                </div>
-                <div class="glass p-10 rounded-[2rem] border-gold/30">
-                    <div class="text-gold text-4xl mb-6">02</div>
-                    <h3 class="font-brand text-xl mb-4">Ingénierie CFO</h3>
-                    <p class="text-sm text-slate-400 leading-relaxed">Accompagnement des directions financières dans la structuration de dette, l'optimisation du WACC et la gestion de la trésorerie au Maroc.</p>
-                </div>
-                <div class="glass p-10 rounded-[2rem]">
-                    <div class="text-gold text-4xl mb-6">03</div>
-                    <h3 class="font-brand text-xl mb-4">Wealth Advisory</h3>
-                    <p class="text-sm text-slate-400 leading-relaxed">Architecture ouverte pour la gestion de fortune. Optimisation fiscale via PEA et assurance-vie pour maximiser le rendement net d'impôt.</p>
-                </div>
+        <div class="formation-card">
+            <h3>🚀 Freelance : Décollez et Optimisez</h3>
+            <p>Tout pour structurer son activité et payer moins d'impôts légalement.</p>
+            <p><strong>Prix : 350 €</strong></p>
+            <button class="btn btn-detail" onclick="toggle('f2')">Détails & Paiement ↓</button>
+            <div id="f2" class="details-menu">
+                <ul>
+                    <li>Module 1 : Choisir son statut (SASU, EI, Micro)</li>
+                    <li>Module 2 : Comptabilité simplifiée</li>
+                    <li>Module 3 : Trouver ses premiers clients</li>
+                </ul>
+                <p>💳 <strong>Paiement :</strong> Virement bancaire ou CB (Possibilité de 3x sans frais).</p>
+                <button class="btn">S'inscrire maintenant</button>
             </div>
+        </div>
 
-            <div class="py-24 max-w-4xl mx-auto">
-                <h3 class="font-brand text-4xl text-center mb-16 underline decoration-gold/40 underline-offset-[20px]">Questions Stratégiques</h3>
-                <div class="space-y-6">
-                    <details class="glass p-8 rounded-2xl group cursor-pointer transition-all">
-                        <summary class="font-bold text-lg flex justify-between items-center group-hover:text-gold">
-                            Quelle est la fiabilité de vos modèles de valorisation ?
-                            <span class="text-gold">+</span>
-                        </summary>
-                        <p class="mt-6 text-slate-400 leading-relaxed border-t border-white/5 pt-6">
-                            Nos modèles DCF et Multiples s'appuient sur les rapports annuels audités et les notes d'informations de l'AMMC. Nous ajustons manuellement le taux sans risque basé sur les dernières adjudications des Bons du Trésor Marocains.
-                        </p>
-                    </details>
-                    <details class="glass p-8 rounded-2xl group cursor-pointer transition-all">
-                        <summary class="font-bold text-lg flex justify-between items-center group-hover:text-gold">
-                            Proposez-vous du conseil en investissement direct ?
-                            <span class="text-gold">+</span>
-                        </summary>
-                        <p class="mt-6 text-slate-400 leading-relaxed border-t border-white/5 pt-6">
-                            "The Moroccan Community" est une plateforme d'éducation et d'outillage technologique. Nos analyses constituent une aide à la décision mais ne remplacent pas les services d'une société de gestion agréée.
-                        </p>
-                    </details>
-                </div>
+        <div class="formation-card">
+            <h3>🏢 Immobilier : De A à Z</h3>
+            <p>De la recherche de biens à la signature chez le notaire.</p>
+            <p><strong>Prix : 499 €</strong></p>
+            <button class="btn btn-detail" onclick="toggle('f3')">Détails & Paiement ↓</button>
+            <div id="f3" class="details-menu">
+                <ul>
+                    <li>Module 1 : Analyse de marché</li>
+                    <li>Module 2 : Négociation bancaire</li>
+                    <li>Module 3 : Fiscalité LMNP</li>
+                </ul>
+                <p>💳 <strong>Paiement :</strong> Stripe, Apple Pay, Google Pay.</p>
+                <button class="btn">S'inscrire maintenant</button>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section id="sim-dcf" class="page-view">
-            <div class="mb-10 flex justify-between items-end border-b border-gold/20 pb-6">
-                <div>
-                    <h2 class="font-brand text-4xl text-gold">Terminal de Valorisation DCF</h2>
-                    <p class="text-slate-400">Analyse fondamentale par actualisation des flux futurs.</p>
-                </div>
-                <button onclick="showView('home')" class="text-[10px] uppercase font-bold text-slate-500 hover:text-white">← Retour</button>
-            </div>
+    <section id="contact">
+        <center><h2>Contactez-nous</h2></center>
+        <form class="contact-form">
+            <input type="text" placeholder="Nom complet" required>
+            <input type="email" placeholder="Email" required>
+            <textarea rows="5" placeholder="Votre message ou besoin spécifique..."></textarea>
+            <button type="submit" class="btn">Envoyer la demande</button>
+        </form>
+    </section>
 
-            <div class="grid lg:grid-cols-3 gap-10">
-                <div class="glass p-8 rounded-3xl space-y-6 h-fit">
-                    <h4 class="font-bold uppercase text-[10px] tracking-widest text-gold mb-4">Paramètres de Modélisation</h4>
-                    <div>
-                        <label class="text-xs text-slate-500 mb-2 block">Cash Flow Année 1 (MAD)</label>
-                        <input id="dcf-cf" type="number" value="1000000" class="input-dark">
-                    </div>
-                    <div>
-                        <label class="text-xs text-slate-500 mb-2 block">Taux de Croissance Long Terme (%)</label>
-                        <input id="dcf-g" type="number" value="4" class="input-dark">
-                    </div>
-                    <div>
-                        <label class="text-xs text-slate-500 mb-2 block">WACC (Taux d'actualisation %)</label>
-                        <input id="dcf-wacc" type="number" value="9" class="input-dark">
-                    </div>
-                    <button onclick="runDcf()" class="w-full btn-premium py-4 rounded-xl shadow-lg">Lancer l'Analyse</button>
-                </div>
-
-                <div class="lg:col-span-2 space-y-8">
-                    <div class="glass p-8 rounded-3xl h-[450px]">
-                        <canvas id="chartDcf"></canvas>
-                    </div>
-                    <div class="glass p-8 rounded-3xl border-l-8 border-gold">
-                        <h4 class="font-bold text-gold uppercase text-xs mb-4">Constat de l'Analyste</h4>
-                        <div id="res-dcf-text" class="text-slate-300 leading-relaxed italic">
-                            En attente de calcul...
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="sim-immo" class="page-view">
-            <div class="mb-10">
-                <h2 class="font-brand text-4xl text-gold">Simulateur d'Ingénierie de Dette</h2>
-                <p class="text-slate-400">Optimisation de l'effet de levier immobilier au Maroc.</p>
-            </div>
-            <div class="grid lg:grid-cols-3 gap-10">
-                <div class="glass p-8 rounded-3xl space-y-6">
-                    <input id="immo-cap" type="number" placeholder="Montant du Prêt (MAD)" class="input-dark">
-                    <input id="immo-rate" type="number" placeholder="Taux d'intérêt annuel (%)" class="input-dark">
-                    <input id="immo-dur" type="number" placeholder="Durée (Années)" class="input-dark">
-                    <button onclick="runImmo()" class="w-full btn-premium py-4 rounded-xl">Générer le Tableau</button>
-                </div>
-                <div class="lg:col-span-2 glass p-8 rounded-3xl min-h-[400px]">
-                    <div id="immo-res-header" class="grid grid-cols-2 gap-4 mb-8"></div>
-                    <canvas id="chartImmo"></canvas>
-                </div>
-            </div>
-        </section>
-
-    </main>
+    <footer style="text-align: center; padding: 20px; background: var(--primary); color: white;">
+        <p>&copy; 2024 FinancePro - Tous droits réservés.</p>
+    </footer>
 
     <script>
-        // ENGINE: GESTION DES PAGES
-        function showView(id) {
-            document.querySelectorAll('.page-view').forEach(p => p.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-            window.scrollTo({top: 0, behavior: 'smooth'});
-            // Fix Chart.js resize issue
-            setTimeout(() => { window.dispatchEvent(new Event('resize')); }, 100);
+        // Logique pour afficher/masquer les détails
+        function toggle(id) {
+            const el = document.getElementById(id);
+            el.style.display = (el.style.display === 'block') ? 'none' : 'block';
         }
 
-        // ENGINE: GRAPHIQUES
-        let chartInstances = {};
-
-        function updateChart(canvasId, type, labels, data, label) {
-            const ctx = document.getElementById(canvasId).getContext('2d');
+        // 1. Calcul Intérêts Composés
+        function calcInterets() {
+            let p = parseFloat(document.getElementById('cap-init').value) || 0;
+            let m = parseFloat(document.getElementById('placement-mensuel').value) || 0;
+            let r = (parseFloat(document.getElementById('taux').value) / 100) / 12;
+            let n = (parseFloat(document.getElementById('annees').value) || 0) * 12;
             
-            // Détruire l'ancienne instance si elle existe pour éviter les bugs
-            if (chartInstances[canvasId]) {
-                chartInstances[canvasId].destroy();
-            }
-
-            chartInstances[canvasId] = new Chart(ctx, {
-                type: type,
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: label,
-                        data: data,
-                        borderColor: '#c5a059',
-                        backgroundColor: 'rgba(197, 160, 89, 0.1)',
-                        borderWidth: 3,
-                        pointBackgroundColor: '#fff',
-                        fill: true,
-                        tension: 0.3
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: { labels: { color: '#94a3b8', font: { size: 12 } } }
-                    },
-                    scales: {
-                        y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#64748b' } },
-                        x: { grid: { display: false }, ticks: { color: '#64748b' } }
-                    }
-                }
-            });
+            let total = p * Math.pow(1 + r, n) + m * ((Math.pow(1 + r, n) - 1) / r);
+            document.getElementById('res-interet').innerText = "Total estimé : " + total.toFixed(2) + " €";
         }
 
-        // LOGIQUE DCF
-        function runDcf() {
-            const cf = parseFloat(document.getElementById('dcf-cf').value);
-            const g = parseFloat(document.getElementById('dcf-g').value) / 100;
-            const wacc = parseFloat(document.getElementById('dcf-wacc').value) / 100;
-
-            if(!cf || !wacc) return;
-
-            let projection = [];
-            let labels = [];
-            for(let i=1; i<=5; i++) {
-                projection.push(cf * Math.pow(1 + g, i));
-                labels.push("Année " + i);
-            }
-
-            const terminalValue = (projection[4] * (1 + 0.02)) / (wacc - 0.02);
-            const enterpriseValue = (terminalValue / Math.pow(1 + wacc, 5));
-
-            updateChart('chartDcf', 'line', labels, projection, 'Flux de Trésorerie Disponibles (MAD)');
-            
-            document.getElementById('res-dcf-text').innerHTML = `
-                L'analyse indique une <b>Valeur Terminale</b> de ${Math.round(terminalValue).toLocaleString()} MAD. 
-                Après actualisation, la valeur actuelle de l'entreprise est estimée à <b>${Math.round(enterpriseValue).toLocaleString()} MAD</b>. 
-                Si cette valeur est supérieure à la capitalisation boursière actuelle sur le MASI, le titre présente un potentiel de croissance attractif.
-            `;
+        // 2. Capacité d'emprunt (Taux d'endettement 35%)
+        function calcEmprunt() {
+            let rev = parseFloat(document.getElementById('revenus').value) || 0;
+            let ch = parseFloat(document.getElementById('charges').value) || 0;
+            let capa = (rev - ch) * 0.35;
+            document.getElementById('res-emprunt').innerText = "Mensualité max conseillée : " + capa.toFixed(2) + " €";
         }
 
-        // LOGIQUE IMMO
-        function runImmo() {
-            const cap = parseFloat(document.getElementById('immo-cap').value);
-            const rate = (parseFloat(document.getElementById('immo-rate').value) / 100) / 12;
-            const dur = parseFloat(document.getElementById('immo-dur').value) * 12;
-
-            if(!cap || !rate || !dur) return;
-
-            const mensu = (cap * rate) / (1 - Math.pow(1 + rate, -dur));
-            const totalCost = (mensu * dur) - cap;
-
-            document.getElementById('immo-res-header').innerHTML = `
-                <div class="glass p-4 rounded-xl"><p class="text-[10px] text-slate-500 uppercase">Mensualité</p><p class="text-2xl font-bold text-white">${Math.round(mensu).toLocaleString()} MAD</p></div>
-                <div class="glass p-4 rounded-xl"><p class="text-[10px] text-slate-500 uppercase">Coût Intérêts</p><p class="text-2xl font-bold text-red-400">${Math.round(totalCost).toLocaleString()} MAD</p></div>
-            `;
-
-            updateChart('chartImmo', 'bar', ['Capital', 'Intérêts'], [cap, totalCost], 'Décomposition du Coût Total');
+        // 3. Budget 50/30/20
+        function calcBudget() {
+            let s = parseFloat(document.getElementById('salaire-net').value) || 0;
+            document.getElementById('res-budget').innerHTML = 
+                `Besoins (50%): ${(s*0.5).toFixed(0)}€ <br>` +
+                `Envies (30%): ${(s*0.3).toFixed(0)}€ <br>` +
+                `Épargne (20%): ${(s*0.2).toFixed(0)}€`;
         }
 
-        // Init Default
-        window.onload = () => {
-            runDcf();
-        };
+        // 4. Seuil de rentabilité
+        function calcSeuil() {
+            let fixes = parseFloat(document.getElementById('charges-fixes').value) || 0;
+            let m = parseFloat(document.getElementById('marge').value) / 100 || 0;
+            let seuil = fixes / m;
+            document.getElementById('res-seuil').innerText = "CA à réaliser : " + (seuil || 0).toFixed(2) + " €";
+        }
+
+        // 5. TVA
+        function calcTva() {
+            let ht = parseFloat(document.getElementById('montant-ht').value) || 0;
+            let taux = parseFloat(document.getElementById('taux-tva').value);
+            let ttc = ht * (1 + taux);
+            document.getElementById('res-tva').innerText = "Montant TTC : " + ttc.toFixed(2) + " €";
+        }
+
+        // 6. Freelance Net (Exemple prestation de service 22% charges)
+        function calcFreelance() {
+            let ca = parseFloat(document.getElementById('ca-mensuel').value) || 0;
+            let net = ca * 0.78; // Estimation après 22% de cotisations
+            document.getElementById('res-free').innerText = "Net estimé (après charges) : " + net.toFixed(2) + " €";
+        }
     </script>
 </body>
 </html>
