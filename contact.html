@@ -1,21 +1,33 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-<meta charset="UTF-8">
-<title>Contact</title>
-<link rel="stylesheet" href="assets/style.css">
-</head>
-<body>
-
-<nav>
-<div class="logo">The Moroccan Community</div>
-</nav>
-
 <section class="container">
-<h1 class="section-title">Contact</h1>
-<p>Email : <b>themoroccananalyst@gmail.com</b></p>
+    <h1 class="section-title">Contact & Inscription</h1>
+    <div class="card" style="max-width: 600px; margin: auto;">
+        <form action="https://formspree.io/f/VOTRE_ID_ICI" method="POST">
+            <label>Nom complet</label>
+            <input type="text" name="name" required>
+            
+            <label>Email</label>
+            <input type="email" name="_replyto" required>
+            
+            <label>Sujet / Formation</label>
+            <select name="formation" id="form-select">
+                <option value="general">Question générale</option>
+                <option value="bourse">Formation Bourse de Casablanca</option>
+                <option value="finance">Formation Finance d'Entreprise</option>
+                <option value="emploi">Coaching Recherche d'Emploi</option>
+            </select>
+
+            <label>Message</label>
+            <textarea name="message" rows="5"></textarea>
+
+            <button type="submit" class="btn">Envoyer ma demande</button>
+        </form>
+    </div>
 </section>
 
-<footer>© The Moroccan Community</footer>
-</body>
-</html>
+<script>
+    // Script pour sélectionner automatiquement la formation choisie
+    const urlParams = new URLSearchParams(window.location.search);
+    if(urlParams.has('f')) {
+        document.getElementById('form-select').value = urlParams.get('f');
+    }
+</script>
