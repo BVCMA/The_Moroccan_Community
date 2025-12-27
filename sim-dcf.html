@@ -1,0 +1,26 @@
+<section class="container">
+    <h1 class="section-title">Simulateur DCF (Discounted Cash Flow)</h1>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+        <div class="card">
+            <h3>Paramètres de Simulation</h3>
+            <input type="number" id="fcf" placeholder="Flux de trésorerie disponible (DH)">
+            <input type="number" id="g" placeholder="Taux de croissance perpétuel (%)">
+            <input type="number" id="wacc" placeholder="Taux d'actualisation / WACC (%)">
+            <button class="btn" onclick="runDCF()">Analyser l'Action</button>
+
+            <div class="guide" style="margin-top: 20px;">
+                <strong>Guide :</strong> Entrez le FCF estimé pour l'année prochaine. Le WACC au Maroc se situe généralement entre 9% et 11%.
+            </div>
+        </div>
+
+        <div class="card">
+            <canvas id="dcfChart"></canvas>
+            <div id="analysis-text" class="analysis" style="margin-top: 20px;">
+                <em>L'analyse s'affichera ici après le calcul.</em>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="assets/app.js"></script>
