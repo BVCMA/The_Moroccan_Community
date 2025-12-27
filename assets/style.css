@@ -1,119 +1,53 @@
-:root{
---bg:#0b0f14;
---surface:#151a22;
---border:#232a36;
---text:#e6e9ef;
---muted:#9aa4b2;
---accent:#c9a227;
---accent-soft:rgba(201,162,39,.15);
+:root {
+    --bg: #0d0e12;
+    --card: #16181d;
+    --accent: #c9a227; /* Or Marocain */
+    --text: #eef0f2;
+    --muted: #8a8f98;
+    --border: rgba(201, 162, 39, 0.2);
 }
 
-*{box-sizing:border-box}
-
-body{
-margin:0;
-font-family:Inter,system-ui,Arial,sans-serif;
-background:var(--bg);
-color:var(--text);
-line-height:1.75;
+body {
+    margin: 0; font-family: 'Inter', sans-serif;
+    background: var(--bg); color: var(--text); line-height: 1.6;
 }
 
-/* NAV */
-nav{
-position:sticky;top:0;z-index:10;
-display:flex;justify-content:space-between;align-items:center;
-padding:18px 6%;
-background:rgba(11,15,20,.92);
-backdrop-filter:blur(10px);
-border-bottom:1px solid var(--border);
-}
-.logo{color:var(--accent);font-weight:600}
-nav a{color:var(--muted);margin-left:26px;text-decoration:none;font-size:.85rem}
-nav a:hover{color:var(--text)}
-
-.container{max-width:1200px;margin:auto;padding:90px 6%}
-
-.section-title{font-size:2.4rem;margin-bottom:10px}
-.section-desc{color:var(--muted);max-width:720px}
-
-.hero{
-display:grid;
-grid-template-columns:1.2fr 1fr;
-gap:60px;
-align-items:center;
+/* Navigation Style Premium */
+nav {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 20px 8%; background: rgba(13, 14, 18, 0.95);
+    border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 1000;
 }
 
-.card, .sim{
-background:var(--surface);
-border:1px solid var(--border);
-border-radius:10px;
-padding:35px;
+.logo { font-weight: 800; color: var(--accent); letter-spacing: 1px; font-size: 1.2rem; }
+nav a { color: var(--muted); text-decoration: none; margin-left: 25px; font-size: 0.85rem; text-transform: uppercase; font-weight: 600; }
+nav a:hover { color: var(--accent); }
+
+/* Layouts */
+.container { max-width: 1200px; margin: auto; padding: 60px 20px; }
+.hero { text-align: center; padding: 100px 0; border-bottom: 1px solid var(--border); }
+.section-title { font-size: 2.5rem; color: var(--accent); margin-bottom: 20px; }
+
+/* Cartes & Simulateurs */
+.card {
+    background: var(--card); border: 1px solid var(--border);
+    padding: 30px; border-radius: 12px; transition: 0.3s;
+}
+.card:hover { border-color: var(--accent); transform: translateY(-5px); }
+
+/* Formulaires & Inputs */
+input, select, textarea {
+    width: 100%; padding: 12px; margin: 10px 0;
+    background: #08090b; border: 1px solid var(--border);
+    color: white; border-radius: 6px; outline: none;
 }
 
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-gap:30px;margin-top:50px;
+.btn {
+    background: var(--accent); color: #000; padding: 14px 28px;
+    border: none; border-radius: 6px; font-weight: 700; cursor: pointer;
+    text-decoration: none; display: inline-block;
 }
 
-.card:hover{
-border-color:var(--accent);
-transform:translateY(-6px);
-transition:.25s;
-}
-
-.btn{
-display:inline-block;
-padding:14px 30px;
-background:var(--accent);
-color:#000;
-font-weight:600;
-border-radius:6px;
-text-decoration:none;
-margin-top:25px;
-}
-
-.sim{margin-bottom:70px}
-.sim h3{color:var(--accent)}
-
-input{
-width:100%;
-padding:12px;
-margin:10px 0;
-background:#0b0f14;
-border:1px solid var(--border);
-color:var(--text);
-border-radius:6px;
-}
-
-button{
-padding:12px 24px;
-background:var(--accent);
-border:none;
-color:#000;
-font-weight:600;
-border-radius:6px;
-cursor:pointer;
-}
-
-.guide{
-margin-top:18px;
-padding:18px;
-background:var(--accent-soft);
-border-left:4px solid var(--accent);
-color:var(--muted);
-}
-
-.analysis{margin-top:15px;color:var(--muted)}
-
-footer{
-border-top:1px solid var(--border);
-padding:40px 6%;
-text-align:center;
-color:var(--muted);
-font-size:.85rem;
-}
-
-@media(max-width:900px){
-.hero{grid-template-columns:1fr}
-}
+/* FAQ */
+.faq-item { margin-bottom: 15px; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
+.faq-q { color: var(--accent); font-weight: 600; cursor: pointer; }
